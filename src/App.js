@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="App">
       <h1>Book Store</h1>
-      <>
+      <></>
       <nav
         style={{
           borderBottom: "solid 1px",
@@ -22,7 +22,6 @@ function App() {
         <Link to="/Register">Register</Link> |
         <Link to="/MyAccount">My Account</Link> |
       </nav>
-      </>
 
       <>
       <Routes>
