@@ -62,6 +62,7 @@ function App() {
                 token={token}
                 setToken={setToken}
                 setUsername={setUsername}
+                username={username}
               />
             }
           />
