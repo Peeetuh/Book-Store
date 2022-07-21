@@ -3,7 +3,7 @@ import './SearchBar.css';
 // const APIURL = `https://sensationnel-maison-12931.herokuapp.com`
 
 
-function SearchBar ({placeholder, data}) {
+function FilteredSearchBar ({placeholder, data}) {
   console.log(data);
     const [filteredData, setFilteredData] = useState([]);
     const myData = data.booksData
@@ -40,7 +40,7 @@ function SearchBar ({placeholder, data}) {
       );
     }
 
-export default SearchBar;
+export default FilteredSearchBar;
 
 
 
