@@ -15,7 +15,7 @@ const Login = ({ setToken, username, setUsername, password, setPassword }) => {
   const authFormSubmitHandler = async (event) => {
     event.preventDefault();
     const data = await fetchLogin(username, password);
-    if (data.toekn) {
+    if (data.token) {
       setToken(data.token);
       window.localStorage.setItem("username", username);
       window.localStorage.setItem("token", data.token);
