@@ -5,6 +5,7 @@ import { MyAccount, Login, Register } from "./routes";
 import "./App.css";
 import SearchBar from './routes/components/SearchBar';
 
+
 function App() {
   const [username, setUsername] = useState(
     window.localStorage.getItem("username")
