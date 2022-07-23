@@ -3,6 +3,8 @@ import Home from "./routes/Home";
 import { useState } from "react";
 import { MyAccount, Login, Register } from "./routes";
 import "./App.css";
+import SearchBar from './routes/components/SearchBar';
+
 
 function App() {
   const [username, setUsername] = useState(
@@ -14,6 +16,7 @@ function App() {
   return (
     <div className="App">
       <h1>Book Store</h1>
+
       <>
         <nav
           style={{
@@ -25,6 +28,7 @@ function App() {
           {token ? null : <Link to="/Login">Login</Link>}
           {token ? null : <Link to="/Register">Register</Link>}
           {token ? <Link to="/MyAccount">My Account</Link> : null}
+          <SearchBar />
         </nav>
       </>
 

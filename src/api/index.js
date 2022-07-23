@@ -55,3 +55,4 @@ export const fetchUserAccount = async (token) => {
     console.log(error);
   }
 }
+
