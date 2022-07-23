@@ -13,7 +13,6 @@ export const fetchRegister = async (username, password) => {
       }),
     });
     const data = await response.json();
-    console.log("data", data);
     return data;
   } catch (error) {
     console.log(error);
@@ -33,7 +32,6 @@ export const fetchLogin = async (username, password) => {
       }),
     });
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
@@ -49,9 +47,30 @@ export const fetchUserAccount = async (token) => {
       },
     });
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
   }
 }
+
+export const addBookToCart = async (userId, price, bookId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/orders/cart`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId,
+        price,
+        bookId
+      }),
+    });
+    const data = await response.json();
+    console.log("datafromIndex", data);
+    return data;
+  } catch (error) {
+    console.log(error)
+  }
+}
+
