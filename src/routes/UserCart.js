@@ -6,7 +6,6 @@ const UserCart = ({username}) => {
     return (
       <main>
         <h2>{username} Checkout</h2>
-        
       </main>
     );
   }
