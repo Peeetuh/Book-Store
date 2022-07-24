@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-const Logout = ({ token, setToken, setUsername }) => {
+const Logout = ({ token, setToken, setUsername, setUserId }) => {
   const navigate = useNavigate();
   if (token) {
     return (
@@ -11,6 +11,7 @@ const Logout = ({ token, setToken, setUsername }) => {
             window.localStorage.clear();
             setToken();
             setUsername("");
+            setUserId("");
             navigate("/");
           }}
         >
