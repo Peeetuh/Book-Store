@@ -4,6 +4,15 @@ import { useState } from "react";
 import { MyAccount, Login, Register } from "./routes";
 import "./App.css";
 import SearchBar from './routes/components/SearchBar';
+import Genre from "./routes/Genre";
+import Horror from "./routes/components/Horror";
+import ScienceFiction from "./routes/components/ScienceFiction";
+import GeneralFiction from "./routes/components/GeneralFiction";
+import Mystery from "./routes/components/Mystery";
+import Comedy from "./routes/components/Comedy";
+import Romance from "./routes/components/Romance";
+import Thriller from "./routes/components/Thriller";
+import SearchResult from "./routes/components/SearchResult";
 
 
 function App() {
@@ -19,12 +28,14 @@ function App() {
 
       <>
         <nav
+          className="nav-bar"
           style={{
             borderBottom: "solid 1px",
             paddingBottom: "1rem",
           }}
         >
           <Link to="/">Home</Link>
+          <Link to="/Genre">Genre</Link>
           {token ? null : <Link to="/Login">Login</Link>}
           {token ? null : <Link to="/Register">Register</Link>}
           {token ? <Link to="/MyAccount">My Account</Link> : null}
@@ -33,8 +44,10 @@ function App() {
       </>
 
       <>
+      
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/Genre" element={<Genre />} />
           <Route
             path="Login"
             element={
@@ -70,7 +83,16 @@ function App() {
               />
             }
           />
+          <Route path="/Horror" element={<Horror />} />
+          <Route path="/ScienceFiction" element={<ScienceFiction />} />
+          <Route path="/GeneralFiction" element={<GeneralFiction />} />
+          <Route path="/Mystery" element={<Mystery />} />
+          <Route path="/Thriller" element={<Thriller />} />
+          <Route path="/Comedy" element={<Comedy />} />
+          <Route path="/Romance" element={<Romance />} />
+          <Route path="/SearchResult" element={<SearchResult />} />
         </Routes>
+        
       </>
     </div>
   );

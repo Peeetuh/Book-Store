@@ -25,7 +25,7 @@ function Home() {
           const fetchFeatured = async () => {
             const resultFeatured = await requestFeatured();
             console.log(resultFeatured);
-            setFeatured(resultFeatured[0]);
+            setFeatured(resultFeatured);
           }
           fetchFeatured();
     },[])
