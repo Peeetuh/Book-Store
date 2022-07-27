@@ -51,9 +51,9 @@ export const fetchUserAccount = async (token) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const addBookToCart = async (userId, price, bookId) => {
+export const addBookToCart = async (userId, price, bookId, quantity) => {
   try {
     const response = await fetch(`${BASE_URL}/orders/cart`, {
       method: "POST",
@@ -62,14 +62,122 @@ export const addBookToCart = async (userId, price, bookId) => {
       },
       body: JSON.stringify({
         userId,
-        price,
-        bookId
+        bookPrice: price,
+        bookId,
+        quantity,
       }),
     });
     const data = await response.json();
     console.log("datafromIndex", data);
     return data;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
+
+export const fetchUsersCart = async (token) => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/me/cart`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteFromCart = async (
+  orderId,
+  orderPrice,
+  bookId,
+  bookPrice,
+  quantity,
+  userCart,
+  setUserCart
+) => {
+  try {
+    const response = await fetch(`${BASE_URL}/orders/cart`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        orderId,
+        bookId,
+        bookPrice,
+        quantity,
+      }),
+
+    });
+    const data = await response.json();
+    console.log("data", data)
+    if (data) {
+      const newCart = userCart.filter((cart) => cart.id !== bookId);
+      setUserCart(newCart);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const requestCuratedRanking = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/books/lists/curated-rankings`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data)
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const requestTopRated = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/books/lists/curated-ratings`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const requestFeatured = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/books/lists/featured`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export async function searchRequest (searchstring){
+  try{
+      const response = await fetch (`${BASE_URL}/search/${searchstring}`,{ //
+          headers: {
+              "Content-Type": "application/json",
+          }
+      })
+      const data = await response.json();
+      return data;
+  } catch(error) {
+      console.log(error);
+  }
+};
+

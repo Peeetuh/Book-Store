@@ -3,8 +3,7 @@ import Home from "./routes/Home";
 import { useState } from "react";
 import { MyAccount, Login, Register, GuestCart, UserCart } from "./routes";
 import "./App.css";
-import SearchBar from './routes/components/SearchBar';
-
+import SearchBar from "./routes/components/SearchBar";
 
 function App() {
   const [username, setUsername] = useState(
@@ -12,7 +11,7 @@ function App() {
   );
   const [password, setPassword] = useState("");
   const [token, setToken] = useState(window.localStorage.getItem("token"));
-  const [userId, setUserId] = useState(window.localStorage.getItem("userId"))
+  const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
   return (
     <div className="App">
       <h1>Book Store</h1>
@@ -28,15 +27,18 @@ function App() {
           {token ? null : <Link to="/Login">Login</Link>}
           {token ? null : <Link to="/Register">Register</Link>}
           {token ? <Link to="/MyAccount">My Account</Link> : null}
-          {token ? <Link to={`/${userId}/cart`}>Cart</Link> : <Link to="/GuestCart">Cart</Link>}
+          {token ? (
+            <Link to={`/${userId}/cart`}>Cart</Link>
+          ) : (
+            <Link to="/GuestCart">Cart</Link>
+          )}
           <SearchBar />
-
         </nav>
       </>
 
       <>
         <Routes>
-          <Route path="/" element={<Home userId={userId} token={token}/>} />
+          <Route path="/" element={<Home userId={userId} token={token} />} />
           <Route
             path="Login"
             element={
@@ -76,7 +78,11 @@ function App() {
             }
           />
           <Route path="GuestCart" element={<GuestCart />} />
-          <Route path={`/${userId}/cart`} element={<UserCart username={username}/>} />
+          <Route
+            path={`/${userId}/cart`}
+            element={<UserCart username={username} token={token}/>}
+          />
+          {/* <Route path={`/${book.id}`} /> */}
         </Routes>
       </>
     </div>

@@ -23,12 +23,13 @@ const Login = ({
     event.preventDefault();
     const data = await fetchLogin(username, password);
     if (data.token) {
+      console.log(data.user.id)
       setToken(data.token);
       setUserId(data.user.id);
       setUsername(data.user.userEmail);
       window.localStorage.setItem("username", data.user.userEmail);
       window.localStorage.setItem("token", data.token);
-      window.localStorage.setItem("UserId", data.user.id);
+      window.localStorage.setItem("userId", data.user.id);
       alert("You've logged on!");
       navigate("/");
     } else {
