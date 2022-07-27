@@ -8,7 +8,7 @@ const CartForm = ({ userId, token }) => {
 
   const addToCartSubmitHandler = async (event) => {
     event.preventDefault();
-    const addedBook = await addBookToCart(userId, price, bookId);
+    const addedBook = await addBookToCart(userId, price, bookId, bookQuantity);
     console.log("addedBook", addedBook)
   };
 
