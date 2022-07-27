@@ -1,7 +1,7 @@
 import { Link, Route, Routes } from "react-router-dom";
 import Home from "./routes/Home";
 import { useState } from "react";
-import { MyAccount, Login, Register } from "./routes";
+import { MyAccount, Login, Register, GuestCart, UserCart } from "./routes";
 import "./App.css";
 import SearchBar from './routes/components/SearchBar';
 import Genre from "./routes/Genre";
@@ -22,7 +22,7 @@ function App() {
   );
   const [password, setPassword] = useState("");
   const [token, setToken] = useState(window.localStorage.getItem("token"));
-
+  const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
   return (
     <div className="App">
       <h1>Book Store</h1>
@@ -40,15 +40,20 @@ function App() {
           {token ? null : <Link to="/Login">Login</Link>}
           {token ? null : <Link to="/Register">Register</Link>}
           {token ? <Link to="/MyAccount">My Account</Link> : null}
+          {token ? (
+            <Link to={`/${userId}/cart`}>Cart</Link>
+          ) : (
+            <Link to="/GuestCart">Cart</Link>
+          )}
           <SearchBar setSearchResult={setSearchResult}/>
+
         </nav>
       </>
 
       <>
       
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/Genre" element={<Genre />} />
+          <Route path="/" element={<Home userId={userId} token={token} />} />
           <Route
             path="Login"
             element={
@@ -58,6 +63,7 @@ function App() {
                 setUsername={setUsername}
                 password={password}
                 setPassword={setPassword}
+                setUserId={setUserId}
               />
             }
           />
@@ -70,6 +76,7 @@ function App() {
                 setUsername={setUsername}
                 password={password}
                 setPassword={setPassword}
+                setUserId={setUserId}
               />
             }
           />
@@ -81,9 +88,17 @@ function App() {
                 setToken={setToken}
                 setUsername={setUsername}
                 username={username}
+                setUserId={setUserId}
               />
             }
+             <Route path="/Genre" element={<Genre />} />
           />
+          <Route path="GuestCart" element={<GuestCart />} />
+          <Route
+            path={`/${userId}/cart`}
+            element={<UserCart username={username} token={token}/>}
+          />
+          {/* <Route path={`/${book.id}`} /> */}
           <Route path="/Horror" element={<Horror />} />
           <Route path="/ScienceFiction" element={<ScienceFiction />} />
           <Route path="/GeneralFiction" element={<GeneralFiction />} />
