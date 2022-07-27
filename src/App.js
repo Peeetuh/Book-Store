@@ -16,6 +16,7 @@ import SearchResult from "./routes/components/SearchResult";
 
 
 function App() {
+  const [searchResult, setSearchResult] = useState([]);
   const [username, setUsername] = useState(
     window.localStorage.getItem("username")
   );
@@ -39,7 +40,7 @@ function App() {
           {token ? null : <Link to="/Login">Login</Link>}
           {token ? null : <Link to="/Register">Register</Link>}
           {token ? <Link to="/MyAccount">My Account</Link> : null}
-          <SearchBar />
+          <SearchBar setSearchResult={setSearchResult}/>
         </nav>
       </>
 
@@ -90,7 +91,7 @@ function App() {
           <Route path="/Thriller" element={<Thriller />} />
           <Route path="/Comedy" element={<Comedy />} />
           <Route path="/Romance" element={<Romance />} />
-          <Route path="/SearchResult" element={<SearchResult />} />
+          <Route path="/SearchResult" element={<SearchResult searchResult={searchResult}/>} />
         </Routes>
         
       </>
