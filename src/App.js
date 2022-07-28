@@ -13,6 +13,7 @@ import Comedy from "./routes/components/Comedy";
 import Romance from "./routes/components/Romance";
 import Thriller from "./routes/components/Thriller";
 import SearchResult from "./routes/components/SearchResult";
+import Author from "./routes/components/SingleAuthor";
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
             <Link to="/GuestCart">Cart</Link>
           )}
           <SearchBar setSearchResult={setSearchResult}/>
+          <Link to="/authors">Authors</Link>
 
         </nav>
       </>
@@ -90,9 +92,8 @@ function App() {
                 username={username}
                 setUserId={setUserId}
               />
-            }
-             <Route path="/Genre" element={<Genre />} />
-          />
+            } />
+          <Route path="/Genre" element={<Genre />} />
           <Route path="GuestCart" element={<GuestCart />} />
           <Route
             path={`/${userId}/cart`}
@@ -107,6 +108,7 @@ function App() {
           <Route path="/Comedy" element={<Comedy />} />
           <Route path="/Romance" element={<Romance />} />
           <Route path="/SearchResult" element={<SearchResult searchResult={searchResult}/>} />
+          <Route path="/authors" element={<Author /> } />
         </Routes>
         
       </>

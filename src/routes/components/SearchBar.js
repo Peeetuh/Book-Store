@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
 import { searchRequest } from "../../api"
 
 

@@ -147,33 +147,33 @@ export const requestCuratedRanking = async () => {
   }
 };
 
-export const requestTopRated = async () => {
-  try {
-    const response = await fetch(`${BASE_URL}/books/lists/curated-ratings`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-};
+// export const requestTopRated = async () => {
+//   try {
+//     const response = await fetch(`${BASE_URL}/books/lists/curated-ratings`, {
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     });
+//     const data = await response.json();
+//     return data;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
-export const requestFeatured = async () => {
-  try {
-    const response = await fetch(`${BASE_URL}/books/lists/featured`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-};
+// export const requestFeatured = async () => {
+//   try {
+//     const response = await fetch(`${BASE_URL}/books/lists/featured`, {
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     });
+//     const data = await response.json();
+//     return data;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 export async function searchRequest (searchstring){
   try{
@@ -189,16 +189,16 @@ export async function searchRequest (searchstring){
   }
 };
 
-export const requestCuratedRanking = async () => {
-  const response = await fetch(`${BASE_URL}/books/lists/curated-rankings`,{
-    headers: {
-      "Content-Type": "application/json"
-    }
-  }); 
-  const data = await response.json();
-  // console.log(data);
-  return data;
-}
+// export const requestCuratedRanking = async () => {
+//   const response = await fetch(`${BASE_URL}/books/lists/curated-rankings`,{
+//     headers: {
+//       "Content-Type": "application/json"
+//     }
+//   }); 
+//   const data = await response.json();
+//   // console.log(data);
+//   return data;
+// }
 
 export const requestTopRated = async () => {
   const response = await fetch(`${BASE_URL}/books/lists/curated-ratings`, {
@@ -297,4 +297,15 @@ export const requestMystery = async () => {
   const mysteryData = await response.json();
   // console.log(mysteryData);
   return mysteryData;
+}
+
+export const requestAuthor = async (authorName) => {
+  const response = await fetch(`${BASE_URL}/authors/George Orwell`, {
+    headers: {
+      "Content-Type": "application/json"
+    }
+    });
+    const authorData = await response.json();
+    return authorData;
+
 }
