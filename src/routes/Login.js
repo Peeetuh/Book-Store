@@ -3,6 +3,7 @@ import { fetchLogin } from "../api";
 
 const Login = ({
   setToken,
+  setUserData,
   username,
   setUsername,
   password,
@@ -25,6 +26,7 @@ const Login = ({
     if (data.token) {
       console.log(data.user.id)
       setToken(data.token);
+      setUserData(data.user);
       setUserId(data.user.id);
       setUsername(data.user.userEmail);
       window.localStorage.setItem("username", data.user.userEmail);

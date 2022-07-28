@@ -1,7 +1,7 @@
-import { useState } from "react";
+//  import { useState } from "react";
 
 const GuestCart = () => {
-    const [checkedOut, setCheckkout] = useState(false)
+    // const [checkedOut, setCheckkout] = useState(false)
     
     return (
       <main>

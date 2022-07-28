@@ -1,9 +1,5 @@
 const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
 
-
-  
-  
-
 export const fetchRegister = async (username, password) => {
   try {
     const response = await fetch(`${BASE_URL}/users/register`, {
@@ -188,39 +184,6 @@ export async function searchRequest (searchstring){
       console.log(error);
   }
 };
-
-export const requestCuratedRanking = async () => {
-  const response = await fetch(`${BASE_URL}/books/lists/curated-rankings`,{
-    headers: {
-      "Content-Type": "application/json"
-    }
-  }); 
-  const data = await response.json();
-  // console.log(data);
-  return data;
-}
-
-export const requestTopRated = async () => {
-  const response = await fetch(`${BASE_URL}/books/lists/curated-ratings`, {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
-  const dataTopRated = await response.json();
-  // console.log(dataTopRated);
-  return dataTopRated;
-}
-
-export const requestFeatured = async () => {
-  const response = await fetch(`${BASE_URL}/books/lists/featured`, {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
-  const dataFeatured = await response.json();
-  // console.log(dataFeatured);
-  return dataFeatured;
-}
 
 export const requestHorror = async () => {
   const response = await fetch(`${BASE_URL}/books/genre/Horror`, {
