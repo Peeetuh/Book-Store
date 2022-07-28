@@ -3,7 +3,7 @@ import { fetchUsersCart, deleteFromCart } from "../api";
 
 const UserCart = ({ username, token }) => {
   const [userCart, setUserCart] = useState([]);
-  const [checkedOut, setCheckkout] = useState(false);
+  // const [checkedOut, setCheckkout] = useState(false);
 
   useEffect(() => {
     const loadUserCart = async () => {

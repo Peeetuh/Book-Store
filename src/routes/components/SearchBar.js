@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
 import { searchRequest } from "../../api"
-
 
 const SearchBar = ({setSearchResult}) => {
     const navigate = useNavigate();
@@ -10,8 +8,6 @@ const SearchBar = ({setSearchResult}) => {
     const changeHandler = e => {
         setSearchQuery(e.target.value)
     }
-
-
     const submitHandler = async (e) => {
         e.preventDefault();
         navigate('./SearchResult')

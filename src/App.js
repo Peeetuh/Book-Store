@@ -3,7 +3,7 @@ import Home from "./routes/Home";
 import { useState } from "react";
 import { MyAccount, Login, Register, GuestCart, UserCart } from "./routes";
 import "./App.css";
-import SearchBar from './routes/components/SearchBar';
+import SearchBar from "./routes/components/SearchBar";
 import Genre from "./routes/Genre";
 import Horror from "./routes/components/Horror";
 import ScienceFiction from "./routes/components/ScienceFiction";
@@ -13,10 +13,14 @@ import Comedy from "./routes/components/Comedy";
 import Romance from "./routes/components/Romance";
 import Thriller from "./routes/components/Thriller";
 import SearchResult from "./routes/components/SearchResult";
-
+import Admin from "./routes/Admin";
+import AdminUsers from "./routes/AdminUsers";
+import AdminOrders from "./routes/AdminOrders";
+import AdminProducts from "./routes/AdminProducts";
 
 function App() {
   const [searchResult, setSearchResult] = useState([]);
+  const [userData, setUserData] = useState({});
   const [username, setUsername] = useState(
     window.localStorage.getItem("username")
   );
@@ -45,13 +49,12 @@ function App() {
           ) : (
             <Link to="/GuestCart">Cart</Link>
           )}
-          <SearchBar setSearchResult={setSearchResult}/>
-
+          {token && userData.isAdmin && <Link to="/admin">Admin</Link>}
+          <SearchBar setSearchResult={setSearchResult} />
         </nav>
       </>
 
       <>
-      
         <Routes>
           <Route path="/" element={<Home userId={userId} token={token} />} />
           <Route
@@ -59,6 +62,7 @@ function App() {
             element={
               <Login
                 setToken={setToken}
+                setUserData={setUserData}
                 username={username}
                 setUsername={setUsername}
                 password={password}
@@ -91,12 +95,12 @@ function App() {
                 setUserId={setUserId}
               />
             }
-             <Route path="/Genre" element={<Genre />} />
           />
+          <Route path="/Genre" element={<Genre />} />
           <Route path="GuestCart" element={<GuestCart />} />
           <Route
             path={`/${userId}/cart`}
-            element={<UserCart username={username} token={token}/>}
+            element={<UserCart username={username} token={token} />}
           />
           {/* <Route path={`/${book.id}`} /> */}
           <Route path="/Horror" element={<Horror />} />
@@ -106,9 +110,16 @@ function App() {
           <Route path="/Thriller" element={<Thriller />} />
           <Route path="/Comedy" element={<Comedy />} />
           <Route path="/Romance" element={<Romance />} />
-          <Route path="/SearchResult" element={<SearchResult searchResult={searchResult}/>} />
+          <Route path="/admin" element={<Admin />}>
+            <Route path="/admin/users" element={<AdminUsers token={token} />} />
+            <Route path="/admin/orders" element={<AdminOrders />} />
+            <Route path="/admin/products" element={<AdminProducts />} />
+          </Route>
+          <Route
+            path="/SearchResult"
+            element={<SearchResult searchResult={searchResult} />}
+          />
         </Routes>
-        
       </>
     </div>
   );

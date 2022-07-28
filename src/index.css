@@ -11,4 +11,14 @@ body {
 .curated-container {
   display: flex;
   justify-content: space-around;
+  width:70%;
+  margin: 0 auto;
+  background-color:#f9f9f9;
+  padding:20px 10px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+.curated-container img {
+  height:120px;
 }
