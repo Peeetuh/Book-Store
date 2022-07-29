@@ -9,7 +9,7 @@ const DisplayAllUsers = ({ token, allUsersData, setAllUsersData }) => {
         <table>
           <tbody>
             <tr>
-              <th>User Id</th>
+              <th>User Id#</th>
               <th>Email</th>
               <th>Status</th>
               <th>Make Admin</th>

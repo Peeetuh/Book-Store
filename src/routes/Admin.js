@@ -5,8 +5,8 @@ const Admin = () => {
     <main>
       <header>
         <h2>Admin Portal</h2>
+        <AdminNav />
       </header>
-      <AdminNav />
     </main>
   );
 };

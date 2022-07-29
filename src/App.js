@@ -112,8 +112,8 @@ function App() {
           <Route path="/Romance" element={<Romance />} />
           <Route path="/admin" element={<Admin />}>
             <Route path="/admin/users" element={<AdminUsers token={token} />} />
-            <Route path="/admin/orders" element={<AdminOrders />} />
-            <Route path="/admin/products" element={<AdminProducts />} />
+            <Route path="/admin/orders" element={<AdminOrders token={token} />} />
+            <Route path="/admin/products" element={<AdminProducts token={token} />} />
           </Route>
           <Route
             path="/SearchResult"
