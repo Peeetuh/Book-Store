@@ -14,7 +14,7 @@ const AdminUsers = ({ token }) => {
   }, []);
   return (
     <div>
-      <h3>Users Admin</h3>
+      <h3>Manage Users</h3>
      <DisplayAllUsers token={token} allUsersData={allUsersData} setAllUsersData={setAllUsersData} />
     </div>
   );
