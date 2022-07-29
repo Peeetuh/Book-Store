@@ -1,4 +1,5 @@
 import { Link, Route, Routes } from "react-router-dom";
+import React from "react";
 import Home from "./routes/Home";
 import { useState } from "react";
 import { MyAccount, Login, Register } from "./routes";
@@ -13,6 +14,9 @@ import Comedy from "./routes/components/Comedy";
 import Romance from "./routes/components/Romance";
 import Thriller from "./routes/components/Thriller";
 import SearchResult from "./routes/components/SearchResult";
+import img1 from "./routes/components/Images/logo.png"
+
+
 
 
 function App() {
@@ -25,22 +29,19 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Book Store</h1>
+      {/* <h1>Book Store</h1> */}
 
       <>
-        <nav
-          className="nav-bar"
-          style={{
-            borderBottom: "solid 1px",
-            paddingBottom: "1rem",
-          }}
-        >
-          <Link to="/">Home</Link>
-          <Link to="/Genre">Genre</Link>
-          {token ? null : <Link to="/Login">Login</Link>}
-          {token ? null : <Link to="/Register">Register</Link>}
-          {token ? <Link to="/MyAccount">My Account</Link> : null}
-          <SearchBar setSearchResult={setSearchResult}/>
+        <nav className="nav-bar">
+        <img src={img1} alt="logo" className="logo"/>
+          <Link className="links" to="/">Home</Link>
+          <Link className="links" to="/Genre">Genre</Link>
+          {token ? null : <Link className="links" to="/Login">Login</Link>}
+          {token ? null : <Link className="links" to="/Register">Register</Link>}
+          {token ? <Link className="links" to="/MyAccount">My Account</Link> : null}
+        </nav>
+        <nav className="nav-bar-search">
+        <SearchBar setSearchResult={setSearchResult}/>
         </nav>
       </>
 
