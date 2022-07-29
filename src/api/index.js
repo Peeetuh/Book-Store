@@ -300,7 +300,7 @@ export const requestMystery = async () => {
 }
 
 export const requestAuthor = async (authorName) => {
-  const response = await fetch(`${BASE_URL}/authors/George Orwell`, {
+  const response = await fetch(`${BASE_URL}/authors/${authorName}`, {
     headers: {
       "Content-Type": "application/json"
     }

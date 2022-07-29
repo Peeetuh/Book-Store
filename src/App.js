@@ -47,7 +47,6 @@ function App() {
             <Link to="/GuestCart">Cart</Link>
           )}
           <SearchBar setSearchResult={setSearchResult}/>
-          <Link to="/authors">Authors</Link>
 
         </nav>
       </>
@@ -108,7 +107,7 @@ function App() {
           <Route path="/Comedy" element={<Comedy />} />
           <Route path="/Romance" element={<Romance />} />
           <Route path="/SearchResult" element={<SearchResult searchResult={searchResult}/>} />
-          <Route path="/authors" element={<Author /> } />
+          <Route path="/authors/:authorName" element={<Author  /> } />
         </Routes>
         
       </>

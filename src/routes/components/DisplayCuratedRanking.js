@@ -15,6 +15,9 @@ function DisplayCuratedRanking({ topCuratedRanking, userId }) {
                 <Link to={`/${book.id}`}>
                   <img src={book.imageLinkM} alt={book.title} />
                 </Link>
+                <Link to={`/authors/${book.author}`}>
+                <p> By {book.author}</p>
+                </Link>
                 <CartForm userId={userId} />
               </div>
               <Routes>
