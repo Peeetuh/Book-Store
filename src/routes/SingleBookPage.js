@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { fetchSingleBook } from "../api";
-import CartForm from "./components/CartForm";
+import { CartForm } from "./components";
 
 const SingleBookPage = ({ userId, token }) => {
   const [bookInfo, setBookInfo] = useState([]);

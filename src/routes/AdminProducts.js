@@ -22,7 +22,7 @@ const AdminProducts = ({ token }) => {
       setBooksData(books);
     };
     fetchBooksData();
-  }, []);
+  }, [currentPage, token]);
   return (
     <div>
       {newBookModal && (
