@@ -18,7 +18,7 @@ const AdminUsers = ({ token }) => {
       setUsersData(users);
     };
     fetchUsersData();
-  }, []);
+  }, [currentPage, token]);
   return (
     <>
       {deactivateModal && (

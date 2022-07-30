@@ -20,7 +20,7 @@ const AdminOrders = ({ token }) => {
       setOrdersData(orders);
     };
     fetchOrdersData();
-  }, []);
+  }, [currentPage, token]);
   return (
     <div>
       {ordersData.length ? (
