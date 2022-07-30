@@ -1,7 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { fetchRegister } from "../api";
 
-const Register = ({ setToken, username, setUsername, password, setPassword }) => {
+const Register = ({
+  setToken,
+  username,
+  setUsername,
+  password,
+  setPassword,
+  setUserId,
+}) => {
   const navigate = useNavigate();
   const usernameChangeHandler = (event) => {
     setUsername(event.target.value);
@@ -13,14 +20,16 @@ const Register = ({ setToken, username, setUsername, password, setPassword }) =>
 
   const authFormSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log("username", username);
-    console.log("password", password)
+
     const data = await fetchRegister(username, password);
-    console.log("data", data)
+
     if (data.token) {
       setToken(data.token);
+      setUserId(data.user.id);
+      setUsername(data.user.userEmail);
       window.localStorage.setItem("username", username);
       window.localStorage.setItem("token", data.token);
+      window.localStorage.setItem("userId", data.user.id);
       alert("You've successfully registered");
       navigate("/");
     } else {
@@ -51,9 +60,7 @@ const Register = ({ setToken, username, setUsername, password, setPassword }) =>
           value={password}
           onChange={passwordChangeHandler}
         />
-        <button type="submit">
-          Submit
-        </button>
+        <button type="submit">Submit</button>
       </form>
     </>
   );

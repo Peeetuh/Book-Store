@@ -1,7 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { fetchLogin } from "../api";
 
-const Login = ({ setToken, username, setUsername, password, setPassword }) => {
+const Login = ({
+  setToken,
+  username,
+  setUsername,
+  password,
+  setPassword,
+  setUserId,
+}) => {
   const navigate = useNavigate();
 
   const usernameChangeHandler = (event) => {
@@ -16,9 +23,13 @@ const Login = ({ setToken, username, setUsername, password, setPassword }) => {
     event.preventDefault();
     const data = await fetchLogin(username, password);
     if (data.token) {
+      console.log(data.user.id)
       setToken(data.token);
-      window.localStorage.setItem("username", username);
+      setUserId(data.user.id);
+      setUsername(data.user.userEmail);
+      window.localStorage.setItem("username", data.user.userEmail);
       window.localStorage.setItem("token", data.token);
+      window.localStorage.setItem("userId", data.user.id);
       alert("You've logged on!");
       navigate("/");
     } else {
@@ -44,13 +55,10 @@ const Login = ({ setToken, username, setUsername, password, setPassword }) => {
           minLength={5}
           onChange={passwordChangeHandler}
         />
-        <button type="submit">
-          Submit
-        </button>
+        <button type="submit">Submit</button>
       </form>
     </>
   );
 };
-
 
 export default Login;
