@@ -1,5 +1,5 @@
-import { Link, Route, Routes } from "react-router-dom";
-import CartForm from "./CartForm";
+import { Link } from "react-router-dom";
+
 
 function DisplayCuratedRanking({ topCuratedRanking, userId }) {
   return (
@@ -10,20 +10,16 @@ function DisplayCuratedRanking({ topCuratedRanking, userId }) {
       <div className="curated-container">
         {topCuratedRanking.map((book) => {
           return (
-            <>
               <div key={book.id}>
-                <Link to={`/${book.id}`}>
+                <Link to={`/books/${book.id}`}>
                   <img src={book.imageLinkM} alt={book.title} />
                 </Link>
+
                 <Link to={`/authors/${book.author}`}>
                 <p> By {book.author}</p>
                 </Link>
                 <CartForm userId={userId} />
               </div>
-              <Routes>
-                <Route path={`/${book.id}`} />
-              </Routes>
-            </>
           );
         })}
       </div>
