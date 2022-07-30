@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { editBookRequest } from "../../api/admin";
-const EditBookModal = ({token, currentBookId, setEditBookModal }) => {
-  const [isbn, setIsbn] = useState("");
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [year, setYear] = useState("");
-  const [publisher, setPublisher] = useState("");
-  const [imageLink, setImageLink] = useState("");
-  const [genre, setGenre] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [inventory, setInventory] = useState("");
+import { editBookRequest, paginatedBooksData } from "../../api/admin";
+const EditBookModal = ({token, currentBookId, setEditBookModal, currentPage, setBooksData }) => {
+  const [isbn, setIsbn] = useState(null);
+  const [title, setTitle] = useState(null);
+  const [author, setAuthor] = useState(null);
+  const [year, setYear] = useState(null);
+  const [publisher, setPublisher] = useState(null);
+  const [imageLink, setImageLink] = useState(null);
+  const [genre, setGenre] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [price, setPrice] = useState(null);
+  const [inventory, setInventory] = useState(null);
   const cancelClickHandler = (e) => {
     e.preventDefault();
     setEditBookModal(false);
@@ -31,25 +31,27 @@ const EditBookModal = ({token, currentBookId, setEditBookModal }) => {
       price,
       inventory
     );
-    console.log("result of adding book:", result);
-    setIsbn("");
-    setTitle("");
-    setAuthor("");
-    setYear("");
-    setPublisher("");
-    setImageLink("");
-    setGenre("");
-    setDescription("");
-    setPrice("");
-    setInventory("");
+    console.log("result of editing book:", result);
+    const books = await paginatedBooksData(token, currentPage);
+    setBooksData(books);
+    setIsbn(null);
+    setTitle(null);
+    setAuthor(null);
+    setYear(null);
+    setPublisher(null);
+    setImageLink(null);
+    setGenre(null);
+    setDescription(null);
+    setPrice(null);
+    setInventory(null);
     setEditBookModal(false);
   };
   return (
     <>
       <div className="background" />
-      <div>
+      <div className="modal">
         <header>
-          <h3>Add a New Book</h3>
+          <h3>Edit Book</h3>
         </header>
         <form onSubmit={submitHandler}>
           <label>ISBN</label>
@@ -92,13 +94,11 @@ const EditBookModal = ({token, currentBookId, setEditBookModal }) => {
           <label>Price</label>
           <input
             type="text"
-            required
             onChange={(e) => setPrice(e.target.value)}
           />
           <label>Inventory Count</label>
           <input
             type="number"
-            required
             min="10"
             max="100"
             onChange={(e) => setInventory(e.target.value)}

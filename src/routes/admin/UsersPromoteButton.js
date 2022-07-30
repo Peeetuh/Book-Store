@@ -1,12 +1,12 @@
-import { allUsersRequest, promoteUserRequest } from "../../api/admin";
+import { paginatedUsersRequest, promoteUserRequest } from "../../api/admin";
 
-const UsersPromoteButton = ({token, userId, setAllUsersData}) => {
+const UsersPromoteButton = ({token, userId, setUsersData, currentPage}) => {
   const submitHandler = async(e)=> {
     e.preventDefault();
     const result = await promoteUserRequest(token, userId);
     console.log ("promote user:", result);
-    const users = await allUsersRequest(token);
-    setAllUsersData(users);
+    const users = await paginatedUsersRequest(token, currentPage);
+    setUsersData(users);
   }
   return (
     <form onSubmit={submitHandler}>

@@ -3,9 +3,9 @@ const AdminNav = () => {
   return (
     <>
     <nav>
-      <Link to="/admin/users">Users</Link>
-      <Link to="/admin/orders">Orders</Link>
-      <Link to="/admin/products">Products</Link>
+      <Link to="/admin/users" className="admin-link">Users</Link>
+      <Link to="/admin/orders" className="admin-link">Orders</Link>
+      <Link to="/admin/products" className="admin-link">Products</Link>
     </nav>
     <Outlet />
     </>

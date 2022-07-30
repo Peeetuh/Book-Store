@@ -1,22 +1,48 @@
 import { useEffect, useState } from "react";
-import { allUsersRequest } from "../api/admin";
-import DisplayAllUsers from "./admin/DisplayAllUsers";
+import { paginatedUsersRequest, usersCountRequest } from "../api/admin";
+import DeactivateUserModal from "./admin/DeactivateUserModal";
+import DisplayPaginatedUsers from "./admin/DisplayPaginatedUsers";
 
 const AdminUsers = ({ token }) => {
-  const [allUsersData, setAllUsersData] = useState([]);
+  const [usersData, setUsersData] = useState([]);
+  const [pages, setPages] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [deactivateModal, setDeactivateModal] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState("");
   useEffect(() => {
     const fetchUsersData = async () => {
-      const users = await allUsersRequest(token);
+      const count = await usersCountRequest();
+      const users = await paginatedUsersRequest(token, currentPage);
       console.log("Users:", users);
-      setAllUsersData(users);
+      setPages(Math.ceil(count / 100));
+      setUsersData(users);
     };
     fetchUsersData();
   }, []);
   return (
-    <div>
-      <h3>Manage Users</h3>
-     <DisplayAllUsers token={token} allUsersData={allUsersData} setAllUsersData={setAllUsersData} />
-    </div>
+    <>
+      {deactivateModal && (
+        <DeactivateUserModal
+          token={token}
+          currentUserId={currentUserId}
+          currentPage={currentPage}
+          setUsersData={setUsersData}
+          setDeactivateModal={setDeactivateModal}
+        />
+      )}
+      <div>
+        <DisplayPaginatedUsers
+          token={token}
+          usersData={usersData}
+          setUsersData={setUsersData}
+          pages={pages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          setDeactivateModal={setDeactivateModal}
+          setCurrentUserId={setCurrentUserId}
+        />
+      </div>
+    </>
   );
 };
 
