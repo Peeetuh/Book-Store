@@ -5,7 +5,7 @@ import {
   updateCartQuantity,
   checkoutCart,
 } from "../api";
-import Selector from "./components/Selector";
+import { Selector } from "./components/";
 
 const UserCart = ({ username, token }) => {
   const [userCart, setUserCart] = useState([]);

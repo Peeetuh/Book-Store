@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Logout from "./components/Logout";
+import { Logout } from "./components";
 import { fetchUserAccount } from "../api";
 
 const MyAccount = ({ token, setToken, setUsername, username, setUserId }) => {

@@ -9,16 +9,19 @@ import {
   GuestCart,
   UserCart,
   SingleBookPage,
+  Admin,
+  AdminUsers,
+  AdminOrders,
+  AdminProducts,
+  Genres
 } from "./routes";
 import "./App.css";
-import SearchBar from "./routes/components/SearchBar";
-import Genres from "./routes/Genres";
-import DisplayGenreBooks from "./routes/components/DisplayGenreBooks";
-import SearchResult from "./routes/components/SearchResult";
-import Admin from "./routes/Admin";
-import AdminUsers from "./routes/AdminUsers";
-import AdminOrders from "./routes/AdminOrders";
-import AdminProducts from "./routes/AdminProducts";
+import {
+  SearchBar,
+  SearchResult,
+  DisplayGenreBooks
+} from "./routes/components/";
+
 import img1 from "./routes/components/Images/logo.png";
 
 function App() {

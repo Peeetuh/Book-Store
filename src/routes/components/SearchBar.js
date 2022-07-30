@@ -4,8 +4,6 @@ import { searchRequest } from "../../api"
 import './SearchBar.css';
 import searchicon from "./Images/searchicon.png";
 
-const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
-
 const SearchBar = ({setSearchResult}) => {
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState('');
