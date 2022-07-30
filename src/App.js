@@ -2,7 +2,7 @@ import { Link, Route, Routes } from "react-router-dom";
 import React from "react";
 import Home from "./routes/Home";
 import { useState } from "react";
-import { MyAccount, Login, Register, GuestCart, UserCart } from "./routes";
+import { MyAccount, Login, Register, GuestCart, UserCart, SingleBookPage } from "./routes";
 import "./App.css";
 import SearchBar from "./routes/components/SearchBar";
 import Genre from "./routes/Genre";
@@ -31,10 +31,6 @@ function App() {
   const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
   return (
     <div className="App">
-      {/* <h1>Book Store</h1> */}
-
-      <>
-
         <nav className="nav-bar">
          <img src={img1} alt="logo" className="logo"/>
           <Link className="links" to="/">Home</Link>
@@ -48,13 +44,10 @@ function App() {
             <Link to="/GuestCart">Cart</Link>
           )}
           {token && userData.isAdmin && <Link to="/admin">Admin</Link>}
-          <nav className="nav-bar-search">
-          <SearchBar setSearchResult={setSearchResult} />
-
+          <div className="nav-bar-search">
+            <SearchBar setSearchResult={setSearchResult} />
+          </div>
         </nav>
-      </>
-
-      <>
         <Routes>
           <Route path="/" element={<Home userId={userId} token={token} />} />
           <Route
@@ -102,7 +95,7 @@ function App() {
             path={`/${userId}/cart`}
             element={<UserCart username={username} token={token} />}
           />
-          {/* <Route path={`/${book.id}`} /> */}
+          <Route path="books/:bookId" element={<SingleBookPage token={token} userId={userId}/>}/>
           <Route path="/Horror" element={<Horror />} />
           <Route path="/ScienceFiction" element={<ScienceFiction />} />
           <Route path="/GeneralFiction" element={<GeneralFiction />} />
@@ -120,7 +113,6 @@ function App() {
             element={<SearchResult searchResult={searchResult} />}
           />
         </Routes>
-      </>
     </div>
   );
 }
