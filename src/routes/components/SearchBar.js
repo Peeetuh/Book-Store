@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { searchRequest } from "../../api"
 import './SearchBar.css';
 import searchicon from "./Images/searchicon.png";
 
@@ -11,21 +12,6 @@ const SearchBar = ({setSearchResult}) => {
     const changeHandler = e => {
         setSearchQuery(e.target.value)
     }
-
-    async function searchRequest(searchstring){
-        try{
-            const response = await fetch (`${BASE_URL}/search/${searchstring}`,{ //
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            })
-            const data = await response.json();
-            return data;
-        } catch(error) {
-            console.log(error);
-        }
-    };
-
     const submitHandler = async (e) => {
         e.preventDefault();
         navigate('./SearchResult')
@@ -33,8 +19,6 @@ const SearchBar = ({setSearchResult}) => {
         console.log(result);
         setSearchResult(result);
     }
-
-
 
     return(
         <div className="search-container">
