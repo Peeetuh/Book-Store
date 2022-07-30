@@ -8,10 +8,12 @@ import {
   requestFeatured,
 } from "../api";
 
+
 function Home({ userId }) {
   const [topCuratedRanking, setTopCuratedRanking] = useState([]);
   const [topRated, setTopRated] = useState([]);
   const [featured, setFeatured] = useState([]);
+
 
   useEffect(() => {
     const fetchCuratedRanking = async () => {
@@ -32,6 +34,7 @@ function Home({ userId }) {
     };
     fetchFeatured();
   }, []);
+
 
   return (
     <main>

@@ -1,1 +1,29 @@
+.nav-bar{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 8vh;
+    background: #1b4965;
+}
 
+.nav-bar-search{
+    background: #CAE9FF;
+    align-items: center;
+    height: 8vh;
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 3rem;
+    text-decoration: none;
+    color: white;
+}
+
+.logo {
+    max-width: 7%;
+    height: 100%;
+    background-color: #2A2A72;
+    /* margin-right: 900px; */
+}

@@ -10,7 +10,6 @@ import Selector from "./components/Selector";
 const UserCart = ({ username, token }) => {
   const [userCart, setUserCart] = useState([]);
   const [bookQuantity, setBookQuantity] = useState(1);
-  const [checkedOut, setCheckkout] = useState(false);
 
   let inventory = 15;
 
