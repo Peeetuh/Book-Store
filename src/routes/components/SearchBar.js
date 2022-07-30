@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { searchRequest } from "../../api"
 import './SearchBar.css';
 import searchicon from "./Images/searchicon.png";
-import { searchRequest } from "../../api"
-// const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
-
 
 const SearchBar = ({setSearchResult}) => {
     const navigate = useNavigate();
@@ -12,8 +10,6 @@ const SearchBar = ({setSearchResult}) => {
     const changeHandler = e => {
         setSearchQuery(e.target.value)
     }
-
-
     const submitHandler = async (e) => {
         e.preventDefault();
         navigate('./SearchResult')

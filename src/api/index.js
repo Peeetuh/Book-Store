@@ -1,4 +1,5 @@
 const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
+// const BASE_URL = "http://localhost:3000/api";
 
 export const fetchRegister = async (username, password) => {
   try {
@@ -94,6 +95,28 @@ export const fetchUsersCart = async (token) => {
   }
 };
 
+export const updateCartQuantity = async (orderId, bookId, bookPrice, oldQuantity, newQuantity) => {
+  try{
+    const response = await fetch(`${BASE_URL}/orders/cart`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        orderId,
+        bookId,
+        bookPrice,
+        oldQuantity,
+        newQuantity,
+      }),
+    });
+    const data = await response.json();
+    return data;
+  } catch(error) {
+    console.log(error)
+  }
+}
+
 export const deleteFromCart = async (
   orderId,
   orderPrice,
@@ -115,10 +138,9 @@ export const deleteFromCart = async (
         bookPrice,
         quantity,
       }),
-
     });
     const data = await response.json();
-    console.log("data", data)
+    console.log("data", data);
     if (data) {
       const newCart = userCart.filter((cart) => cart.id !== bookId);
       setUserCart(newCart);
@@ -128,6 +150,23 @@ export const deleteFromCart = async (
   }
 };
 
+export const checkoutCart = async (token, orderId) => {
+  try{
+    const response = await fetch(`${BASE_URL}/orders/${orderId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    return data
+
+  } catch(error) {
+    console.log(error)
+  }
+}
+
 export const requestCuratedRanking = async () => {
   try {
     const response = await fetch(`${BASE_URL}/books/lists/curated-rankings`, {
@@ -136,7 +175,6 @@ export const requestCuratedRanking = async () => {
       },
     });
     const data = await response.json();
-    console.log(data)
     return data;
   } catch (error) {
     console.log(error);
@@ -171,19 +209,21 @@ export const requestFeatured = async () => {
   }
 };
 
-export async function searchRequest (searchstring){
-  try{
-      const response = await fetch (`${BASE_URL}/search/${searchstring}`,{ //
-          headers: {
-              "Content-Type": "application/json",
-          }
-      })
-      const data = await response.json();
-      return data;
-  } catch(error) {
-      console.log(error);
+export const searchRequest = async (searchstring) => {
+  try {
+    const response = await fetch(`${BASE_URL}/search/${searchstring}`, {
+      //
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
   }
 };
+
 
 // export const requestCuratedRanking = async () => {
 //   const response = await fetch(`${BASE_URL}/books/lists/curated-rankings`,{
@@ -217,6 +257,21 @@ export async function searchRequest (searchstring){
 //   // console.log(dataFeatured);
 //   return dataFeatured;
 // }
+
+export const fetchSingleBook = async (bookId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/books/${bookId}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    return data[0];
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
 export const requestHorror = async () => {
   const response = await fetch(`${BASE_URL}/books/genre/Horror`, {
@@ -293,4 +348,16 @@ export const requestMystery = async () => {
   const mysteryData = await response.json();
   // console.log(mysteryData);
   return mysteryData;
+}
+
+
+export const requestAuthor = async (authorName) => {
+  const response = await fetch(`${BASE_URL}/authors/${authorName}`, {
+    headers: {
+      "Content-Type": "application/json"
+    }
+    });
+    const authorData = await response.json();
+    return authorData;
+
 }

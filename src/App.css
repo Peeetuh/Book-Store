@@ -7,18 +7,36 @@
 }
 
 .nav-bar-search{
-    background: #CAE9FF;
+    /* background: #CAE9FF; */
     align-items: center;
-    height: 8vh;
+    height: 6.5vh;
 }
 
 .links {
     display: flex;
+    position: relative;
     align-items: center;
     justify-content: space-around;
     gap: 3rem;
     text-decoration: none;
     color: white;
+    font-family: 'Poppins',sans-serif;
+    letter-spacing: 0.5px;
+}
+
+.links:after{
+    content: "";
+    position: absolute;
+    background-color: #A8DADC;
+    height: 3px;
+    width: 0;
+    left: 0;
+    bottom:-10px;
+    transition: 0.3s;
+}
+
+a:hover:after{
+    width: 100%;
 }
 
 .logo {

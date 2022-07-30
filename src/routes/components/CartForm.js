@@ -1,15 +1,21 @@
 import { useState } from "react";
 import { addBookToCart } from "../../api";
+import Selector from "./Selector";
 
-const CartForm = ({ userId, token }) => {
+const CartForm = ({ userId, price, id, inventory }) => {
   const [bookQuantity, setBookQuantity] = useState(1);
-  const price = 5.99;
-  const bookId = 5;
+  //const [guestCart, setGuestCart] = useState([])
 
   const addToCartSubmitHandler = async (event) => {
     event.preventDefault();
-    const addedBook = await addBookToCart(userId, price, bookId, bookQuantity);
-    console.log("addedBook", addedBook)
+
+    if (userId) {
+      await addBookToCart(userId, price, id, bookQuantity);
+      alert("Book added to cart");
+    } else {
+      window.localStorage.setItem("BookId", id);
+      alert("Book added to cart");
+    }
   };
 
   return (
@@ -19,13 +25,9 @@ const CartForm = ({ userId, token }) => {
         name="selectList"
         onChange={(e) => setBookQuantity(e.target.value)}
       >
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
+        <Selector inventory={inventory} />
       </select>
+      {inventory < 15 ? <h6>Only {inventory} left in stock</h6> : null}
       <button type="submit">Add to Cart</button>
     </form>
   );

@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
-import DisplayCuratedRanking from "./components/DisplayCuratedRanking";
-import DisplayHighestRanking from "./components/DisplayHighestRanking";
-import DisplayFeatured from "./components/DisplayFeatured";
+import {
+  DisplayCuratedRanking,
+  DisplayHighestRanking,
+  DisplayFeatured,
+} from "./components";
 import {
   requestCuratedRanking,
   requestTopRated,
   requestFeatured,
 } from "../api";
 
-
 function Home({ userId }) {
   const [topCuratedRanking, setTopCuratedRanking] = useState([]);
   const [topRated, setTopRated] = useState([]);
   const [featured, setFeatured] = useState([]);
-
 
   useEffect(() => {
     const fetchCuratedRanking = async () => {
@@ -34,7 +34,6 @@ function Home({ userId }) {
     };
     fetchFeatured();
   }, []);
-
 
   return (
     <main>
