@@ -1,4 +1,5 @@
 import { Link, Route, Routes } from "react-router-dom";
+import React from "react";
 import Home from "./routes/Home";
 import { useState } from "react";
 import { MyAccount, Login, Register, GuestCart, UserCart } from "./routes";
@@ -17,6 +18,7 @@ import Admin from "./routes/Admin";
 import AdminUsers from "./routes/AdminUsers";
 import AdminOrders from "./routes/AdminOrders";
 import AdminProducts from "./routes/AdminProducts";
+import img1 from "./routes/components/Images/logo.png"
 
 function App() {
   const [searchResult, setSearchResult] = useState([]);
@@ -29,28 +31,26 @@ function App() {
   const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
   return (
     <div className="App">
-      <h1>Book Store</h1>
+      {/* <h1>Book Store</h1> */}
 
       <>
-        <nav
-          className="nav-bar"
-          style={{
-            borderBottom: "solid 1px",
-            paddingBottom: "1rem",
-          }}
-        >
-          <Link to="/">Home</Link>
-          <Link to="/Genre">Genre</Link>
-          {token ? null : <Link to="/Login">Login</Link>}
-          {token ? null : <Link to="/Register">Register</Link>}
-          {token ? <Link to="/MyAccount">My Account</Link> : null}
+
+        <nav className="nav-bar">
+         <img src={img1} alt="logo" className="logo"/>
+          <Link className="links" to="/">Home</Link>
+          <Link className="links" to="/Genre">Genre</Link>
+          {token ? null : <Link className="links" to="/Login">Login</Link>}
+          {token ? null : <Link className="links" to="/Register">Register</Link>}
+          {token ? <Link className="links" to="/MyAccount">My Account</Link> : null}
           {token ? (
             <Link to={`/${userId}/cart`}>Cart</Link>
           ) : (
             <Link to="/GuestCart">Cart</Link>
           )}
           {token && userData.isAdmin && <Link to="/admin">Admin</Link>}
+          <nav className="nav-bar-search">
           <SearchBar setSearchResult={setSearchResult} />
+
         </nav>
       </>
 
