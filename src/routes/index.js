@@ -9,4 +9,4 @@ export { default as Admin } from './Admin';
 export { default as AdminUsers } from './AdminUsers';
 export { default as AdminOrders } from './AdminOrders';
 export { default as AdminProducts } from './AdminProducts';
-export { default as Genre } from './Genre';
+export { default as Genres } from './Genres';

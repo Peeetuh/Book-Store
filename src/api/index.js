@@ -35,7 +35,7 @@ export const fetchLogin = async (username, password) => {
     });
     const data = await response.json();
 
-// console.log(data);
+    // console.log(data);
     return data;
   } catch (error) {
     console.log(error);
@@ -95,8 +95,14 @@ export const fetchUsersCart = async (token) => {
   }
 };
 
-export const updateCartQuantity = async (orderId, bookId, bookPrice, oldQuantity, newQuantity) => {
-  try{
+export const updateCartQuantity = async (
+  orderId,
+  bookId,
+  bookPrice,
+  oldQuantity,
+  newQuantity
+) => {
+  try {
     const response = await fetch(`${BASE_URL}/orders/cart`, {
       method: "PATCH",
       headers: {
@@ -112,10 +118,10 @@ export const updateCartQuantity = async (orderId, bookId, bookPrice, oldQuantity
     });
     const data = await response.json();
     return data;
-  } catch(error) {
-    console.log(error)
+  } catch (error) {
+    console.log(error);
   }
-}
+};
 
 export const deleteFromCart = async (
   orderId,
@@ -151,7 +157,7 @@ export const deleteFromCart = async (
 };
 
 export const checkoutCart = async (token, orderId) => {
-  try{
+  try {
     const response = await fetch(`${BASE_URL}/orders/${orderId}`, {
       method: "POST",
       headers: {
@@ -160,12 +166,11 @@ export const checkoutCart = async (token, orderId) => {
       },
     });
     const data = await response.json();
-    return data
-
-  } catch(error) {
-    console.log(error)
+    return data;
+  } catch (error) {
+    console.log(error);
   }
-}
+};
 
 export const requestCuratedRanking = async () => {
   try {
@@ -272,92 +277,33 @@ export const fetchSingleBook = async (bookId) => {
   }
 };
 
-
-export const requestHorror = async () => {
-  const response = await fetch(`${BASE_URL}/books/genre/Horror`, {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
-  const horrorData = await response.json();
-  // console.log(horrorData);
-  return horrorData;
-}
-
-export const requestComedy = async () => {
-  const response = await fetch(`${BASE_URL}/books/genre/Comedy`, {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
-  const comedyData = await response.json();
-  // console.log(comedyData);
-  return comedyData;
-}
-
-export const requestRomance = async () => {
-  const response = await fetch(`${BASE_URL}/books/genre/Romance`, {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
-  const romanceData = await response.json();
-  // console.log(romanceData);
-  return romanceData;
-}
-
-export const requestScienceFiction = async () => {
-  const response = await fetch(`${BASE_URL}/books/genre/Science-Fiction`, {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
-  const scienceFictionData = await response.json();
-  // console.log(scienceFictionData);
-  return scienceFictionData;
-}
-
-export const requestGeneralFiction = async () => {
-  const response = await fetch(`${BASE_URL}/books/genre/General Fiction`, {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
-  const generalFictionData = await response.json();
-  console.log(generalFictionData);
-  return generalFictionData;
-}
-
-export const requestThriller = async () => {
-  const response = await fetch(`${BASE_URL}/books/genre/Thriller`, {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
-  const thrillerData = await response.json();
-  // console.log(thrillerData);
-  return thrillerData;
-}
-
-export const requestMystery = async () => {
-  const response = await fetch(`${BASE_URL}/books/genre/Mystery`, {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
-  const mysteryData = await response.json();
-  // console.log(mysteryData);
-  return mysteryData;
-}
-
-
-export const requestAuthor = async (authorName) => {
-  const response = await fetch(`${BASE_URL}/authors/${authorName}`, {
-    headers: {
-      "Content-Type": "application/json"
-    }
+export const fetchCountByGenre = async (genre) => {
+  try {
+    const response = await fetch(`${BASE_URL}/books/count/${genre}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
-    const authorData = await response.json();
-    return authorData;
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error("An error occurred:", err);
+  }
+};
 
-}
+export const fetchBooksByGenrePaginated = async (genre, currentPage) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/books/genre/${genre}/${currentPage}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error("An error occurred:", err);
+  }
+};
