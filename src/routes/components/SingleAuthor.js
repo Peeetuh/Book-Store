@@ -16,7 +16,13 @@ function Author(){
     return(
         <section>
         <header>
-        <h3>Authors - { authorName } </h3>
+        <h3>{ authorName } </h3>
+        <img className="authorPic"
+        style={{width:400, height:400}}
+        src="https://i.imgur.com/rwZzeOM.png" alt="awful"></img>
+        <p>
+            
+        </p>
         </header>
         <div className="authorPage">
         {author.map(book =>{
