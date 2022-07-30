@@ -14,11 +14,13 @@ import Comedy from "./routes/components/Comedy";
 import Romance from "./routes/components/Romance";
 import Thriller from "./routes/components/Thriller";
 import SearchResult from "./routes/components/SearchResult";
+import Author from "./routes/components/SingleAuthor";
 import Admin from "./routes/Admin";
 import AdminUsers from "./routes/AdminUsers";
 import AdminOrders from "./routes/AdminOrders";
 import AdminProducts from "./routes/AdminProducts";
 import img1 from "./routes/components/Images/logo.png"
+
 
 function App() {
   const [searchResult, setSearchResult] = useState([]);
@@ -89,6 +91,7 @@ function App() {
               />
             }
           />
+
           <Route path="/Genre" element={<Genre />} />
           <Route path="GuestCart" element={<GuestCart />} />
           <Route
@@ -103,6 +106,9 @@ function App() {
           <Route path="/Thriller" element={<Thriller />} />
           <Route path="/Comedy" element={<Comedy />} />
           <Route path="/Romance" element={<Romance />} />
+          <Route path="/SearchResult" element={<SearchResult searchResult={searchResult}/>} />
+          <Route path="/authors/:authorName" element={<Author  /> } />
+
           <Route path="/admin" element={<Admin />}>
             <Route path="/admin/users" element={<AdminUsers token={token} />} />
             <Route path="/admin/orders" element={<AdminOrders token={token} />} />
@@ -112,6 +118,7 @@ function App() {
             path="/SearchResult"
             element={<SearchResult searchResult={searchResult} />}
           />
+
         </Routes>
     </div>
   );
