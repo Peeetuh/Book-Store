@@ -3,10 +3,23 @@ const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
 
 // USERS
 
-const allUsersRequest = async (token) => {
+const usersCountRequest = async () => {
   try {
-    console.log("token at all users request:", token);
-    const response = await fetch(`${BASE_URL}/admin/users/all-users`, {
+    const response = await fetch(`${BASE_URL}/admin/users`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error("An error occurred:", err);
+  }
+};
+
+const paginatedUsersRequest = async (token, currentPage) => {
+  try {
+    const response = await fetch(`${BASE_URL}/admin/users/${currentPage}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -59,15 +72,65 @@ const promoteUserRequest = async (token, userId) => {
 
 // ORDERS
 
-const allOrdersRequest = async (token) => {
+const ordersCountRequest = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/admin/orders/all`, {
+    const response = await fetch(`${BASE_URL}/admin/orders`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error("An error occurred:", err);
+  }
+};
+
+const paginatedOrdersRequest = async (token, currentPage) => {
+  try {
+    const response = await fetch(`${BASE_URL}/admin/orders/${currentPage}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
-    const data = response.json();
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error("An error occurred:", err);
+  }
+};
+
+const closedOrdersRequest = async (token, currentPage) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/admin/orders/closed/${currentPage}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error("An error occurred:", err);
+  }
+};
+
+const openOrdersRequest = async (token, currentPage) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/admin/orders/open/${currentPage}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const data = await response.json();
     return data;
   } catch (err) {
     console.error("An error occurred:", err);
@@ -85,6 +148,20 @@ const paginatedBooksData = async (token, currentPage) => {
       },
     });
     const data = response.json();
+    return data;
+  } catch (err) {
+    console.error("An error occurred:", err);
+  }
+};
+
+const productCountRequest = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/admin/books`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
     return data;
   } catch (err) {
     console.error("An error occurred:", err);
@@ -180,7 +257,7 @@ const deactivateBookRequest = async (token, bookId) => {
         "Content-Type": "authorization/json",
         Authorization: `Bearer ${token}`,
       },
-    })
+    });
     const data = response.json();
     return data;
   } catch (err) {
@@ -189,12 +266,17 @@ const deactivateBookRequest = async (token, bookId) => {
 };
 
 export {
-  allUsersRequest,
+  paginatedUsersRequest,
   deactivateUserRequest,
   promoteUserRequest,
-  allOrdersRequest,
+  ordersCountRequest,
+  paginatedOrdersRequest,
+  closedOrdersRequest,
+  openOrdersRequest,
   paginatedBooksData,
   addBookRequest,
   deactivateBookRequest,
   editBookRequest,
+  productCountRequest,
+  usersCountRequest,
 };

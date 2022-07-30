@@ -50,7 +50,7 @@ const AddNewBookModal = ({ token, setNewBookModal, currentPage, setBooksData }) 
   return (
     <>
       <div className="background" />
-      <div>
+      <div className="modal">
         <header>
           <h3>Add a New Book</h3>
         </header>
