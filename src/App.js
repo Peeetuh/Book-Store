@@ -1,7 +1,7 @@
 import { Link, Route, Routes } from "react-router-dom";
 import Home from "./routes/Home";
 import { useState } from "react";
-import { MyAccount, Login, Register, GuestCart, UserCart } from "./routes";
+import { MyAccount, Login, Register, GuestCart, UserCart, SingleBookPage } from "./routes";
 import "./App.css";
 import SearchBar from "./routes/components/SearchBar";
 
@@ -82,7 +82,7 @@ function App() {
             path={`/${userId}/cart`}
             element={<UserCart username={username} token={token}/>}
           />
-          {/* <Route path={`/${book.id}`} /> */}
+          <Route path="books/:bookId" element={<SingleBookPage token={token} userId={userId}/>}/>
         </Routes>
       </>
     </div>
