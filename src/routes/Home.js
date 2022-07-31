@@ -42,8 +42,8 @@ function Home({ userId }) {
         topCuratedRanking={topCuratedRanking}
         userId={userId}
       />
-      <DisplayHighestRanking topRated={topRated} />
-      <DisplayFeatured featured={featured} />
+      <DisplayHighestRanking topRated={topRated} userId={userId}/>
+      <DisplayFeatured featured={featured} userId={userId}/>
     </main>
   );
 }
