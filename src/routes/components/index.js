@@ -13,3 +13,4 @@ export { default as Selector } from './Selector';
 export { default as Thriller } from './Thriller';
 export { default as Horror } from './Horror';
 export { default as SearchResult } from './SearchResult';
+export {default as DisplayGenreBooks } from './DisplayGenreBooks';
