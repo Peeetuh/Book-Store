@@ -71,7 +71,7 @@ function App() {
         </div>
       </nav>
       <Routes>
-        <Route path="/" element={<Home userId={userId} token={token} />} />
+        <Route path="/" element={<Home userId={userId} username={username} token={token} />} />
         <Route
           path="Login"
           element={
@@ -116,7 +116,7 @@ function App() {
         <Route path="GuestCart" element={<GuestCart />} />
         <Route
           path={`/${userId}/cart`}
-          element={<UserCart username={username} token={token} />}
+          element={<UserCart userId={userId} username={username} token={token} />}
         />
         <Route
           path="books/:bookId"
