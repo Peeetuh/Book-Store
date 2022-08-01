@@ -1,5 +1,5 @@
-// const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com";
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com";
+// const BASE_URL = "http://localhost:3000";
 
 const stripeCheckoutRequest = async (userId, orderPrice) => {
   try {
