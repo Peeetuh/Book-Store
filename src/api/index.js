@@ -229,13 +229,12 @@ export const searchRequest = async (searchstring) => {
   }
 };
 
-
 // export const requestCuratedRanking = async () => {
 //   const response = await fetch(`${BASE_URL}/books/lists/curated-rankings`,{
 //     headers: {
 //       "Content-Type": "application/json"
 //     }
-//   }); 
+//   });
 //   const data = await response.json();
 //   // console.log(data);
 //   return data;
@@ -244,24 +243,24 @@ export const searchRequest = async (searchstring) => {
 export const requestTopRated = async () => {
   const response = await fetch(`${BASE_URL}/books/lists/curated-ratings`, {
     headers: {
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   });
   const dataTopRated = await response.json();
   // console.log(dataTopRated);
   return dataTopRated;
-}
+};
 
 export const requestFeatured = async () => {
   const response = await fetch(`${BASE_URL}/books/lists/featured`, {
     headers: {
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   });
   const dataFeatured = await response.json();
   // console.log(dataFeatured);
   return dataFeatured;
-}
+};
 
 export const fetchSingleBook = async (bookId) => {
   try {
@@ -305,5 +304,19 @@ export const fetchBooksByGenrePaginated = async (genre, currentPage) => {
     return data;
   } catch (err) {
     console.error("An error occurred:", err);
+  }
+};
+
+export const requestAuthor = async (authorName) => {
+  try {
+    const response = await fetch(`${BASE_URL}/authors/${authorName}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const authorData = await response.json();
+    return authorData;
+  } catch (error) {
+    console.log(error);
   }
 };

@@ -3,7 +3,7 @@ import { requestAuthor } from "../../api";
 import { useParams } from "react-router-dom";
 import { faker } from '@faker-js/faker';
 import CartForm from "./CartForm";
-import { Link, Route, Routes } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 
