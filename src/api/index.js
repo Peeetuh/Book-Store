@@ -1,5 +1,5 @@
-// const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
+// const BASE_URL = "http://localhost:3000/api";
 
 export const fetchRegister = async (username, password) => {
   try {
