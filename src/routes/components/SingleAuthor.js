@@ -37,7 +37,7 @@ function Author(){
         return(
             <>
             <div key={book.id}>
-              <Link to={`/${book.id}`}>
+              <Link to={`books/${book.id}`}>
                 <img src={book.imageLinkM} alt={book.title} />
               </Link>
               <Link to={`/authors/${book.author}`}>
