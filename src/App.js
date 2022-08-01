@@ -27,13 +27,14 @@ import img1 from "./routes/components/Images/logo.png";
 
 function App() {
   const [searchResult, setSearchResult] = useState([]);
-  const [userData, setUserData] = useState({});
+  // const [userData, setUserData] = useState({});
   const [username, setUsername] = useState(
     window.localStorage.getItem("username")
   );
   const [password, setPassword] = useState("");
   const [token, setToken] = useState(window.localStorage.getItem("token"));
   const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
+  const [isAdmin, setIsAdmin] = useState(window.localStorage.getItem("isAdmin"));
   const [genres] = useState(['Horror', 'Science-Fiction', 'Thriller', 'General Fiction', 'Comedy', 'Romance', 'Mystery'])
   const [genreSelect, setGenreSelect] = useState("");
   return (
@@ -66,7 +67,7 @@ function App() {
         ) : (
           <Link to="/GuestCart">Cart</Link>
         )}
-        {token && userData.isAdmin && <Link to="/admin">Admin</Link>}
+        {token && isAdmin && <Link to="/admin">Admin</Link>}
         <div className="nav-bar-search">
           <SearchBar setSearchResult={setSearchResult} />
         </div>
@@ -78,12 +79,13 @@ function App() {
           element={
             <Login
               setToken={setToken}
-              setUserData={setUserData}
+              /* setUserData={setUserData} */
               username={username}
               setUsername={setUsername}
               password={password}
               setPassword={setPassword}
               setUserId={setUserId}
+              setIsAdmin={setIsAdmin}
             />
           }
         />
