@@ -19,7 +19,8 @@ import "./App.css";
 import {
   SearchBar,
   SearchResult,
-  DisplayGenreBooks
+  DisplayGenreBooks,
+  Author
 } from "./routes/components/";
 
 import img1 from "./routes/components/Images/logo.png";
@@ -122,6 +123,7 @@ function App() {
           path="books/:bookId"
           element={<SingleBookPage token={token} userId={userId} />}
         />
+        <Route path="/authors/:authorName" element={<Author  /> } />
         <Route path="/admin" element={<Admin />}>
           <Route path="/admin/users" element={<AdminUsers token={token} />} />
           <Route path="/admin/orders" element={<AdminOrders token={token} />} />

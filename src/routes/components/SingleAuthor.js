@@ -45,9 +45,6 @@ function Author(){
               </Link>
               <CartForm  />
             </div>
-            <Routes>
-              <Route path={`/${book.id}`} />
-            </Routes>
           </>
         );
       })}
