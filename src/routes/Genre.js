@@ -4,30 +4,25 @@ import { Link } from 'react-router-dom';
     return (
       <div>
         <h1>Genre</h1>
-
-        <ul>
-            <li>
+                <div className="genre-card">
+                <div className="image-container">
                 <Link to='/Horror'> Horror </Link>
-            </li>
-            <li>
+                </div>
+                </div>
+            
                 <Link to='/Romance'> Romance </Link>
-            </li>
-            <li>
+            
+            
                 <Link to='/Thriller'> Thriller </Link>
-            </li>
-            <li>
+        
                 <Link to='/Comedy'> Comedy </Link>
-            </li>
-            <li>
+           
                 <Link to='/ScienceFiction'> Science-Fiction </Link>
-            </li>
-            <li>
+           
                 <Link to='/GeneralFiction'> General Fiction </Link>
-            </li>
-            <li>
+           
                 <Link to='/Mystery'> Mystery </Link>
-            </li>
-        </ul>
+
 
       </div>
 
