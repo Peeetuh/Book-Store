@@ -26,7 +26,7 @@ function Author() {
           className="authorPic"
           style={{ width: 400, height: 400 }}
           src={fakePic}
-          alt="awful"
+          alt="Random stock"
         ></img>
         <p>
           <strong> About author:</strong> {fakeBio}
