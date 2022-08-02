@@ -2,7 +2,15 @@ import { useState } from "react";
 import { addBookToCart } from "../../api";
 import Selector from "./Selector";
 
-const CartForm = ({ userId, price, id, inventory }) => {
+const CartForm = ({
+  userId,
+  price,
+  id,
+  inventory,
+  bookImage,
+  title,
+  author,
+}) => {
   const [bookQuantity, setBookQuantity] = useState(1);
   //const [guestCart, setGuestCart] = useState([])
 
@@ -13,8 +21,23 @@ const CartForm = ({ userId, price, id, inventory }) => {
       await addBookToCart(userId, price, id, bookQuantity);
       alert("Book added to cart");
     } else {
-      window.localStorage.setItem("BookId", id);
-      alert("Book added to cart");
+      let existingEntries = JSON.parse(localStorage.getItem("GuestCartData"));
+      if (existingEntries == null) {
+        existingEntries = [];
+      }
+      let newBook = {
+        id,
+        title,
+        author,
+        bookImage,
+        inventory,
+        price,
+        bookQuantity,
+      };
+
+      localStorage.setItem("newBook", JSON.stringify(newBook));
+      existingEntries.push(newBook);
+      localStorage.setItem("GuestCartData", JSON.stringify(existingEntries));
     }
   };
 

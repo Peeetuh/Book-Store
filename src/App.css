@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    height: 8vh;
+    height: 9vh;
     background: #1b4965;
 }
 
@@ -10,6 +10,16 @@
     /* background: #CAE9FF; */
     align-items: center;
     height: 6.5vh;
+}
+
+.genre-link{
+    text-decoration: none;
+    font-family: 'Poppins',sans-serif;
+    color:black;
+}
+
+.title-home{
+    font-family: 'Poppins', sans-serif;
 }
 
 .links {
@@ -23,6 +33,7 @@
     font-family: 'Poppins',sans-serif;
     letter-spacing: 0.5px;
 }
+
 
 .links:after{
     content: "";
@@ -44,4 +55,10 @@ a:hover:after{
     height: 100%;
     background-color: #2A2A72;
     /* margin-right: 900px; */
+}
+
+.genre-cards{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
 }

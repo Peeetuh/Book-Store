@@ -13,20 +13,14 @@ import {
   AdminUsers,
   AdminOrders,
   AdminProducts,
-  Genre
+  Genres
 } from "./routes";
 import "./App.css";
 import {
   SearchBar,
-  Horror,
-  ScienceFiction,
-  GeneralFiction,
-  Mystery,
-  Comedy,
-  Romance,
-  Thriller,
   SearchResult,
-  CartForm,
+  DisplayGenreBooks,
+  Author
 } from "./routes/components/";
 
 import img1 from "./routes/components/Images/logo.png";
@@ -38,9 +32,10 @@ function App() {
     window.localStorage.getItem("username")
   );
   const [password, setPassword] = useState("");
-  const [userId, setUserId] = useState("");
   const [token, setToken] = useState(window.localStorage.getItem("token"));
-
+  const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
+  const [genres] = useState(['Horror', 'Science-Fiction', 'Thriller', 'General Fiction', 'Comedy', 'Romance', 'Mystery'])
+  const [genreSelect, setGenreSelect] = useState("");
   return (
     <div className="App">
       <nav className="nav-bar">
@@ -48,8 +43,8 @@ function App() {
         <Link className="links" to="/">
           Home
         </Link>
-        <Link className="links" to="/Genre">
-          Genre
+        <Link className="links" to="/Genres">
+          Genres
         </Link>
         {token ? null : (
           <Link className="links" to="/Login">
@@ -117,7 +112,8 @@ function App() {
             />
           }
         />
-        <Route path="/Genre" element={<Genre />} />
+        <Route path="/genres" element={<Genres genres={genres} setGenreSelect={setGenreSelect} />} />
+        <Route path="/genres/:genre" element={<DisplayGenreBooks genreSelect={genreSelect} />} />
         <Route path="GuestCart" element={<GuestCart />} />
         <Route
           path={`/${userId}/cart`}
@@ -127,13 +123,7 @@ function App() {
           path="books/:bookId"
           element={<SingleBookPage token={token} userId={userId} />}
         />
-        <Route path="/Horror" element={<Horror />} />
-        <Route path="/ScienceFiction" element={<ScienceFiction />} />
-        <Route path="/GeneralFiction" element={<GeneralFiction />} />
-        <Route path="/Mystery" element={<Mystery />} />
-        <Route path="/Thriller" element={<Thriller />} />
-        <Route path="/Comedy" element={<Comedy />} />
-        <Route path="/Romance" element={<Romance />} />
+        <Route path="/authors/:authorName" element={<Author  /> } />
         <Route path="/admin" element={<Admin />}>
           <Route path="/admin/users" element={<AdminUsers token={token} />} />
           <Route path="/admin/orders" element={<AdminOrders token={token} />} />
@@ -142,7 +132,7 @@ function App() {
             element={<AdminProducts token={token} />}
           />
         </Route>
-        <Route path="/CartForm" element={<CartForm />} />
+        {/* <Route path="/CartForm" element={<CartForm />} /> */}
         <Route
           path="/SearchResult"
           element={<SearchResult searchResult={searchResult} />}

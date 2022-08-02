@@ -12,6 +12,8 @@
 }
 
 .search-container{
+    display: flex;
+    flex-wrap: wrap;
     border-radius: 50px;
 }
 
