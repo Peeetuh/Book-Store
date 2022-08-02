@@ -7,9 +7,6 @@ const GuestCart = () => {
   );
   const [updatedBookQuantity, setUpdatedBookQuantity] = useState();
 
-  console.log("guestCartData", guestCart);
-  console.log("editBook", updatedBookQuantity);
-
   useEffect(() => {
     const loadGuestCart = () => {
       const guestCartData = JSON.parse(
