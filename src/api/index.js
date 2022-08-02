@@ -1,5 +1,5 @@
 const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
-// const BASE_URL = "http://localhost:3000/api";
+//const BASE_URL = "http://localhost:3000/api";
 
 export const fetchRegister = async (username, password) => {
   try {
@@ -51,7 +51,6 @@ export const fetchUserAccount = async (token) => {
       },
     });
     const data = await response.json();
-    // console.log(data);
     return data;
   } catch (error) {
     console.log(error);
@@ -73,7 +72,6 @@ export const addBookToCart = async (userId, price, bookId, quantity) => {
       }),
     });
     const data = await response.json();
-    console.log("datafromIndex", data);
     return data;
   } catch (error) {
     console.log(error);
