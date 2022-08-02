@@ -9,6 +9,7 @@ const Login = ({
   password,
   setPassword,
   setUserId,
+  setIsAdmin,
 }) => {
   const navigate = useNavigate();
 
@@ -24,14 +25,16 @@ const Login = ({
     event.preventDefault();
     const data = await fetchLogin(username, password);
     if (data.token) {
-      console.log(data.user.id)
+      console.log(data.user, data.user.isAdmin)
       setToken(data.token);
-      setUserData(data.user);
+      // setUserData(data.user);
       setUserId(data.user.id);
       setUsername(data.user.userEmail);
+      setIsAdmin(data.user.isAdmin);
       window.localStorage.setItem("username", data.user.userEmail);
       window.localStorage.setItem("token", data.token);
       window.localStorage.setItem("userId", data.user.id);
+      window.localStorage.setItem("isAdmin", data.user.isAdmin)
       alert("You've logged on!");
       navigate("/");
     } else {

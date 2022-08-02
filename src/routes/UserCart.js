@@ -5,34 +5,51 @@ import {
   updateCartQuantity,
   checkoutCart,
 } from "../api";
+import { stripeCheckoutRequest } from "../api/checkout";
 import { Selector } from "./components/";
 
-const UserCart = ({ username, token }) => {
+const UserCart = ({ userId, username, token }) => {
   const [userCart, setUserCart] = useState([]);
   const [bookQuantity, setBookQuantity] = useState(1);
-
+  const [stripeMessage, setStripeMessage] = useState("");
   let inventory = 15;
 
   useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    if (query.get("success")) {
+      setStripeMessage(
+        `Your order has been placed. Thanks for your business, ${username}!`
+      );
+    }
+    if (query.get("canceled")) {
+      setStripeMessage("Order canceled");
+    }
     const loadUserCart = async () => {
       const fetchedCart = await fetchUsersCart(token);
       setUserCart(fetchedCart);
     };
     loadUserCart();
-  });
+  }, []);
 
-  const checkoutClickHandler = async (event) => {
-    event.preventDefault();
+  // const checkoutClickHandler = async (event) => {
+  //   event.preventDefault();
 
+  //   await checkoutCart(token, userCart.orderId);
+  //   alert("You've checked out");
+  // };
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    await stripeCheckoutRequest(userId, userCart.orderPrice);
     await checkoutCart(token, userCart.orderId);
-    alert("You've checked out");
   };
 
   return (
     <main>
-      <h2>{username} Checkout</h2>
+      <h2>{username}&#39;s Checkout Page</h2>
+      {stripeMessage && <p>{stripeMessage}</p>}
       {userCart.length < 1 ? (
-        <h5>There is nothing in your cart</h5>
+        <p>Your shopping cart is empty.</p>
       ) : (
         <>
           {userCart.orderDetails.map((cart) => {
@@ -88,12 +105,16 @@ const UserCart = ({ username, token }) => {
               </div>
             );
           })}
+          <h4>Cart Total: {userCart.orderPrice}</h4>
+          {/* <button type="checkout" onClick={checkoutClickHandler}>
+        Checkout
+      </button> */}
+
+          <form onSubmit={submitHandler}>
+            <button type="submit">Place Your Order</button>
+          </form>
         </>
       )}
-      <h4>Cart Total: {userCart.orderPrice}</h4>
-      <button type="checkout" onClick={checkoutClickHandler}>
-        Checkout
-      </button>
     </main>
   );
 };

@@ -10,7 +10,7 @@ import {
   requestFeatured,
 } from "../api";
 
-function Home({ userId }) {
+function Home({ userId, username }) {
   const [topCuratedRanking, setTopCuratedRanking] = useState([]);
   const [topRated, setTopRated] = useState([]);
   const [featured, setFeatured] = useState([]);
@@ -42,8 +42,8 @@ function Home({ userId }) {
         topCuratedRanking={topCuratedRanking}
         userId={userId}
       />
-      <DisplayHighestRanking topRated={topRated} userId={userId}/>
-      <DisplayFeatured featured={featured} userId={userId}/>
+      <DisplayHighestRanking topRated={topRated} userId={userId} />
+      <DisplayFeatured featured={featured} userId={userId} />
     </main>
   );
 }

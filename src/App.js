@@ -27,13 +27,14 @@ import img1 from "./routes/components/Images/logo.png";
 
 function App() {
   const [searchResult, setSearchResult] = useState([]);
-  const [userData, setUserData] = useState({});
+  // const [userData, setUserData] = useState({});
   const [username, setUsername] = useState(
     window.localStorage.getItem("username")
   );
   const [password, setPassword] = useState("");
   const [token, setToken] = useState(window.localStorage.getItem("token"));
   const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
+  const [isAdmin, setIsAdmin] = useState(window.localStorage.getItem("isAdmin"));
   const [genres] = useState(['Horror', 'Science-Fiction', 'Thriller', 'General Fiction', 'Comedy', 'Romance', 'Mystery'])
   const [genreSelect, setGenreSelect] = useState("");
   return (
@@ -66,24 +67,25 @@ function App() {
         ) : (
           <Link to="/GuestCart">Cart</Link>
         )}
-        {token && userData.isAdmin && <Link to="/admin">Admin</Link>}
+        {token && isAdmin && <Link to="/admin">Admin</Link>}
         <div className="nav-bar-search">
           <SearchBar setSearchResult={setSearchResult} />
         </div>
       </nav>
       <Routes>
-        <Route path="/" element={<Home userId={userId} token={token} />} />
+        <Route path="/" element={<Home userId={userId} username={username} token={token} />} />
         <Route
           path="Login"
           element={
             <Login
               setToken={setToken}
-              setUserData={setUserData}
+              /* setUserData={setUserData} */
               username={username}
               setUsername={setUsername}
               password={password}
               setPassword={setPassword}
               setUserId={setUserId}
+              setIsAdmin={setIsAdmin}
             />
           }
         />
@@ -117,7 +119,7 @@ function App() {
         <Route path="GuestCart" element={<GuestCart />} />
         <Route
           path={`/${userId}/cart`}
-          element={<UserCart username={username} token={token} />}
+          element={<UserCart userId={userId} username={username} token={token} />}
         />
         <Route
           path="books/:bookId"
