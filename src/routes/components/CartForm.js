@@ -11,19 +11,16 @@ const CartForm = ({
   title,
   author,
 }) => {
-  const [bookQuantity, setBookQuantity] = useState();
-
+  const [bookQuantity, setBookQuantity] = useState(1);
 
   const addToCartSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log("userId", userId)
-
+    // console.log("userId", userId)
     if (userId) {
       await addBookToCart(userId, price, id, bookQuantity);
       alert("Book added to cart");
     } else {
-      let existingEntries = JSON.parse(localStorage.getItem("GuestCartData"));
-
+      let existingEntries = JSON.parse(localStorage.getItem("GuestCartData")) || [];
       let newBook = {
         id,
         title,
@@ -33,8 +30,8 @@ const CartForm = ({
         price,
         bookQuantity,
       };
-      console.log("exsitingEntries", existingEntries)
-
+      // console.log("exsitingEntries", existingEntries)
+      console.log("new book", newBook);
       if (existingEntries.length < 1) {
         console.log("sarah")
         existingEntries = [];

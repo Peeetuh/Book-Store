@@ -3,14 +3,14 @@ import { Selector } from "./components";
 
 const GuestCart = () => {
   const [guestCart, setGuestCart] = useState(
-    JSON.parse(window.localStorage.getItem("GuestCartData"))
+    JSON.parse(window.localStorage.getItem("GuestCartData")) || []
   );
   const [updatedBookQuantity, setUpdatedBookQuantity] = useState();
 
   useEffect(() => {
     const loadGuestCart = () => {
       const guestCartData = JSON.parse(
-        window.localStorage.getItem("GuestCartData")
+        window.localStorage.getItem("GuestCartData") || []
       );
       setGuestCart(guestCartData);
     };
@@ -32,7 +32,7 @@ const GuestCart = () => {
   return (
     <main>
       <h2>Guest Checkout</h2>
-      {guestCart.length < 1 ? (
+      {!guestCart.length ? (
         <h5>There is nothing in your cart</h5>
       ) : (
         <>

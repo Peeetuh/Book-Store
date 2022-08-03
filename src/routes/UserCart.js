@@ -1,53 +1,52 @@
 import { useState, useEffect } from "react";
-import {
-  fetchUsersCart,
-  deleteFromCart,
-  updateCartQuantity,
-  checkoutCart,
-} from "../api";
-import { stripeCheckoutRequest } from "../api/checkout";
+import { fetchUsersCart, deleteFromCart, updateCartQuantity } from "../api";
+import { stripeCheckoutRequest, userCompleteOrderReq } from "../api/checkout";
 import { Selector } from "./components/";
 
 const UserCart = ({ userId, username, token }) => {
   const [userCart, setUserCart] = useState([]);
   const [bookQuantity, setBookQuantity] = useState(1);
-  const [stripeMessage, setStripeMessage] = useState("");
+  const [stripeConfirm, setStripeConfirm] = useState(false);
+  const [currOrderId, setCurrOrderId] = useState(null);
   let inventory = 15;
-
-  useEffect(() => {
-    const query = new URLSearchParams(window.location.search);
-    if (query.get("success")) {
-      setStripeMessage(
-        `Your order has been placed. Thanks for your business, ${username}!`
-      );
-    }
-    if (query.get("canceled")) {
-      setStripeMessage("Order canceled");
-    }
-    const loadUserCart = async () => {
-      const fetchedCart = await fetchUsersCart(token);
-      setUserCart(fetchedCart);
-    };
-    loadUserCart();
-  }, []);
-
-  // const checkoutClickHandler = async (event) => {
-  //   event.preventDefault();
-
-  //   await checkoutCart(token, userCart.orderId);
-  //   alert("You've checked out");
-  // };
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    await stripeCheckoutRequest(userId, userCart.orderPrice);
-    await checkoutCart(token, userCart.orderId);
+    await stripeCheckoutRequest(userCart.orderPrice, userCart.orderId, userId);
   };
+
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const queryStr = query.toString();
+    const idFromQuery = Number(queryStr.slice(queryStr.indexOf("?") + 13));
+    if (query.get("success")) {
+      setStripeConfirm(true);
+      setCurrOrderId(idFromQuery);
+    }
+    if (token) {
+      const loadUserCart = async () => {
+        const fetchedCart = await fetchUsersCart(token);
+        setUserCart(fetchedCart);
+      };
+      loadUserCart();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (stripeConfirm) {
+      const closeOrder = async () => {
+        // console.log("orderId", currOrderId);
+        const result = await userCompleteOrderReq(token, currOrderId);
+        console.log("result of closing user's order:", result);
+      };
+      closeOrder();
+      setStripeConfirm(false);
+    }
+  }, [stripeConfirm]);
 
   return (
     <main>
       <h2>{username}&#39;s Checkout Page</h2>
-      {stripeMessage && <p>{stripeMessage}</p>}
       {userCart.length < 1 ? (
         <p>Your shopping cart is empty.</p>
       ) : (
@@ -89,7 +88,6 @@ const UserCart = ({ userId, username, token }) => {
                     type="confirm"
                     onClick={(event) => {
                       event.preventDefault();
-
                       updateCartQuantity(
                         userCart.orderId,
                         cart.bookId,
@@ -106,10 +104,6 @@ const UserCart = ({ userId, username, token }) => {
             );
           })}
           <h4>Cart Total: {userCart.orderPrice}</h4>
-          {/* <button type="checkout" onClick={checkoutClickHandler}>
-        Checkout
-      </button> */}
-
           <form onSubmit={submitHandler}>
             <button type="submit">Place Your Order</button>
           </form>
