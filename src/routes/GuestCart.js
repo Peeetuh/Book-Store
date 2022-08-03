@@ -9,9 +9,8 @@ const GuestCart = () => {
 
   useEffect(() => {
     const loadGuestCart = () => {
-      const guestCartData = JSON.parse(
-        window.localStorage.getItem("GuestCartData") || []
-      );
+      const guestCartData =
+        JSON.parse(window.localStorage.getItem("GuestCartData")) || [];
       setGuestCart(guestCartData);
     };
     loadGuestCart();
@@ -24,6 +23,8 @@ const GuestCart = () => {
 
     return totalPrice.toFixed(2);
   };
+
+  // --- You stopped  here. Add email prompt to add guest to db, then proceed to guest checkout.
 
   const checkoutClickHandler = (event) => {
     event.preventDefault();
@@ -64,7 +65,7 @@ const GuestCart = () => {
                   <label>Change Order Quantity</label>
                   <select
                     name="selectList"
-                    onChange={(e) => setUpdatedBookQuantity(e.target.value)}
+                    onChange={(e) => setUpdatedBookQuantity(Number(e.target.value))}
                   >
                     <Selector inventory={cart.inventory} />
                   </select>
@@ -95,7 +96,7 @@ const GuestCart = () => {
       )}
       <h4>Cart Total: ${calculateOrderPrice(guestCart)}</h4>
       <button type="checkout" onClick={checkoutClickHandler}>
-        Checkout
+        Proceed to Checkout
       </button>
     </main>
   );

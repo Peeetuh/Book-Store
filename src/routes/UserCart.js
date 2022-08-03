@@ -105,7 +105,7 @@ const UserCart = ({ userId, username, token }) => {
           })}
           <h4>Cart Total: {userCart.orderPrice}</h4>
           <form onSubmit={submitHandler}>
-            <button type="submit">Place Your Order</button>
+            <button type="submit">Proceed to Checkout</button>
           </form>
         </>
       )}

@@ -20,8 +20,10 @@ const CartForm = ({
       await addBookToCart(userId, price, id, bookQuantity);
       alert("Book added to cart");
     } else {
-      let existingEntries = JSON.parse(localStorage.getItem("GuestCartData")) || [];
-      let newBook = {
+      const existingEntries =
+        JSON.parse(localStorage.getItem("GuestCartData")) || [];
+      // console.log("existingEntries", existingEntries)
+      const newBook = {
         id,
         title,
         author,
@@ -30,18 +32,15 @@ const CartForm = ({
         price,
         bookQuantity,
       };
-      // console.log("exsitingEntries", existingEntries)
-      console.log("new book", newBook);
-      if (existingEntries.length < 1) {
-        console.log("sarah")
-        existingEntries = [];
+      // console.log("new book", newBook);
+      if (!existingEntries.length) {
+        // existingEntries = [];
         existingEntries.push(newBook);
         localStorage.setItem("GuestCartData", JSON.stringify(existingEntries));
       } else {
         const checkForBook = existingEntries.filter((book) => {
-          console.log("book.id", book.id);
-          console.log("newBook.id", newBook.id);
-
+          // console.log("book.id", book.id);
+          // console.log("newBook.id", newBook.id);
           if (book.id === newBook.id) {
             const newQuantity = newBook.bookQuantity + book.bookQuantity;
             newBook.bookQuantity = newQuantity;
@@ -50,7 +49,7 @@ const CartForm = ({
         });
         checkForBook.push(newBook);
         localStorage.setItem("GuestCartData", JSON.stringify(checkForBook));
-        console.log("checkForBook", checkForBook);
+        // console.log("checkForBook", checkForBook);
       }
     }
   };
@@ -60,7 +59,7 @@ const CartForm = ({
       <label>Quantity</label>
       <select
         name="selectList"
-        onChange={(e) => setBookQuantity(e.target.value)}
+        onChange={(e) => setBookQuantity(Number(e.target.value))}
       >
         <Selector inventory={inventory} />
       </select>
