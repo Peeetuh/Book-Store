@@ -8,3 +8,4 @@ export { default as Selector } from "./Selector";
 export { default as SearchResult } from "./SearchResult";
 export { default as DisplayGenreBooks } from "./DisplayGenreBooks";
 export { default as Author } from "./SingleAuthor";
+export { default as DeleteFromCartButton } from "./DeleteFromCartButton";

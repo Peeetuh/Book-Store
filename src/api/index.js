@@ -123,12 +123,11 @@ export const updateCartQuantity = async (
 
 export const deleteFromCart = async (
   orderId,
-  orderPrice,
   bookId,
   bookPrice,
   quantity,
-  userCart,
-  setUserCart
+  // userCart,
+  // setUserCart
 ) => {
   try {
     const response = await fetch(`${BASE_URL}/orders/cart`, {
@@ -144,11 +143,12 @@ export const deleteFromCart = async (
       }),
     });
     const data = await response.json();
-    console.log("data", data);
-    if (data) {
-      const newCart = userCart.filter((cart) => cart.id !== bookId);
-      setUserCart(newCart);
-    }
+    // console.log("data", data);
+    // if (data) {
+    //   const newCart = userCart.filter((cart) => cart.id !== bookId);
+    //   setUserCart(newCart);
+    // }
+    return data;
   } catch (error) {
     console.log(error);
   }

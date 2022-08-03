@@ -1,6 +1,8 @@
 // const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
 const BASE_URL = "http://localhost:4000/api";
 
+// STRIPE
+
 const stripeCheckoutRequest = async (orderPrice, orderId, userId) => {
   try {
     const response = await fetch(
@@ -24,6 +26,8 @@ const stripeCheckoutRequest = async (orderPrice, orderId, userId) => {
   }
 };
 
+// USERS
+
 const userCompleteOrderReq = async (token, orderId) => {
   try {
     const response = await fetch(`${BASE_URL}/orders/${orderId}`, {
@@ -37,6 +41,27 @@ const userCompleteOrderReq = async (token, orderId) => {
     return data;
   } catch (error) {
     console.log(error);
+  }
+};
+
+// GUESTS
+
+const guestCheckoutRequest = async (guestEmail, guestCart) => {
+  try {
+    const response = await fetch(`${BASE_URL}/guests/checkout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        guestEmail,
+        guestCart,
+      }),
+    });
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error("An error occurred:", err);
   }
 };
 
@@ -59,4 +84,9 @@ const guestCompleteOrderReq = async (orderId, guestCart) => {
   }
 };
 
-export { stripeCheckoutRequest, guestCompleteOrderReq, userCompleteOrderReq };
+export {
+  stripeCheckoutRequest,
+  guestCompleteOrderReq,
+  userCompleteOrderReq,
+  guestCheckoutRequest,
+};
