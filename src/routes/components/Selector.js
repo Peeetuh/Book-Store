@@ -4,9 +4,11 @@ const Selector = ({ inventory }) => {
   return (
     <>
       {inventoryArr.map((num) => {
-        const offByOne = num+1 
+        const offByOne = num + 1;
         return (
-            <option key={num} value={offByOne}>{offByOne}</option>
+          <option key={num} value={offByOne}>
+            {offByOne}
+          </option>
         );
       })}
     </>

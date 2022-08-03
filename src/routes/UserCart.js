@@ -8,7 +8,7 @@ import {
 import { stripeCheckoutRequest } from "../api/checkout";
 import { Selector } from "./components/";
 
-const UserCart = ({ userId, username, token }) => {
+const UserCart = ({ userId, username, token, setIsLoading }) => {
   const [userCart, setUserCart] = useState([]);
   const [bookQuantity, setBookQuantity] = useState(1);
   const [stripeMessage, setStripeMessage] = useState("");
@@ -25,23 +25,26 @@ const UserCart = ({ userId, username, token }) => {
       setStripeMessage("Order canceled");
     }
     const loadUserCart = async () => {
-      const fetchedCart = await fetchUsersCart(token);
-      setUserCart(fetchedCart);
+      setIsLoading(true);
+      try {
+        const fetchedCart = await fetchUsersCart(token);
+        setUserCart(fetchedCart);
+      } finally {
+        setIsLoading(false);
+      }
     };
     loadUserCart();
-  }, []);
-
-  // const checkoutClickHandler = async (event) => {
-  //   event.preventDefault();
-
-  //   await checkoutCart(token, userCart.orderId);
-  //   alert("You've checked out");
-  // };
+  }, [setIsLoading, token, username]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    await stripeCheckoutRequest(userId, userCart.orderPrice);
-    await checkoutCart(token, userCart.orderId);
+    setIsLoading(true);
+    try {
+      await stripeCheckoutRequest(userId, userCart.orderPrice);
+      await checkoutCart(token, userCart.orderId);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

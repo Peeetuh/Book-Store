@@ -2,21 +2,38 @@ import { useState, useEffect } from "react";
 import { Logout } from "./components";
 import { fetchUserAccount } from "../api";
 
-const MyAccount = ({ token, setToken, setUsername, username, setUserId }) => {
+const MyAccount = ({
+  token,
+  setToken,
+  setUsername,
+  username,
+  setUserId,
+  setIsLoading,
+}) => {
   const [myAccount, setMyAccount] = useState([]);
 
   useEffect(() => {
     const loadMyAccount = async () => {
-      const fetchedAccount = await fetchUserAccount(token);
-      setMyAccount(fetchedAccount);
+      setIsLoading(true);
+      try {
+        const fetchedAccount = await fetchUserAccount(token);
+        setMyAccount(fetchedAccount);
+      } finally {
+        setIsLoading(false);
+      }
     };
     loadMyAccount();
-  }, [token]);
+  }, [token, setIsLoading]);
 
   return (
     <>
       <h1>Welcome {username}!</h1>
-      <Logout token={token} setToken={setToken} setUsername={setUsername} setUserId={setUserId} />
+      <Logout
+        token={token}
+        setToken={setToken}
+        setUsername={setUsername}
+        setUserId={setUserId}
+      />
       {myAccount.length < 1 ? (
         <h6>Your order history will appear here</h6>
       ) : (

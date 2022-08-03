@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Selector } from "./components";
 
-const GuestCart = () => {
+const GuestCart = ({ setIsLoading }) => {
   const [guestCart, setGuestCart] = useState(
     JSON.parse(window.localStorage.getItem("GuestCartData"))
   );
@@ -9,13 +9,18 @@ const GuestCart = () => {
 
   useEffect(() => {
     const loadGuestCart = () => {
+      setIsLoading(true);
+      try{
       const guestCartData = JSON.parse(
         window.localStorage.getItem("GuestCartData")
       );
       setGuestCart(guestCartData);
+      } finally {
+        setIsLoading(false);
+      }
     };
     loadGuestCart();
-  }, []);
+  }, [setIsLoading]);
 
   const calculateOrderPrice = (guestCart) => {
     const totalPrice = guestCart.reduce((total, cart) => {

@@ -5,7 +5,7 @@ import DisplayPaginatedOrders from "./admin/DisplayPaginatedOrders";
 import DisplayOpenOrders from "./admin/DisplayOpenOrders";
 import DisplayClosedOrders from "./admin/DisplayClosedOrders";
 
-const AdminOrders = ({ token }) => {
+const AdminOrders = ({ token, setIsLoading }) => {
   const [ordersData, setOrdersData] = useState([]);
   const [closedOrdersData, setClosedOrdersData] = useState([]);
   const [openOrdersData, setOpenOrdersData] = useState([]);
@@ -14,17 +14,23 @@ const AdminOrders = ({ token }) => {
   const [filter, setFilter] = useState("");
   useEffect(() => {
     const fetchOrdersData = async () => {
-      const count = await ordersCountRequest();
-      const orders = await paginatedOrdersRequest(token, currentPage);
-      setPages(Math.ceil(count / 100));
-      setOrdersData(orders);
+      setIsLoading(true);
+      try {
+        const count = await ordersCountRequest();
+        const orders = await paginatedOrdersRequest(token, currentPage);
+        setPages(Math.ceil(count / 100));
+        setOrdersData(orders);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchOrdersData();
-  }, [currentPage, token]);
+  }, [currentPage, token, setIsLoading]);
   return (
     <div>
       {ordersData.length ? (
         <DisplayPaginatedOrders
+          setIsLoading={setIsLoading}
           token={token}
           ordersData={ordersData}
           setOrdersData={setOrdersData}
@@ -38,6 +44,7 @@ const AdminOrders = ({ token }) => {
         />
       ) : closedOrdersData.length ? (
         <DisplayClosedOrders
+          setIsLoading={setIsLoading}
           token={token}
           closedOrdersData={closedOrdersData}
           setClosedOrdersData={setClosedOrdersData}
@@ -51,6 +58,7 @@ const AdminOrders = ({ token }) => {
         />
       ) : (
         <DisplayOpenOrders
+          setIsLoading={setIsLoading}
           token={token}
           openOrdersData={openOrdersData}
           setOpenOrdersData={setOpenOrdersData}
