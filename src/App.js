@@ -13,14 +13,15 @@ import {
   AdminUsers,
   AdminOrders,
   AdminProducts,
-  Genres
+  Genres,
 } from "./routes";
 import "./App.css";
 import {
+  Logout,
   SearchBar,
   SearchResult,
   DisplayGenreBooks,
-  Author
+  Author,
 } from "./routes/components/";
 
 import img1 from "./routes/components/Images/logo.png";
@@ -34,8 +35,18 @@ function App() {
   const [password, setPassword] = useState("");
   const [token, setToken] = useState(window.localStorage.getItem("token"));
   const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
-  const [isAdmin, setIsAdmin] = useState(window.localStorage.getItem("isAdmin"));
-  const [genres] = useState(['Horror', 'Science-Fiction', 'Thriller', 'General Fiction', 'Comedy', 'Romance', 'Mystery'])
+  const [isAdmin, setIsAdmin] = useState(
+    window.localStorage.getItem("isAdmin")
+  );
+  const [genres] = useState([
+    "Horror",
+    "Science-Fiction",
+    "Thriller",
+    "General Fiction",
+    "Comedy",
+    "Romance",
+    "Mystery",
+  ]);
   const [genreSelect, setGenreSelect] = useState("");
   return (
     <div className="App">
@@ -63,17 +74,25 @@ function App() {
           </Link>
         ) : null}
         {token ? (
-          <Link to={`/${userId}/cart`}>Cart</Link>
+          <Link className="links" to={`/${userId}/cart`}>Cart</Link>
         ) : (
-          <Link to="/GuestCart">Cart</Link>
+          <Link className="links" to="/GuestCart">Cart</Link>
         )}
-        {token && isAdmin && <Link to="/admin">Admin</Link>}
+        {token && isAdmin && (
+          <Link className="links" to="/admin">
+            Admin
+          </Link>
+        )}
+        {token ? <Link className="links" to="/logout">Logout</Link> : null}
         <div className="nav-bar-search">
           <SearchBar setSearchResult={setSearchResult} />
         </div>
       </nav>
       <Routes>
-        <Route path="/" element={<Home userId={userId} username={username} token={token} />} />
+        <Route
+          path="/"
+          element={<Home userId={userId} username={username} token={token} />}
+        />
         <Route
           path="Login"
           element={
@@ -104,28 +123,28 @@ function App() {
         />
         <Route
           path="MyAccount"
-          element={
-            <MyAccount
-              token={token}
-              setToken={setToken}
-              setUsername={setUsername}
-              username={username}
-              setUserId={setUserId}
-            />
-          }
+          element={<MyAccount token={token} username={username} />}
         />
-        <Route path="/genres" element={<Genres genres={genres} setGenreSelect={setGenreSelect} />} />
-        <Route path="/genres/:genre" element={<DisplayGenreBooks genreSelect={genreSelect} />} />
+        <Route
+          path="/genres"
+          element={<Genres genres={genres} setGenreSelect={setGenreSelect} />}
+        />
+        <Route
+          path="/genres/:genre"
+          element={<DisplayGenreBooks genreSelect={genreSelect} />}
+        />
         <Route path="GuestCart" element={<GuestCart />} />
         <Route
           path={`/${userId}/cart`}
-          element={<UserCart userId={userId} username={username} token={token} />}
+          element={
+            <UserCart userId={userId} username={username} token={token} />
+          }
         />
         <Route
           path="books/:bookId"
           element={<SingleBookPage token={token} userId={userId} />}
         />
-        <Route path="/authors/:authorName" element={<Author  /> } />
+        <Route path="/authors/:authorName" element={<Author />} />
         <Route path="/admin" element={<Admin />}>
           <Route path="/admin/users" element={<AdminUsers token={token} />} />
           <Route path="/admin/orders" element={<AdminOrders token={token} />} />
@@ -137,6 +156,17 @@ function App() {
         <Route
           path="/SearchResult"
           element={<SearchResult searchResult={searchResult} />}
+        />
+        <Route
+          path="/logout"
+          element={
+            <Logout
+              token={token}
+              setToken={setToken}
+              setUsername={setUsername}
+              setUserId={setUserId}
+            />
+          }
         />
       </Routes>
     </div>
