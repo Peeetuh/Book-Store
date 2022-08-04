@@ -1,15 +1,8 @@
 import { useState, useEffect } from "react";
-import { Logout } from "./components";
 import { fetchUserAccount } from "../api";
 
-const MyAccount = ({
-  token,
-  setToken,
-  setUsername,
-  username,
-  setUserId,
-  setIsLoading,
-}) => {
+const MyAccount = ({ token, username, setIsLoading }) => {
+
   const [myAccount, setMyAccount] = useState([]);
 
   useEffect(() => {
@@ -28,12 +21,6 @@ const MyAccount = ({
   return (
     <>
       <h1>Welcome {username}!</h1>
-      <Logout
-        token={token}
-        setToken={setToken}
-        setUsername={setUsername}
-        setUserId={setUserId}
-      />
       {myAccount.length < 1 ? (
         <h6>Your order history will appear here</h6>
       ) : (

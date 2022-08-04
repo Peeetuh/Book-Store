@@ -18,6 +18,7 @@ import {
 import "./App.css";
 import {
   Loading,
+  Logout,
   SearchBar,
   SearchResult,
   DisplayGenreBooks,
@@ -76,11 +77,16 @@ function App() {
           </Link>
         ) : null}
         {token ? (
-          <Link to={`/${userId}/cart`}>Cart</Link>
+          <Link className="links" to={`/${userId}/cart`}>Cart</Link>
         ) : (
-          <Link to="/GuestCart">Cart</Link>
+          <Link className="links" to="/GuestCart">Cart</Link>
         )}
-        {token && isAdmin && <Link to="/admin">Admin</Link>}
+        {token && isAdmin && (
+          <Link className="links" to="/admin">
+            Admin
+          </Link>
+        )}
+        {token ? <Link className="links" to="/logout">Logout</Link> : null}
         <div className="nav-bar-search">
           <SearchBar
             setIsLoading={setIsLoading}
@@ -133,6 +139,7 @@ function App() {
         />
         <Route
           path="MyAccount"
+
           element={
             <MyAccount
               token={token}
@@ -186,6 +193,7 @@ function App() {
           path="/authors/:authorName"
           element={<Author setIsLoading={setIsLoading} />}
         />
+        <Route path="/authors/:authorName" element={<Author />} />
         <Route path="/admin" element={<Admin />}>
           <Route
             path="/admin/users"
@@ -205,6 +213,17 @@ function App() {
         <Route
           path="/SearchResult"
           element={<SearchResult searchResult={searchResult} />}
+        />
+        <Route
+          path="/logout"
+          element={
+            <Logout
+              token={token}
+              setToken={setToken}
+              setUsername={setUsername}
+              setUserId={setUserId}
+            />
+          }
         />
       </Routes>
     </div>
