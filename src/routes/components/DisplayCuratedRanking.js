@@ -16,7 +16,7 @@ function DisplayCuratedRanking({ topCuratedRanking, userId }) {
               </Link>
 
               <Link to={`/authors/${book.author}`}>
-                <p> By {book.author}</p>
+                <p className="author-link"> By {book.author}</p>
               </Link>
               <CartForm
                 userId={userId}

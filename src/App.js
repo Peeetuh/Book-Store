@@ -153,6 +153,7 @@ function App() {
             element={<AdminProducts token={token} />}
           />
         </Route>
+        {/* <Route path="/CartForm" element={<CartForm />} /> */}
         <Route
           path="/SearchResult"
           element={<SearchResult searchResult={searchResult} />}

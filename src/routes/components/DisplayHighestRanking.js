@@ -15,7 +15,7 @@ function DisplayHighestRanking({ topRated, userId }) {
                   <img src={book.imageLinkM} alt={book.title} />
                 </Link>
 
-                <Link to={`/authors/${book.author}`}>
+                <Link className="author-link" to={`/authors/${book.author}`}>
                 <p> By {book.author}</p>
                 </Link>
                 <CartForm
