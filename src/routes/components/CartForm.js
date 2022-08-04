@@ -12,20 +12,18 @@ const CartForm = ({
   author,
 }) => {
   const [bookQuantity, setBookQuantity] = useState(1);
-  //const [guestCart, setGuestCart] = useState([])
 
   const addToCartSubmitHandler = async (event) => {
     event.preventDefault();
-
+    // console.log("userId", userId)
     if (userId) {
       await addBookToCart(userId, price, id, bookQuantity);
       alert("Book added to cart");
     } else {
-      let existingEntries = JSON.parse(localStorage.getItem("GuestCartData"));
-      if (existingEntries == null) {
-        existingEntries = [];
-      }
-      let newBook = {
+      const existingEntries =
+        JSON.parse(localStorage.getItem("GuestCartData")) || [];
+      // console.log("existingEntries", existingEntries)
+      const newBook = {
         id,
         title,
         author,
@@ -34,10 +32,25 @@ const CartForm = ({
         price,
         bookQuantity,
       };
-
-      localStorage.setItem("newBook", JSON.stringify(newBook));
-      existingEntries.push(newBook);
-      localStorage.setItem("GuestCartData", JSON.stringify(existingEntries));
+      // console.log("new book", newBook);
+      if (!existingEntries.length) {
+        // existingEntries = [];
+        existingEntries.push(newBook);
+        localStorage.setItem("GuestCartData", JSON.stringify(existingEntries));
+      } else {
+        const checkForBook = existingEntries.filter((book) => {
+          // console.log("book.id", book.id);
+          // console.log("newBook.id", newBook.id);
+          if (book.id === newBook.id) {
+            const newQuantity = newBook.bookQuantity + book.bookQuantity;
+            newBook.bookQuantity = newQuantity;
+          }
+          return book.id !== newBook.id;
+        });
+        checkForBook.push(newBook);
+        localStorage.setItem("GuestCartData", JSON.stringify(checkForBook));
+        // console.log("checkForBook", checkForBook);
+      }
     }
   };
 
@@ -46,7 +59,7 @@ const CartForm = ({
       <label>Quantity</label>
       <select
         name="selectList"
-        onChange={(e) => setBookQuantity(e.target.value)}
+        onChange={(e) => setBookQuantity(Number(e.target.value))}
       >
         <Selector inventory={inventory} />
       </select>
