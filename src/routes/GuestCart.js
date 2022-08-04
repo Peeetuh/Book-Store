@@ -6,10 +6,10 @@ import {
   guestCompleteOrderReq,
 } from "../api/checkout";
 
-const GuestCart = ({ setIsLoading }) => {
-  const [guestCart, setGuestCart] = useState(
-    JSON.parse(window.localStorage.getItem("GuestCartData")) || []
-  );
+const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
+  // const [guestCart, setGuestCart] = useState(
+  //   JSON.parse(window.localStorage.getItem("GuestCartData")) || []
+  // );
   const [updatedBookQuantity, setUpdatedBookQuantity] = useState();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [guestEmail, setGuestEmail] = useState("");
@@ -61,6 +61,7 @@ const GuestCart = ({ setIsLoading }) => {
       }
     };
     loadGuestCart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setIsLoading]);
 
   useEffect(() => {

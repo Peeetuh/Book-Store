@@ -30,7 +30,6 @@ const Login = ({
       if (data.token) {
         console.log(data.user, data.user.isAdmin);
         setToken(data.token);
-        // setUserData(data.user);
         setUserId(data.user.id);
         setUsername(data.user.userEmail);
         setIsAdmin(data.user.isAdmin);
