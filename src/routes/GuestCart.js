@@ -6,7 +6,7 @@ import {
   guestCompleteOrderReq,
 } from "../api/checkout";
 
-const GuestCart = () => {
+const GuestCart = ({ setIsLoading }) => {
   const [guestCart, setGuestCart] = useState(
     JSON.parse(window.localStorage.getItem("GuestCartData")) || []
   );
@@ -27,11 +27,16 @@ const GuestCart = () => {
   const cancelClickHandler = () => setIsCheckingOut(false);
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(guestEmail, guestCart);
-    const result = await guestCheckoutRequest(guestEmail, guestCart);
-    if (result.status === "checkout") {
-      const { orderPrice, orderId } = result;
-      await stripeCheckoutRequest(orderPrice, orderId);
+    setIsLoading(true);
+    try {
+      console.log(guestEmail, guestCart);
+      const result = await guestCheckoutRequest(guestEmail, guestCart);
+      if (result.status === "checkout") {
+        const { orderPrice, orderId } = result;
+        await stripeCheckoutRequest(orderPrice, orderId);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -39,28 +44,40 @@ const GuestCart = () => {
     const query = new URLSearchParams(window.location.search);
     const queryStr = query.toString();
     const idFromQuery = Number(queryStr.slice(queryStr.indexOf("?") + 13));
+    setIsLoading(true);
+
     if (query.get("success")) {
       setStripeConfirm(true);
       setCurrOrderId(idFromQuery);
     }
     const loadGuestCart = () => {
-      const guestCartData =
-        JSON.parse(window.localStorage.getItem("GuestCartData")) || [];
-      setGuestCart(guestCartData);
+      setIsLoading(true);
+      try {
+        const guestCartData =
+          JSON.parse(window.localStorage.getItem("GuestCartData")) || [];
+        setGuestCart(guestCartData);
+      } finally {
+        setIsLoading(false);
+      }
     };
     loadGuestCart();
-  }, []);
+  }, [setIsLoading]);
 
   useEffect(() => {
-    if (stripeConfirm) {
-      const closeOrder = async () => {
-        await guestCompleteOrderReq(currOrderId, guestCart);
-      };
-      closeOrder();
-      setGuestCart([]);
-      window.localStorage.removeItem("GuestCartData");
-      setStripeConfirm(false);
-      setStripeMessage(true);
+    setIsLoading(true);
+    try {
+      if (stripeConfirm) {
+        const closeOrder = async () => {
+          await guestCompleteOrderReq(currOrderId, guestCart);
+        };
+        closeOrder();
+        setGuestCart([]);
+        window.localStorage.removeItem("GuestCartData");
+        setStripeConfirm(false);
+        setStripeMessage(true);
+      }
+    } finally {
+      setIsLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stripeConfirm]);

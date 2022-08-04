@@ -2,6 +2,7 @@ import { paginatedBooksData } from "../../api/admin";
 import "../Admin.css";
 
 const DisplayPaginatedBooks = ({
+  setIsLoading,
   token,
   booksData,
   setBooksData,
@@ -14,14 +15,24 @@ const DisplayPaginatedBooks = ({
   setCurrentBookId,
 }) => {
   const prevClickHandler = async (e) => {
-    setCurrentPage(currentPage - 1);
-    const books = await paginatedBooksData(token, currentPage - 1);
-    setBooksData(books);
+    setIsLoading(true);
+    try {
+      setCurrentPage(currentPage - 1);
+      const books = await paginatedBooksData(token, currentPage - 1);
+      setBooksData(books);
+    } finally {
+      setIsLoading(false);
+    }
   };
   const nextClickHandler = async (e) => {
-    setCurrentPage(currentPage + 1);
-    const books = await paginatedBooksData(token, currentPage + 1);
-    setBooksData(books);
+    setIsLoading(true);
+    try {
+      setCurrentPage(currentPage + 1);
+      const books = await paginatedBooksData(token, currentPage + 1);
+      setBooksData(books);
+    } finally {
+      setIsLoading(false);
+    }
   };
   const newBookClickHandler = (e) => {
     e.preventDefault();

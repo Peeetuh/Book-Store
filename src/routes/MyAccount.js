@@ -1,16 +1,22 @@
 import { useState, useEffect } from "react";
 import { fetchUserAccount } from "../api";
 
-const MyAccount = ({ token, username }) => {
+const MyAccount = ({ token, username, setIsLoading }) => {
+
   const [myAccount, setMyAccount] = useState([]);
 
   useEffect(() => {
     const loadMyAccount = async () => {
-      const fetchedAccount = await fetchUserAccount(token);
-      setMyAccount(fetchedAccount);
+      setIsLoading(true);
+      try {
+        const fetchedAccount = await fetchUserAccount(token);
+        setMyAccount(fetchedAccount);
+      } finally {
+        setIsLoading(false);
+      }
     };
     loadMyAccount();
-  }, [token]);
+  }, [token, setIsLoading]);
 
   return (
     <>

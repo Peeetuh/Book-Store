@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
-import { fetchUsersCart, /* deleteFromCart, */ updateCartQuantity } from "../api";
+import {
+  fetchUsersCart,
+  /* deleteFromCart, */ updateCartQuantity,
+} from "../api";
 import { stripeCheckoutRequest, userCompleteOrderReq } from "../api/checkout";
 import { Selector, DeleteFromCartButton } from "./components/";
 
-const UserCart = ({ userId, username, token }) => {
+const UserCart = ({ userId, username, token, setIsLoading }) => {
   const [userCart, setUserCart] = useState([]);
   const [bookQuantity, setBookQuantity] = useState(1);
   const [stripeConfirm, setStripeConfirm] = useState(false);
@@ -13,12 +16,26 @@ const UserCart = ({ userId, username, token }) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    await stripeCheckoutRequest(userCart.orderPrice, userCart.orderId, userId);
+    setIsLoading(true);
+    try {
+      await stripeCheckoutRequest(
+        userCart.orderPrice,
+        userCart.orderId,
+        userId
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const loadUserCart = async () => {
-    const fetchedCart = await fetchUsersCart(token);
-    setUserCart(fetchedCart);
+    setIsLoading(true);
+    try {
+      const fetchedCart = await fetchUsersCart(token);
+      setUserCart(fetchedCart);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -29,6 +46,7 @@ const UserCart = ({ userId, username, token }) => {
       setStripeConfirm(true);
       setCurrOrderId(idFromQuery);
     }
+
     if (token) loadUserCart();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

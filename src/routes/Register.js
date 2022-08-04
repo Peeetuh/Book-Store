@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchRegister } from "../api";
 
 const Register = ({
+  setIsLoading,
   setToken,
   username,
   setUsername,
@@ -20,20 +21,24 @@ const Register = ({
 
   const authFormSubmitHandler = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
+    try {
+      const data = await fetchRegister(username, password);
 
-    const data = await fetchRegister(username, password);
-
-    if (data.token) {
-      setToken(data.token);
-      setUserId(data.user.id);
-      setUsername(data.user.userEmail);
-      window.localStorage.setItem("username", username);
-      window.localStorage.setItem("token", data.token);
-      window.localStorage.setItem("userId", data.user.id);
-      alert("You've successfully registered");
-      navigate("/");
-    } else {
-      alert(`${data.message}`);
+      if (data.token) {
+        setToken(data.token);
+        setUserId(data.user.id);
+        setUsername(data.user.userEmail);
+        window.localStorage.setItem("username", username);
+        window.localStorage.setItem("token", data.token);
+        window.localStorage.setItem("userId", data.user.id);
+        alert("You've successfully registered");
+        navigate("/");
+      } else {
+        alert(`${data.message}`);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
   return (

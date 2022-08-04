@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { CartForm } from "./";
 
-function DisplayHighestRanking({ topRated, userId }) {
+function DisplayHighestRanking({ topRated, userId, setIsLoading }) {
   return (
     <section>
       <header>
@@ -11,14 +11,14 @@ function DisplayHighestRanking({ topRated, userId }) {
         {topRated.map((book) => {
           return (
             <div key={book.id}>
-                <Link to={`/books/${book.id}`}>
-                  <img src={book.imageLinkM} alt={book.title} />
-                </Link>
-
-                <Link className="author-link" to={`/authors/${book.author}`}>
+              <Link to={`/books/${book.id}`}>
+                <img src={book.imageLinkM} alt={book.title} />
+              </Link>
+              <Link className="author-link" to={`/authors/${book.author}`}>
                 <p> By {book.author}</p>
-                </Link>
-                <CartForm
+              </Link>
+              <CartForm
+                setIsLoading={setIsLoading}
                 userId={userId}
                 price={book.price}
                 id={book.id}

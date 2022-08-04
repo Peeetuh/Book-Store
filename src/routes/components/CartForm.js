@@ -10,47 +10,49 @@ const CartForm = ({
   bookImage,
   title,
   author,
+  setIsLoading,
 }) => {
   const [bookQuantity, setBookQuantity] = useState(1);
 
   const addToCartSubmitHandler = async (event) => {
     event.preventDefault();
-    // console.log("userId", userId)
-    if (userId) {
-      await addBookToCart(userId, price, id, bookQuantity);
-      alert("Book added to cart");
-    } else {
-      const existingEntries =
-        JSON.parse(localStorage.getItem("GuestCartData")) || [];
-      // console.log("existingEntries", existingEntries)
-      const newBook = {
-        id,
-        title,
-        author,
-        bookImage,
-        inventory,
-        price,
-        bookQuantity,
-      };
-      // console.log("new book", newBook);
-      if (!existingEntries.length) {
-        // existingEntries = [];
-        existingEntries.push(newBook);
-        localStorage.setItem("GuestCartData", JSON.stringify(existingEntries));
+    setIsLoading(true);
+    try {
+      if (userId) {
+        await addBookToCart(userId, price, id, bookQuantity);
+        alert("Book added to cart");
       } else {
-        const checkForBook = existingEntries.filter((book) => {
-          // console.log("book.id", book.id);
-          // console.log("newBook.id", newBook.id);
-          if (book.id === newBook.id) {
-            const newQuantity = newBook.bookQuantity + book.bookQuantity;
-            newBook.bookQuantity = newQuantity;
-          }
-          return book.id !== newBook.id;
-        });
-        checkForBook.push(newBook);
-        localStorage.setItem("GuestCartData", JSON.stringify(checkForBook));
-        // console.log("checkForBook", checkForBook);
+        const existingEntries =
+          JSON.parse(localStorage.getItem("GuestCartData")) || [];
+        const newBook = {
+          id,
+          title,
+          author,
+          bookImage,
+          inventory,
+          price,
+          bookQuantity,
+        };
+        if (!existingEntries.length) {
+          existingEntries.push(newBook);
+          localStorage.setItem(
+            "GuestCartData",
+            JSON.stringify(existingEntries)
+          );
+        } else {
+          const checkForBook = existingEntries.filter((book) => {
+            if (book.id === newBook.id) {
+              const newQuantity = newBook.bookQuantity + book.bookQuantity;
+              newBook.bookQuantity = newQuantity;
+            }
+            return book.id !== newBook.id;
+          });
+          checkForBook.push(newBook);
+          localStorage.setItem("GuestCartData", JSON.stringify(checkForBook));
+        }
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
