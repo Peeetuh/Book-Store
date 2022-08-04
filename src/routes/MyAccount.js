@@ -4,10 +4,10 @@ import { fetchUserAccount } from "../api";
 const MyAccount = ({ token, username }) => {
   const [myAccount, setMyAccount] = useState([]);
   const [editMode, setEditMode] = useState(false);
-  const [state, setState] = useState();
-  const [city, setCity] = useState();
-  const [street, setStreet] = useState();
-  const [zip, setZip] = useState();
+  const [state, setState] = useState("");
+  const [city, setCity] = useState("");
+  const [street, setStreet] = useState("");
+  const [zip, setZip] = useState("");
   useEffect(() => {
     const loadMyAccount = async () => {
       const fetchedAccount = await fetchUserAccount(token);
@@ -15,26 +15,35 @@ const MyAccount = ({ token, username }) => {
     };
     loadMyAccount();
   }, [token]);
-  const submitHandler = (e) => {
+  const clickHandler = (e) => {
     e.preventDefault();
     setEditMode(true);
     console.log(editMode);
   }
-  const addressHandler = (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
-    const address = { state, city, street, zip}
-    console.log(address)
-    return address;
+    setEditMode(false);
+    // setState("");
+    // setCity("");
+    // setStreet("");
+    // setZip("");
+  }
+  const cancelHandler = () => {
+    setEditMode(false);
+    setState("");
+    setCity("");
+    setStreet("");
+    setZip("");
   }
 
   return (
 <>
       <h1>Welcome {username}!</h1>
-      <form onSubmit={submitHandler}>
-      <button type="submit"> Edit Profile</button>
-      </form>
+      <h2> { `Street:${street} City:${city} State:${state} Zip:${zip}` }</h2>
+      <button onClick={clickHandler}> Edit Profile</button>
       {editMode && (<>
-      <h3> Set address details!</h3><form>
+      <h3> Set address details!</h3>
+      <form onSubmit={submitHandler}>
         <label>
           State:
         </label>
@@ -64,11 +73,14 @@ const MyAccount = ({ token, username }) => {
           Zip:
         </label>
         <input 
-        type="text" 
+        type="number" 
+        min= '10000'
+        max= '99999'
         required 
         value={zip}
         onChange={(e) => setZip(e.target.value)} />
-        <button onSubmit={addressHandler}>Confirm address</button>
+        <button onClick={cancelHandler}>Cancel </button>
+        <button type="submit">Confirm address</button>
       </form></>
       )}
       {myAccount.length < 1 ? (
