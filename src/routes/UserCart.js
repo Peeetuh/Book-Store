@@ -1,53 +1,61 @@
 import { useState, useEffect } from "react";
-import {
-  fetchUsersCart,
-  deleteFromCart,
-  updateCartQuantity,
-  checkoutCart,
-} from "../api";
-import { stripeCheckoutRequest } from "../api/checkout";
-import { Selector } from "./components/";
+import { fetchUsersCart, /* deleteFromCart, */ updateCartQuantity } from "../api";
+import { stripeCheckoutRequest, userCompleteOrderReq } from "../api/checkout";
+import { Selector, DeleteFromCartButton } from "./components/";
 
 const UserCart = ({ userId, username, token }) => {
   const [userCart, setUserCart] = useState([]);
   const [bookQuantity, setBookQuantity] = useState(1);
-  const [stripeMessage, setStripeMessage] = useState("");
+  const [stripeConfirm, setStripeConfirm] = useState(false);
+  const [stripeMessage, setStripeMessage] = useState(false);
+  const [currOrderId, setCurrOrderId] = useState(null);
   let inventory = 15;
-
-  useEffect(() => {
-    const query = new URLSearchParams(window.location.search);
-    if (query.get("success")) {
-      setStripeMessage(
-        `Your order has been placed. Thanks for your business, ${username}!`
-      );
-    }
-    if (query.get("canceled")) {
-      setStripeMessage("Order canceled");
-    }
-    const loadUserCart = async () => {
-      const fetchedCart = await fetchUsersCart(token);
-      setUserCart(fetchedCart);
-    };
-    loadUserCart();
-  }, []);
-
-  // const checkoutClickHandler = async (event) => {
-  //   event.preventDefault();
-
-  //   await checkoutCart(token, userCart.orderId);
-  //   alert("You've checked out");
-  // };
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    await stripeCheckoutRequest(userId, userCart.orderPrice);
-    await checkoutCart(token, userCart.orderId);
+    await stripeCheckoutRequest(userCart.orderPrice, userCart.orderId, userId);
   };
+
+  const loadUserCart = async () => {
+    const fetchedCart = await fetchUsersCart(token);
+    setUserCart(fetchedCart);
+  };
+
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const queryStr = query.toString();
+    const idFromQuery = Number(queryStr.slice(queryStr.indexOf("?") + 13));
+    if (query.get("success")) {
+      setStripeConfirm(true);
+      setCurrOrderId(idFromQuery);
+    }
+    if (token) loadUserCart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (stripeConfirm) {
+      const closeOrder = async () => {
+        const result = await userCompleteOrderReq(token, currOrderId);
+        console.log("result", result);
+      };
+      closeOrder();
+      loadUserCart();
+      setStripeConfirm(false);
+      setStripeMessage(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stripeConfirm]);
 
   return (
     <main>
       <h2>{username}&#39;s Checkout Page</h2>
-      {stripeMessage && <p>{stripeMessage}</p>}
+      {stripeMessage && (
+        <p>
+          Your order #{currOrderId} is complete. We'll let you know when it
+          ships. Thanks for your business, {username}!
+        </p>
+      )}
       {userCart.length < 1 ? (
         <p>Your shopping cart is empty.</p>
       ) : (
@@ -60,7 +68,7 @@ const UserCart = ({ userId, username, token }) => {
                 <img src={cart.imageLinkS} alt={cart.title} />
                 <h6>Price: {cart.bookPrice}</h6>
                 <h6>Quantity: {cart.quantity}</h6>
-                <button
+                {/* <button
                   className="button"
                   type="button"
                   onClick={async () => {
@@ -76,7 +84,13 @@ const UserCart = ({ userId, username, token }) => {
                   }}
                 >
                   Delete
-                </button>
+                </button> */}
+                <DeleteFromCartButton
+                  token={token}
+                  userCart={userCart}
+                  setUserCart={setUserCart}
+                  cart={cart}
+                />
                 <div>
                   <label>Change Order Quantity</label>
                   <select
@@ -89,7 +103,6 @@ const UserCart = ({ userId, username, token }) => {
                     type="confirm"
                     onClick={(event) => {
                       event.preventDefault();
-
                       updateCartQuantity(
                         userCart.orderId,
                         cart.bookId,
@@ -106,12 +119,8 @@ const UserCart = ({ userId, username, token }) => {
             );
           })}
           <h4>Cart Total: {userCart.orderPrice}</h4>
-          {/* <button type="checkout" onClick={checkoutClickHandler}>
-        Checkout
-      </button> */}
-
           <form onSubmit={submitHandler}>
-            <button type="submit">Place Your Order</button>
+            <button type="submit">Proceed to Checkout</button>
           </form>
         </>
       )}
