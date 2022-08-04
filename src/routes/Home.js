@@ -52,7 +52,7 @@ function Home({ userId, username, setIsLoading }) {
 
   return (
     <main>
-      <h1>Home</h1>
+      <h1 className="title-home">TBM Bookstore</h1>
       <DisplayCuratedRanking
         topCuratedRanking={topCuratedRanking}
         userId={userId}
