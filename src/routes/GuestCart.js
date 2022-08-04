@@ -1,20 +1,61 @@
 import { useEffect, useState } from "react";
 import { Selector } from "./components";
+import {
+  guestCheckoutRequest,
+  stripeCheckoutRequest,
+  guestCompleteOrderReq,
+} from "../api/checkout";
 
 const GuestCart = ({ setIsLoading }) => {
   const [guestCart, setGuestCart] = useState(
-    JSON.parse(window.localStorage.getItem("GuestCartData"))
+    JSON.parse(window.localStorage.getItem("GuestCartData")) || []
   );
   const [updatedBookQuantity, setUpdatedBookQuantity] = useState();
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [guestEmail, setGuestEmail] = useState("");
+  const [stripeConfirm, setStripeConfirm] = useState(false);
+  const [stripeMessage, setStripeMessage] = useState(false);
+  const [currOrderId, setCurrOrderId] = useState(null);
+
+  const calculateOrderPrice = (guestCart) => {
+    const totalPrice = guestCart.reduce((total, cart) => {
+      return total + cart.bookQuantity * cart.price;
+    }, 0);
+    return totalPrice.toFixed(2);
+  };
+  const checkoutClickHandler = () => setIsCheckingOut(true);
+  const cancelClickHandler = () => setIsCheckingOut(false);
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      console.log(guestEmail, guestCart);
+      const result = await guestCheckoutRequest(guestEmail, guestCart);
+      if (result.status === "checkout") {
+        const { orderPrice, orderId } = result;
+        await stripeCheckoutRequest(orderPrice, orderId);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const queryStr = query.toString();
+    const idFromQuery = Number(queryStr.slice(queryStr.indexOf("?") + 13));
+    setIsLoading(true);
+
+    if (query.get("success")) {
+      setStripeConfirm(true);
+      setCurrOrderId(idFromQuery);
+    }
     const loadGuestCart = () => {
       setIsLoading(true);
-      try{
-      const guestCartData = JSON.parse(
-        window.localStorage.getItem("GuestCartData")
-      );
-      setGuestCart(guestCartData);
+      try {
+        const guestCartData =
+          JSON.parse(window.localStorage.getItem("GuestCartData")) || [];
+        setGuestCart(guestCartData);
       } finally {
         setIsLoading(false);
       }
@@ -22,22 +63,53 @@ const GuestCart = ({ setIsLoading }) => {
     loadGuestCart();
   }, [setIsLoading]);
 
-  const calculateOrderPrice = (guestCart) => {
-    const totalPrice = guestCart.reduce((total, cart) => {
-      return total + cart.bookQuantity * cart.price;
-    }, 0);
-
-    return totalPrice.toFixed(2);
-  };
-
-  const checkoutClickHandler = (event) => {
-    event.preventDefault();
-  };
+  useEffect(() => {
+    setIsLoading(true);
+    try {
+      if (stripeConfirm) {
+        const closeOrder = async () => {
+          await guestCompleteOrderReq(currOrderId, guestCart);
+        };
+        closeOrder();
+        setGuestCart([]);
+        window.localStorage.removeItem("GuestCartData");
+        setStripeConfirm(false);
+        setStripeMessage(true);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stripeConfirm]);
 
   return (
     <main>
       <h2>Guest Checkout</h2>
-      {guestCart.length < 1 ? (
+      {isCheckingOut && (
+        <div>
+          <form onSubmit={submitHandler}>
+            <h3>Checking Out as Guest</h3>
+            <label htmlFor="guest-email">
+              Please enter your email address:
+            </label>
+            <input
+              id="guest-email"
+              type="email"
+              required
+              onChange={(e) => setGuestEmail(e.target.value)}
+            />
+            <button onClick={cancelClickHandler}>Cancel</button>
+            <button type="submit">Proceed to Checkout</button>
+          </form>
+        </div>
+      )}
+      {stripeMessage && (
+        <p>
+          Your order #{currOrderId} is complete. We'll let you know when it
+          ships. Thanks for your business, {guestEmail}!
+        </p>
+      )}
+      {!guestCart.length ? (
         <h5>There is nothing in your cart</h5>
       ) : (
         <>
@@ -69,7 +141,9 @@ const GuestCart = ({ setIsLoading }) => {
                   <label>Change Order Quantity</label>
                   <select
                     name="selectList"
-                    onChange={(e) => setUpdatedBookQuantity(e.target.value)}
+                    onChange={(e) =>
+                      setUpdatedBookQuantity(Number(e.target.value))
+                    }
                   >
                     <Selector inventory={cart.inventory} />
                   </select>
@@ -96,12 +170,10 @@ const GuestCart = ({ setIsLoading }) => {
               </div>
             );
           })}
+          <h4>Cart Total: ${calculateOrderPrice(guestCart)}</h4>
+          <button onClick={checkoutClickHandler}>Checkout as Guest</button>
         </>
       )}
-      <h4>Cart Total: ${calculateOrderPrice(guestCart)}</h4>
-      <button type="checkout" onClick={checkoutClickHandler}>
-        Checkout
-      </button>
     </main>
   );
 };

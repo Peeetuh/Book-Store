@@ -12,7 +12,7 @@ const CartForm = ({
   author,
   setIsLoading,
 }) => {
-  const [bookQuantity, setBookQuantity] = useState();
+  const [bookQuantity, setBookQuantity] = useState(1);
 
   const addToCartSubmitHandler = async (event) => {
     event.preventDefault();
@@ -22,9 +22,9 @@ const CartForm = ({
         await addBookToCart(userId, price, id, bookQuantity);
         alert("Book added to cart");
       } else {
-        let existingEntries = JSON.parse(localStorage.getItem("GuestCartData"));
-
-        let newBook = {
+        const existingEntries =
+          JSON.parse(localStorage.getItem("GuestCartData")) || [];
+        const newBook = {
           id,
           title,
           author,
@@ -33,11 +33,7 @@ const CartForm = ({
           price,
           bookQuantity,
         };
-        console.log("exsitingEntries", existingEntries);
-
-        if (existingEntries.length < 1) {
-          console.log("sarah");
-          existingEntries = [];
+        if (!existingEntries.length) {
           existingEntries.push(newBook);
           localStorage.setItem(
             "GuestCartData",
@@ -45,9 +41,6 @@ const CartForm = ({
           );
         } else {
           const checkForBook = existingEntries.filter((book) => {
-            console.log("book.id", book.id);
-            console.log("newBook.id", newBook.id);
-
             if (book.id === newBook.id) {
               const newQuantity = newBook.bookQuantity + book.bookQuantity;
               newBook.bookQuantity = newQuantity;
@@ -56,7 +49,6 @@ const CartForm = ({
           });
           checkForBook.push(newBook);
           localStorage.setItem("GuestCartData", JSON.stringify(checkForBook));
-          console.log("checkForBook", checkForBook);
         }
       }
     } finally {
@@ -69,7 +61,7 @@ const CartForm = ({
       <label>Quantity</label>
       <select
         name="selectList"
-        onChange={(e) => setBookQuantity(e.target.value)}
+        onChange={(e) => setBookQuantity(Number(e.target.value))}
       >
         <Selector inventory={inventory} />
       </select>
