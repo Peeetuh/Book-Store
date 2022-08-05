@@ -29,15 +29,17 @@ import img1 from "./routes/components/Images/logo.png";
 
 function App() {
   const [searchResult, setSearchResult] = useState([]);
-  // const [userData, setUserData] = useState({});
   const [username, setUsername] = useState(
-    window.localStorage.getItem("username")
+    window.localStorage.getItem("username") || ""
   );
   const [password, setPassword] = useState("");
   const [token, setToken] = useState(window.localStorage.getItem("token"));
   const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
   const [isAdmin, setIsAdmin] = useState(
     window.localStorage.getItem("isAdmin")
+  );
+  const [guestCart, setGuestCart] = useState(
+    JSON.parse(window.localStorage.getItem("GuestCartData")) || []
   );
   const [genres] = useState([
     "Horror",
@@ -113,7 +115,6 @@ function App() {
             <Login
               setIsLoading={setIsLoading}
               setToken={setToken}
-              /* setUserData={setUserData} */
               username={username}
               setUsername={setUsername}
               password={password}
@@ -134,6 +135,8 @@ function App() {
               password={password}
               setPassword={setPassword}
               setUserId={setUserId}
+              guestCart={guestCart}
+              setGuestCart={setGuestCart}
             />
           }
         />
@@ -166,7 +169,7 @@ function App() {
         />
         <Route
           path="GuestCart"
-          element={<GuestCart setIsLoading={setIsLoading} />}
+          element={<GuestCart guestCart={guestCart} setGuestCart={setGuestCart} setIsLoading={setIsLoading} />}
         />
         <Route
           path={`/${userId}/cart`}
