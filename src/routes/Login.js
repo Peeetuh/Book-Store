@@ -40,8 +40,11 @@ const Login = ({
   };
   return (
     <>
+    <body className="body-page">
       <h3>Login</h3>
-      <form id="login" onSubmit={authFormSubmitHandler}>
+      
+      <form className="login" onSubmit={authFormSubmitHandler}>
+        <div className="input-container">
         <label>Username</label>
         <input
           placeholder="username"
@@ -49,6 +52,8 @@ const Login = ({
           type="email"
           onChange={usernameChangeHandler}
         />
+        </div>
+        <div className="input-container">
         <label>Password</label>
         <input
           placeholder="password"
@@ -57,8 +62,12 @@ const Login = ({
           minLength={5}
           onChange={passwordChangeHandler}
         />
+        </div>
+        <div className="button-container">
         <button type="submit">Submit</button>
+        </div>
       </form>
+      </body>
     </>
   );
 };

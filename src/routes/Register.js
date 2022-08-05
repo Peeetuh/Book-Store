@@ -38,12 +38,14 @@ const Register = ({
   };
   return (
     <>
+      <section className="register-page">
       <h3>Register</h3>
       <h6>
         To register please create a username and a password with at least 9
         characters
       </h6>
-      <form id="login" onSubmit={authFormSubmitHandler}>
+      <form className="login" id="login" onSubmit={authFormSubmitHandler}>
+        <div className="input-container">
         <label>Username</label>
         <input
           placeholder="username"
@@ -52,6 +54,8 @@ const Register = ({
           value={username}
           onChange={usernameChangeHandler}
         />
+        </div>
+        <div className="input-container">
         <label>Password</label>
         <input
           placeholder="minimum of 9 characters"
@@ -60,8 +64,10 @@ const Register = ({
           value={password}
           onChange={passwordChangeHandler}
         />
+        </div>
         <button type="submit">Submit</button>
       </form>
+      </section>
     </>
   );
 };

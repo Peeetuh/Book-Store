@@ -23,6 +23,8 @@ import {
   Author
 } from "./routes/components/";
 
+import Footer from "./routes/components/Footer";
+
 import img1 from "./routes/components/Images/logo.png";
 
 function App() {
@@ -138,6 +140,7 @@ function App() {
           element={<SearchResult searchResult={searchResult} />}
         />
       </Routes>
+      <Footer />
     </div>
   );
 }
