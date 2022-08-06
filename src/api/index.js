@@ -95,6 +95,7 @@ export const editUser = async (token, userId, state, city, street, zip) => {
     });
     const data = await response.json();
     console.log(data);
+    return data;
   } catch (err) {
     console.error("An error occurred:", err);
   }

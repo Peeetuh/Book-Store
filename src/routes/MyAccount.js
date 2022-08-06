@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { fetchUserAccount } from "../api";
 import { editUser } from "../api";
 
-const MyAccount = ({ token, username, userId, setIsLoading }) => {
+const MyAccount = ({ token, username, userId, setIsLoading,}) => {
 
   const [myAccount, setMyAccount] = useState([]);
   const [editMode, setEditMode] = useState(false);
@@ -15,6 +15,7 @@ const MyAccount = ({ token, username, userId, setIsLoading }) => {
       setIsLoading(true);
       try {
         const fetchedAccount = await fetchUserAccount(token);
+        console.log(fetchedAccount);
         setMyAccount(fetchedAccount);
       } finally {
         setIsLoading(false);
@@ -34,7 +35,7 @@ const MyAccount = ({ token, username, userId, setIsLoading }) => {
     // setCity("");
     // setStreet("");
     // setZip("");
-    console.log(state, city, street, zip);
+    // console.log(state, city, street, zip);
    const result = await editUser ( 
       token,
       userId,
@@ -47,20 +48,20 @@ const MyAccount = ({ token, username, userId, setIsLoading }) => {
     setCity(null);
     setStreet(null);
     setZip(null);
-    console.log("result of address", result);
+    console.log(result)
   }
   const cancelHandler = () => {
     setEditMode(false);
-    setState(null);
-    setCity(null);
-    setStreet(null);
-    setZip(null);
+    // setState(null);
+    // setCity(null);
+    // setStreet(null);
+    // setZip(null);
   }
 
   return (
 <>
       <h1>Welcome {username}!</h1>
-      <h2> { `Street:${street} City:${city} State:${state} Zip:${zip}` }</h2>
+      <h2> State: { myAccount.state }<br></br> City: {myAccount.city}<br></br> Street: {myAccount.street}<br></br> Zip: {myAccount.zip}<br></br> </h2>
       <button onClick={clickHandler}> Edit Profile</button>
       {editMode && (<>
       <h3> Set address details!</h3>
