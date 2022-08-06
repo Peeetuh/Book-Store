@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { fetchSingleBook } from "../api";
 import { CartForm } from "./components";
 
-const SingleBookPage = ({ userId, token, setIsLoading }) => {
+const SingleBookPage = ({ userId, token, setIsLoading, setGuestCart }) => {
   const [bookInfo, setBookInfo] = useState([]);
   const { bookId } = useParams();
 
@@ -50,7 +50,14 @@ const SingleBookPage = ({ userId, token, setIsLoading }) => {
       <h6>
         Published By: {publisher} in {year}
       </h6>
-      <CartForm setIsLoading={setIsLoading} userId={userId} price={price} id={id} inventory={inventory} />
+      <CartForm
+        setIsLoading={setIsLoading}
+        userId={userId}
+        price={price}
+        id={id}
+        inventory={inventory}
+        setGuestCart={setGuestCart}
+      />
     </>
   );
 };

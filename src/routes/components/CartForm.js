@@ -11,6 +11,7 @@ const CartForm = ({
   title,
   author,
   setIsLoading,
+  setGuestCart,
 }) => {
   const [bookQuantity, setBookQuantity] = useState(1);
 
@@ -39,6 +40,7 @@ const CartForm = ({
             "GuestCartData",
             JSON.stringify(existingEntries)
           );
+          setGuestCart(existingEntries);
         } else {
           const checkForBook = existingEntries.filter((book) => {
             if (book.id === newBook.id) {
@@ -49,6 +51,7 @@ const CartForm = ({
           });
           checkForBook.push(newBook);
           localStorage.setItem("GuestCartData", JSON.stringify(checkForBook));
+          setGuestCart(checkForBook);
         }
       }
     } finally {

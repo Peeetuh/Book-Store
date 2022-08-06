@@ -1,5 +1,5 @@
-const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
-// const BASE_URL = "http://localhost:4000/api";
+// const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
+const BASE_URL = "http://localhost:4000/api";
 
 export const fetchRegister = async (userEmail, password, guestCart) => {
   try {
@@ -22,7 +22,7 @@ export const fetchRegister = async (userEmail, password, guestCart) => {
   }
 };
 
-export const fetchLogin = async (userEmail, password) => {
+export const fetchLogin = async (userEmail, password, guestCart) => {
   try {
     const response = await fetch(`${BASE_URL}/users/login`, {
       method: "POST",
@@ -32,6 +32,7 @@ export const fetchLogin = async (userEmail, password) => {
       body: JSON.stringify({
         userEmail,
         password,
+        guestCart
       }),
     });
     const data = await response.json();

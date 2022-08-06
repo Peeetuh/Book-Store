@@ -4,13 +4,14 @@ import { fetchLogin } from "../api";
 const Login = ({
   setIsLoading,
   setToken,
-  setUserData,
   username,
   setUsername,
   password,
   setPassword,
   setUserId,
   setIsAdmin,
+  guestCart,
+  setGuestCart,
 }) => {
   const navigate = useNavigate();
 
@@ -26,13 +27,16 @@ const Login = ({
     event.preventDefault();
     setIsLoading(true);
     try {
-      const data = await fetchLogin(username, password);
+      console.log("guest cart before log on", guestCart);
+      const data = await fetchLogin(username, password, guestCart);
       if (data.token) {
-        console.log(data.user, data.user.isAdmin);
+        console.log("login data:", data);
         setToken(data.token);
         setUserId(data.user.id);
         setUsername(data.user.userEmail);
         setIsAdmin(data.user.isAdmin);
+        setGuestCart([]);
+        window.localStorage.removeItem("GuestCartData");
         window.localStorage.setItem("username", data.user.userEmail);
         window.localStorage.setItem("token", data.token);
         window.localStorage.setItem("userId", data.user.id);
