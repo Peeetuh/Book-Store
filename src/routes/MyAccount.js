@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { fetchUserAccount } from "../api";
 import { editUser } from "../api";
 
-const MyAccount = ({ token, username, userId }) => {
+const MyAccount = ({ token, username, userId, setIsLoading }) => {
+
   const [myAccount, setMyAccount] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [state, setState] = useState(null);
@@ -11,11 +12,16 @@ const MyAccount = ({ token, username, userId }) => {
   const [zip, setZip] = useState(null);
   useEffect(() => {
     const loadMyAccount = async () => {
-      const fetchedAccount = await fetchUserAccount(token);
-      setMyAccount(fetchedAccount);
+      setIsLoading(true);
+      try {
+        const fetchedAccount = await fetchUserAccount(token);
+        setMyAccount(fetchedAccount);
+      } finally {
+        setIsLoading(false);
+      }
     };
     loadMyAccount();
-  }, [token]);
+  }, [token, setIsLoading]);
   const clickHandler = (e) => {
     e.preventDefault();
     setEditMode(true);

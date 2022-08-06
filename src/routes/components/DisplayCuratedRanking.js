@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { CartForm } from "./";
 
-function DisplayCuratedRanking({ topCuratedRanking, userId }) {
+function DisplayCuratedRanking({ topCuratedRanking, userId, setIsLoading }) {
   return (
     <section>
       <header>
@@ -16,9 +16,10 @@ function DisplayCuratedRanking({ topCuratedRanking, userId }) {
               </Link>
 
               <Link to={`/authors/${book.author}`}>
-                <p> By {book.author}</p>
+                <p className="author-link"> By {book.author}</p>
               </Link>
               <CartForm
+                setIsLoading={setIsLoading}
                 userId={userId}
                 price={book.price}
                 id={book.id}

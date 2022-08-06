@@ -17,6 +17,7 @@ import {
 } from "./routes";
 import "./App.css";
 import {
+  Loading,
   Logout,
   SearchBar,
   SearchResult,
@@ -28,15 +29,17 @@ import img1 from "./routes/components/Images/logo.png";
 
 function App() {
   const [searchResult, setSearchResult] = useState([]);
-  // const [userData, setUserData] = useState({});
   const [username, setUsername] = useState(
-    window.localStorage.getItem("username")
+    window.localStorage.getItem("username") || ""
   );
   const [password, setPassword] = useState("");
   const [token, setToken] = useState(window.localStorage.getItem("token"));
   const [userId, setUserId] = useState(window.localStorage.getItem("userId"));
   const [isAdmin, setIsAdmin] = useState(
     window.localStorage.getItem("isAdmin")
+  );
+  const [guestCart, setGuestCart] = useState(
+    JSON.parse(window.localStorage.getItem("GuestCartData")) || []
   );
   const [genres] = useState([
     "Horror",
@@ -48,6 +51,8 @@ function App() {
     "Mystery",
   ]);
   const [genreSelect, setGenreSelect] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <div className="App">
       <nav className="nav-bar">
@@ -85,20 +90,31 @@ function App() {
         )}
         {token ? <Link className="links" to="/logout">Logout</Link> : null}
         <div className="nav-bar-search">
-          <SearchBar setSearchResult={setSearchResult} />
+          <SearchBar
+            setIsLoading={setIsLoading}
+            setSearchResult={setSearchResult}
+          />
         </div>
       </nav>
+      {isLoading ? <Loading /> : null}
       <Routes>
         <Route
           path="/"
-          element={<Home userId={userId} username={username} token={token} />}
+          element={
+            <Home
+              setIsLoading={setIsLoading}
+              userId={userId}
+              username={username}
+              token={token}
+            />
+          }
         />
         <Route
           path="Login"
           element={
             <Login
+              setIsLoading={setIsLoading}
               setToken={setToken}
-              /* setUserData={setUserData} */
               username={username}
               setUsername={setUsername}
               password={password}
@@ -112,18 +128,30 @@ function App() {
           path="Register"
           element={
             <Register
+              setIsLoading={setIsLoading}
               setToken={setToken}
               username={username}
               setUsername={setUsername}
               password={password}
               setPassword={setPassword}
               setUserId={setUserId}
+              guestCart={guestCart}
+              setGuestCart={setGuestCart}
             />
           }
         />
         <Route
           path="MyAccount"
-          element={<MyAccount token={token} username={username} userId={userId} />}
+          element={
+            <MyAccount
+              token={token}
+              setToken={setToken}
+              setUsername={setUsername}
+              username={username}
+              setUserId={setUserId}
+              setIsLoading={setIsLoading}
+            />
+          }
         />
         <Route
           path="/genres"
@@ -131,28 +159,60 @@ function App() {
         />
         <Route
           path="/genres/:genre"
-          element={<DisplayGenreBooks genreSelect={genreSelect} />}
+          element={
+            <DisplayGenreBooks
+              setIsLoading={setIsLoading}
+              genreSelect={genreSelect}
+            />
+          }
         />
-        <Route path="GuestCart" element={<GuestCart />} />
+        <Route
+          path="GuestCart"
+          element={<GuestCart guestCart={guestCart} setGuestCart={setGuestCart} setIsLoading={setIsLoading} />}
+        />
         <Route
           path={`/${userId}/cart`}
           element={
-            <UserCart userId={userId} username={username} token={token} />
+            <UserCart
+              setIsLoading={setIsLoading}
+              userId={userId}
+              username={username}
+              token={token}
+            />
           }
         />
         <Route
           path="books/:bookId"
-          element={<SingleBookPage token={token} userId={userId} />}
+          element={
+            <SingleBookPage
+              setIsLoading={setIsLoading}
+              token={token}
+              userId={userId}
+            />
+          }
+        />
+        <Route
+          path="/authors/:authorName"
+          element={<Author setIsLoading={setIsLoading} />}
         />
         <Route path="/authors/:authorName" element={<Author />} />
         <Route path="/admin" element={<Admin />}>
-          <Route path="/admin/users" element={<AdminUsers token={token} />} />
-          <Route path="/admin/orders" element={<AdminOrders token={token} />} />
+          <Route
+            path="/admin/users"
+            element={<AdminUsers setIsLoading={setIsLoading} token={token} />}
+          />
+          <Route
+            path="/admin/orders"
+            element={<AdminOrders setIsLoading={setIsLoading} token={token} />}
+          />
           <Route
             path="/admin/products"
-            element={<AdminProducts token={token} />}
+            element={
+              <AdminProducts setIsLoading={setIsLoading} token={token} />
+            }
           />
         </Route>
+        {/* <Route path="/CartForm" element={<CartForm />} /> */}
         <Route
           path="/SearchResult"
           element={<SearchResult searchResult={searchResult} />}

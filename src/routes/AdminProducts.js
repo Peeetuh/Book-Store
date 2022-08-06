@@ -6,7 +6,7 @@ import AddNewBookModal from "./admin/AddNewBookModal";
 import DeactivateBookModal from "./admin/DeactivateBookModal";
 import EditBookModal from "./admin/EditBookModal";
 
-const AdminProducts = ({ token }) => {
+const AdminProducts = ({ token, setIsLoading }) => {
   const [booksData, setBooksData] = useState([]);
   const [currentBookId, setCurrentBookId] = useState("");
   const [pages, setPages] = useState("");
@@ -16,17 +16,23 @@ const AdminProducts = ({ token }) => {
   const [deactivateBookModal, setDeactivateBookModal] = useState(false);
   useEffect(() => {
     const fetchBooksData = async () => {
-      const count = await productCountRequest();
-      const books = await paginatedBooksData(token, currentPage);
-      setPages(Math.ceil(count/100));
-      setBooksData(books);
+      setIsLoading(true);
+      try {
+        const count = await productCountRequest();
+        const books = await paginatedBooksData(token, currentPage);
+        setPages(Math.ceil(count / 100));
+        setBooksData(books);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchBooksData();
-  }, [currentPage, token]);
+  }, [currentPage, token, setIsLoading]);
   return (
     <div>
       {newBookModal && (
         <AddNewBookModal
+          setIsLoading={setIsLoading}
           token={token}
           setNewBookModal={setNewBookModal}
           currentPage={currentPage}
@@ -35,6 +41,7 @@ const AdminProducts = ({ token }) => {
       )}
       {deactivateBookModal && (
         <DeactivateBookModal
+          setIsLoading={setIsLoading}
           token={token}
           setDeactivateBookModal={setDeactivateBookModal}
           currentBookId={currentBookId}
@@ -44,6 +51,7 @@ const AdminProducts = ({ token }) => {
       )}
       {editBookModal && (
         <EditBookModal
+          setIsLoading={setIsLoading}
           token={token}
           currentBookId={currentBookId}
           setEditBookModal={setEditBookModal}
@@ -53,6 +61,7 @@ const AdminProducts = ({ token }) => {
       )}
       {}
       <DisplayPaginatedBooks
+      setIsLoading={setIsLoading}
         token={token}
         booksData={booksData}
         setBooksData={setBooksData}

@@ -1,7 +1,7 @@
 // const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
 const BASE_URL = "http://localhost:4000/api";
 
-export const fetchRegister = async (username, password) => {
+export const fetchRegister = async (userEmail, password, guestCart) => {
   try {
     const response = await fetch(`${BASE_URL}/users/register`, {
       method: "POST",
@@ -9,8 +9,9 @@ export const fetchRegister = async (username, password) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userEmail: username,
-        password: password,
+        userEmail,
+        password,
+        guestCart,
       }),
     });
     const data = await response.json();
@@ -21,7 +22,7 @@ export const fetchRegister = async (username, password) => {
   }
 };
 
-export const fetchLogin = async (username, password) => {
+export const fetchLogin = async (userEmail, password) => {
   try {
     const response = await fetch(`${BASE_URL}/users/login`, {
       method: "POST",
@@ -29,13 +30,11 @@ export const fetchLogin = async (username, password) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userEmail: username,
-        password: password,
+        userEmail,
+        password,
       }),
     });
     const data = await response.json();
-
-    // console.log(data);
     return data;
   } catch (error) {
     console.log(error);
@@ -212,33 +211,19 @@ export const requestCuratedRanking = async () => {
   }
 };
 
-// export const requestTopRated = async () => {
-//   try {
-//     const response = await fetch(`${BASE_URL}/books/lists/curated-ratings`, {
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     });
-//     const data = await response.json();
-//     return data;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-// export const requestFeatured = async () => {
-//   try {
-//     const response = await fetch(`${BASE_URL}/books/lists/featured`, {
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     });
-//     const data = await response.json();
-//     return data;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+export const requestFeatured = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/books/lists/featured`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const searchRequest = async (searchstring) => {
   try {
@@ -255,17 +240,6 @@ export const searchRequest = async (searchstring) => {
   }
 };
 
-// export const requestCuratedRanking = async () => {
-//   const response = await fetch(`${BASE_URL}/books/lists/curated-rankings`,{
-//     headers: {
-//       "Content-Type": "application/json"
-//     }
-//   });
-//   const data = await response.json();
-//   // console.log(data);
-//   return data;
-// }
-
 export const requestTopRated = async () => {
   const response = await fetch(`${BASE_URL}/books/lists/curated-ratings`, {
     headers: {
@@ -275,17 +249,6 @@ export const requestTopRated = async () => {
   const dataTopRated = await response.json();
   // console.log(dataTopRated);
   return dataTopRated;
-};
-
-export const requestFeatured = async () => {
-  const response = await fetch(`${BASE_URL}/books/lists/featured`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  const dataFeatured = await response.json();
-  // console.log(dataFeatured);
-  return dataFeatured;
 };
 
 export const fetchSingleBook = async (bookId) => {

@@ -3,20 +3,28 @@ import { Link } from "react-router-dom";
 import { fetchBooksByGenrePaginated, fetchCountByGenre } from "../../api";
 import "./DisplayGenreBooks.css";
 
-const DisplayGenreBooks = ({ genreSelect }) => {
+const DisplayGenreBooks = ({ genreSelect, setIsLoading }) => {
   const [booksData, setBooksData] = useState([]);
   const [pages, setPages] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchGenreBooks = async () => {
-      const count = await fetchCountByGenre(genreSelect);
-      const genre = await fetchBooksByGenrePaginated(genreSelect, currentPage);
-      setBooksData(genre);
-      setPages(Math.ceil(count / 20));
+      setIsLoading(true);
+      try {
+        const count = await fetchCountByGenre(genreSelect);
+        const genre = await fetchBooksByGenrePaginated(
+          genreSelect,
+          currentPage
+        );
+        setBooksData(genre);
+        setPages(Math.ceil(count / 20));
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchGenreBooks();
-  }, []);
+  }, [setIsLoading, currentPage, genreSelect]);
 
   const prevClickHandler = async (e) => {
     e.preventDefault();

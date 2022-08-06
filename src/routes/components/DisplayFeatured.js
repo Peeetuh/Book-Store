@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { CartForm } from "./";
 
-function DisplayFeatured({ featured, userId }) {
+function DisplayFeatured({ featured, userId, setIsLoading }) {
   return (
     <section>
       <header>
@@ -11,14 +11,14 @@ function DisplayFeatured({ featured, userId }) {
         {featured.map((book) => {
           return (
             <div key={book.id}>
-                              <Link to={`/books/${book.id}`}>
-                  <img src={book.imageLinkM} alt={book.title} />
-                </Link>
-
-                <Link to={`/authors/${book.author}`}>
+              <Link to={`/books/${book.id}`}>
+                <img src={book.imageLinkM} alt={book.title} />
+              </Link>
+              <Link className="author-link" to={`/authors/${book.author}`}>
                 <p> By {book.author}</p>
-                </Link>
-                <CartForm
+              </Link>
+              <CartForm
+                setIsLoading={setIsLoading}
                 userId={userId}
                 price={book.price}
                 id={book.id}

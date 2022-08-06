@@ -10,40 +10,64 @@ import {
   requestFeatured,
 } from "../api";
 
-function Home({ userId, username }) {
+function Home({ userId, username, setIsLoading }) {
   const [topCuratedRanking, setTopCuratedRanking] = useState([]);
   const [topRated, setTopRated] = useState([]);
   const [featured, setFeatured] = useState([]);
 
   useEffect(() => {
     const fetchCuratedRanking = async () => {
-      const dataCurated = await requestCuratedRanking();
-      setTopCuratedRanking(dataCurated);
+      setIsLoading(true);
+      try {
+        const dataCurated = await requestCuratedRanking();
+        setTopCuratedRanking(dataCurated);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchCuratedRanking();
 
     const fetchTopRated = async () => {
-      const dataTopRated = await requestTopRated();
-      setTopRated(dataTopRated);
+      setIsLoading(true);
+      try {
+        const dataTopRated = await requestTopRated();
+        setTopRated(dataTopRated);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchTopRated();
 
     const fetchFeatured = async () => {
-      const dataFeatured = await requestFeatured();
-      setFeatured(dataFeatured);
+      setIsLoading(true);
+      try {
+        const dataFeatured = await requestFeatured();
+        setFeatured(dataFeatured);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchFeatured();
-  }, []);
+  }, [setIsLoading]);
 
   return (
     <main>
-      <h1>Home</h1>
+      <h1 className="title-home">TBM Bookstore</h1>
       <DisplayCuratedRanking
         topCuratedRanking={topCuratedRanking}
         userId={userId}
+        setIsLoading={setIsLoading}
       />
-      <DisplayHighestRanking topRated={topRated} userId={userId} />
-      <DisplayFeatured featured={featured} userId={userId} />
+      <DisplayHighestRanking
+        topRated={topRated}
+        userId={userId}
+        setIsLoading={setIsLoading}
+      />
+      <DisplayFeatured
+        featured={featured}
+        userId={userId}
+        setIsLoading={setIsLoading}
+      />
     </main>
   );
 }

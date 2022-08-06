@@ -2,6 +2,7 @@ import UsersPromoteButton from "./UsersPromoteButton";
 import { paginatedUsersRequest } from "../../api/admin";
 
 const DisplayPaginatedUsers = ({
+  setIsLoading,
   token,
   usersData,
   setUsersData,
@@ -12,14 +13,24 @@ const DisplayPaginatedUsers = ({
   setCurrentUserId,
 }) => {
   const prevClickHandler = async (e) => {
-    setCurrentPage(currentPage - 1);
-    const users = await paginatedUsersRequest(token, currentPage - 1);
-    setUsersData(users);
+    setIsLoading(true);
+    try {
+      setCurrentPage(currentPage - 1);
+      const users = await paginatedUsersRequest(token, currentPage - 1);
+      setUsersData(users);
+    } finally {
+      setIsLoading(false);
+    }
   };
   const nextClickHandler = async (e) => {
-    setCurrentPage(currentPage + 1);
-    const users = await paginatedUsersRequest(token, currentPage + 1);
-    setUsersData(users);
+    setIsLoading(true);
+    try {
+      setCurrentPage(currentPage + 1);
+      const users = await paginatedUsersRequest(token, currentPage + 1);
+      setUsersData(users);
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <section>

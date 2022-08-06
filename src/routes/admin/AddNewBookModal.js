@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { addBookRequest, paginatedBooksData } from "../../api/admin";
 
-const AddNewBookModal = ({ token, setNewBookModal, currentPage, setBooksData }) => {
+const AddNewBookModal = ({
+  token,
+  setNewBookModal,
+  currentPage,
+  setBooksData,
+  setIsLoading,
+}) => {
   const [isbn, setIsbn] = useState("");
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
@@ -18,34 +24,39 @@ const AddNewBookModal = ({ token, setNewBookModal, currentPage, setBooksData }) 
   };
   const submitHandler = async (e) => {
     e.preventDefault();
-    const result = await addBookRequest(
-      token,
-      isbn,
-      title,
-      author,
-      year,
-      publisher,
-      imageLink,
-      genre,
-      description,
-      price,
-      inventory
-    );
-    console.log("result of adding book:", result);
-    const books = await paginatedBooksData(token, currentPage + 1);
-    console.log(books, currentPage);
-    setBooksData(books);
-    setIsbn("");
-    setTitle("");
-    setAuthor("");
-    setYear("");
-    setPublisher("");
-    setImageLink("");
-    setGenre("");
-    setDescription("");
-    setPrice("");
-    setInventory("");
-    setNewBookModal(false);
+    setIsLoading(true);
+    try {
+      const result = await addBookRequest(
+        token,
+        isbn,
+        title,
+        author,
+        year,
+        publisher,
+        imageLink,
+        genre,
+        description,
+        price,
+        inventory
+      );
+      console.log("result of adding book:", result);
+      const books = await paginatedBooksData(token, currentPage + 1);
+      console.log(books, currentPage);
+      setBooksData(books);
+      setIsbn("");
+      setTitle("");
+      setAuthor("");
+      setYear("");
+      setPublisher("");
+      setImageLink("");
+      setGenre("");
+      setDescription("");
+      setPrice("");
+      setInventory("");
+      setNewBookModal(false);
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <>

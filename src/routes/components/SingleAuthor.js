@@ -5,7 +5,7 @@ import { faker } from "@faker-js/faker";
 import CartForm from "./CartForm";
 import { Link } from "react-router-dom";
 
-function Author() {
+function Author({ setIsLoading }) {
   const [author, setAuthor] = useState([]);
   const { authorName } = useParams();
   const fakeBio = faker.lorem.paragraph(6);
@@ -13,11 +13,16 @@ function Author() {
 
   useEffect(() => {
     const fetchAuthorData = async () => {
-      const authorData = await requestAuthor(authorName);
-      setAuthor(authorData);
+      setIsLoading(true);
+      try {
+        const authorData = await requestAuthor(authorName);
+        setAuthor(authorData);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchAuthorData();
-  }, [authorName]);
+  }, [authorName, setIsLoading]);
   return (
     <section>
       <header>

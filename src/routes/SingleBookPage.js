@@ -3,30 +3,35 @@ import { useParams, Link } from "react-router-dom";
 import { fetchSingleBook } from "../api";
 import { CartForm } from "./components";
 
-const SingleBookPage = ({ userId, token }) => {
+const SingleBookPage = ({ userId, token, setIsLoading }) => {
   const [bookInfo, setBookInfo] = useState([]);
   const { bookId } = useParams();
 
   useEffect(() => {
     const fetchBookData = async () => {
-      const bookData = await fetchSingleBook(bookId);
-      setBookInfo(bookData);
+      setIsLoading(true);
+      try {
+        const bookData = await fetchSingleBook(bookId);
+        setBookInfo(bookData);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchBookData();
-  }, [bookId]);
+  }, [bookId, setIsLoading]);
 
   const {
     author,
     description,
     genre,
-    globalRatings,
+    // globalRatings,
     id,
     imageLinkL,
-    imageLinkM,
-    imageLinkS,
+    // imageLinkM,
+    // imageLinkS,
     inventory,
-    isFeatured,
-    isbn,
+    // isFeatured,
+    // isbn,
     price,
     publisher,
     rating,
@@ -42,8 +47,10 @@ const SingleBookPage = ({ userId, token }) => {
       <h5>Genre: {genre}</h5>
       <h4>{description}</h4>
       <h5>Price: {price}</h5>
-      <h6>Published By: {publisher} in {year}</h6>
-      <CartForm userId={userId} price={price} id={id} inventory={inventory}/>
+      <h6>
+        Published By: {publisher} in {year}
+      </h6>
+      <CartForm setIsLoading={setIsLoading} userId={userId} price={price} id={id} inventory={inventory} />
     </>
   );
 };
