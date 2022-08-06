@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { CartForm } from "./";
 
-function DisplayFeatured({ featured, userId, setIsLoading }) {
+function DisplayFeatured({ featured, userId, setIsLoading, setGuestCart }) {
   return (
     <section>
       <header>
@@ -26,6 +26,7 @@ function DisplayFeatured({ featured, userId, setIsLoading }) {
                 bookImage={book.imageLinkM}
                 title={book.title}
                 author={book.author}
+                setGuestCart={setGuestCart}
               />
             </div>
           );
