@@ -123,7 +123,7 @@ function App() {
         />
         <Route
           path="MyAccount"
-          element={<MyAccount token={token} username={username} />}
+          element={<MyAccount token={token} username={username} userId={userId} />}
         />
         <Route
           path="/genres"

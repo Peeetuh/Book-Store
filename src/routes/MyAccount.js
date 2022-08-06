@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { fetchUserAccount } from "../api";
+import { editUser } from "../api";
 
-const MyAccount = ({ token, username }) => {
+const MyAccount = ({ token, username, userId }) => {
   const [myAccount, setMyAccount] = useState([]);
   const [editMode, setEditMode] = useState(false);
-  const [state, setState] = useState("");
-  const [city, setCity] = useState("");
-  const [street, setStreet] = useState("");
-  const [zip, setZip] = useState("");
+  const [state, setState] = useState(null);
+  const [city, setCity] = useState(null);
+  const [street, setStreet] = useState(null);
+  const [zip, setZip] = useState(null);
   useEffect(() => {
     const loadMyAccount = async () => {
       const fetchedAccount = await fetchUserAccount(token);
@@ -20,20 +21,34 @@ const MyAccount = ({ token, username }) => {
     setEditMode(true);
     console.log(editMode);
   }
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     setEditMode(false);
     // setState("");
     // setCity("");
     // setStreet("");
     // setZip("");
+    console.log(state, city, street, zip);
+   const result = await editUser ( 
+      token,
+      userId,
+      state,
+      city,
+      street,
+      zip
+    )
+    setState(null);
+    setCity(null);
+    setStreet(null);
+    setZip(null);
+    console.log("result of address", result);
   }
   const cancelHandler = () => {
     setEditMode(false);
-    setState("");
-    setCity("");
-    setStreet("");
-    setZip("");
+    setState(null);
+    setCity(null);
+    setStreet(null);
+    setZip(null);
   }
 
   return (
@@ -49,8 +64,6 @@ const MyAccount = ({ token, username }) => {
         </label>
         <input 
         type="text" 
-        required 
-        value={state}
         onChange={(e) => setState(e.target.value)}
         />
         <label>
@@ -58,16 +71,12 @@ const MyAccount = ({ token, username }) => {
         </label>
         <input 
         type="text" 
-        required 
-        value={city}
         onChange={(e) => setCity(e.target.value)} />
         <label>
           Street:
         </label>
         <input 
         type="text" 
-        required 
-        value={street}
         onChange={(e) => setStreet(e.target.value)}/>
         <label>
           Zip:
@@ -76,8 +85,6 @@ const MyAccount = ({ token, username }) => {
         type="number" 
         min= '10000'
         max= '99999'
-        required 
-        value={zip}
         onChange={(e) => setZip(e.target.value)} />
         <button onClick={cancelHandler}>Cancel </button>
         <button type="submit">Confirm address</button>
