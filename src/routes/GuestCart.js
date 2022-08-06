@@ -4,6 +4,7 @@ import {
   guestCheckoutRequest,
   stripeCheckoutRequest,
   guestCompleteOrderReq,
+  guestCancelOrder,
 } from "../api/checkout";
 
 const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
@@ -14,7 +15,9 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [guestEmail, setGuestEmail] = useState("");
   const [stripeConfirm, setStripeConfirm] = useState(false);
+  const [stripeCancel, setStripeCancel] = useState(false);
   const [stripeMessage, setStripeMessage] = useState(false);
+  // const []
   const [currOrderId, setCurrOrderId] = useState(null);
 
   const calculateOrderPrice = (guestCart) => {
@@ -31,6 +34,8 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
     try {
       console.log(guestEmail, guestCart);
       const result = await guestCheckoutRequest(guestEmail, guestCart);
+      console.log(result);
+      result.error && alert(result.message);
       if (result.status === "checkout") {
         const { orderPrice, orderId } = result;
         await stripeCheckoutRequest(orderPrice, orderId);
@@ -43,12 +48,16 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const queryStr = query.toString();
-    const idFromQuery = Number(queryStr.slice(queryStr.indexOf("?") + 13));
+    // const idFromQuery = Number(queryStr.slice(queryStr.indexOf("?") + 13));
     setIsLoading(true);
 
     if (query.get("success")) {
       setStripeConfirm(true);
-      setCurrOrderId(idFromQuery);
+      setCurrOrderId(Number(queryStr.slice(queryStr.indexOf("?") + 13)));
+    }
+    if (query.get("canceled")) {
+      setStripeCancel(true);
+      setCurrOrderId(Number(queryStr.slice(queryStr.indexOf("?") + 14)));
     }
     const loadGuestCart = () => {
       setIsLoading(true);
@@ -62,7 +71,7 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
     };
     loadGuestCart();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setIsLoading]);
+  }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -82,6 +91,23 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stripeConfirm]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    try {
+      if (stripeCancel) {
+        const deleteOrder = async () => {
+          await guestCancelOrder(currOrderId);
+        };
+        deleteOrder();
+        setStripeCancel(false);
+        setStripeMessage(true);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stripeCancel]);
 
   return (
     <main>
@@ -104,11 +130,13 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
           </form>
         </div>
       )}
-      {stripeMessage && (
+      {stripeMessage && !guestCart.length ? (
         <p>
           Your order #{currOrderId} is complete. We'll let you know when it
           ships. Thanks for your business, {guestEmail}!
         </p>
+      ) : stripeMessage && guestCart.length (
+        <p>Order cancelled.</p>
       )}
       {!guestCart.length ? (
         <h5>There is nothing in your cart</h5>
