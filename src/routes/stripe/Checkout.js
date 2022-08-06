@@ -1,4 +1,4 @@
-import { FlipRounded } from "@material-ui/icons";
+// import { FlipRounded } from "@material-ui/icons";
 
 const Checkout = () => {
   return (
