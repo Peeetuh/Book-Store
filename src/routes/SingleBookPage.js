@@ -46,7 +46,7 @@ const SingleBookPage = ({ userId, token, setIsLoading, setGuestCart }) => {
       <img src={imageLinkL} alt={title} />
       <h5>Genre: {genre}</h5>
       <h4>{description}</h4>
-      <h5>Price: {price}</h5>
+      <h5>Price: {price} | Current stock: {inventory} copies</h5>
       <h6>
         Published By: {publisher} in {year}
       </h6>

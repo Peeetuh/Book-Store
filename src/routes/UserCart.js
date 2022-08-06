@@ -10,7 +10,9 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
   const [userCart, setUserCart] = useState([]);
   const [bookQuantity, setBookQuantity] = useState(1);
   const [stripeConfirm, setStripeConfirm] = useState(false);
-  const [stripeMessage, setStripeMessage] = useState(false);
+  const [stripeCancel, setStripeCancel] = useState(false);
+  const [stripeMsg, setStripeMsg] = useState(false);
+  const [stripeRes, setStripeRes] = useState(false);
   const [currOrderId, setCurrOrderId] = useState(null);
   let inventory = 15;
 
@@ -41,12 +43,13 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const queryStr = query.toString();
-    const idFromQuery = Number(queryStr.slice(queryStr.indexOf("?") + 13));
     if (query.get("success")) {
       setStripeConfirm(true);
-      setCurrOrderId(idFromQuery);
+      setCurrOrderId(Number(queryStr.slice(queryStr.indexOf("?") + 13)));
     }
-
+    if(query.get("canceled")) {
+      setStripeCancel(true);
+    }
     if (token) loadUserCart();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -60,20 +63,30 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
       closeOrder();
       loadUserCart();
       setStripeConfirm(false);
-      setStripeMessage(true);
+      setStripeRes(true);
+      setStripeMsg(`Your order ${currOrderId} is complete. We'll let you know when it ships. Thanks for your business, ${username}`)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stripeConfirm]);
 
+  useEffect(() => {
+    setIsLoading(true);
+    try {
+      if (stripeCancel) {
+        setStripeCancel(false);
+        setStripeRes(true);
+        setStripeMsg("Your order has been cancelled.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stripeCancel]);
+
   return (
     <main>
       <h2>{username}&#39;s Checkout Page</h2>
-      {stripeMessage && (
-        <p>
-          Your order #{currOrderId} is complete. We'll let you know when it
-          ships. Thanks for your business, {username}!
-        </p>
-      )}
+      {stripeRes && (<p>{stripeMsg}</p>)}
       {userCart.length < 1 ? (
         <p>Your shopping cart is empty.</p>
       ) : (
@@ -86,23 +99,6 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
                 <img src={cart.imageLinkS} alt={cart.title} />
                 <h6>Price: {cart.bookPrice}</h6>
                 <h6>Quantity: {cart.quantity}</h6>
-                {/* <button
-                  className="button"
-                  type="button"
-                  onClick={async () => {
-                    deleteFromCart(
-                      userCart.orderId,
-                      userCart.orderPrice,
-                      cart.bookId,
-                      cart.bookPrice,
-                      cart.quantity,
-                      userCart,
-                      setUserCart
-                    );
-                  }}
-                >
-                  Delete
-                </button> */}
                 <DeleteFromCartButton
                   token={token}
                   userCart={userCart}

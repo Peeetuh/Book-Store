@@ -16,8 +16,8 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
   const [guestEmail, setGuestEmail] = useState("");
   const [stripeConfirm, setStripeConfirm] = useState(false);
   const [stripeCancel, setStripeCancel] = useState(false);
-  const [stripeMessage, setStripeMessage] = useState(false);
-  // const []
+  const [stripeRes, setStripeRes] = useState(false);
+  const [stripeMsg, setStripeMsg] = useState("");
   const [currOrderId, setCurrOrderId] = useState(null);
 
   const calculateOrderPrice = (guestCart) => {
@@ -34,9 +34,9 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
     try {
       console.log(guestEmail, guestCart);
       const result = await guestCheckoutRequest(guestEmail, guestCart);
-      console.log(result);
+      console.log("result", result);
       result.error && alert(result.message);
-      if (result.status === "checkout") {
+      if (result.status && result.status === "checkout") {
         const { orderPrice, orderId } = result;
         await stripeCheckoutRequest(orderPrice, orderId);
       }
@@ -48,7 +48,6 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const queryStr = query.toString();
-    // const idFromQuery = Number(queryStr.slice(queryStr.indexOf("?") + 13));
     setIsLoading(true);
 
     if (query.get("success")) {
@@ -84,7 +83,10 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
         setGuestCart([]);
         window.localStorage.removeItem("GuestCartData");
         setStripeConfirm(false);
-        setStripeMessage(true);
+        setStripeRes(true);
+        setStripeMsg(
+          `Your order ${currOrderId} is complete. We'll let you know when it ships. Thanks for your business!`
+        );
       }
     } finally {
       setIsLoading(false);
@@ -101,7 +103,8 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
         };
         deleteOrder();
         setStripeCancel(false);
-        setStripeMessage(true);
+        setStripeRes(true);
+        setStripeMsg("Your order has been cancelled.");
       }
     } finally {
       setIsLoading(false);
@@ -130,14 +133,7 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
           </form>
         </div>
       )}
-      {stripeMessage && !guestCart.length ? (
-        <p>
-          Your order #{currOrderId} is complete. We'll let you know when it
-          ships. Thanks for your business, {guestEmail}!
-        </p>
-      ) : stripeMessage && guestCart.length (
-        <p>Order cancelled.</p>
-      )}
+      {stripeRes && (<p>{stripeMsg}</p>)}
       {!guestCart.length ? (
         <h5>There is nothing in your cart</h5>
       ) : (
