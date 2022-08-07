@@ -1,103 +1,119 @@
 import { useState, useEffect } from "react";
 import { fetchUserAccount } from "../api";
-import { editUser } from "../api";
+import { editUsersAddress } from "../api";
 
-const MyAccount = ({ token, username, userId, setIsLoading,}) => {
-
+const MyAccount = ({ token, username, userId, setIsLoading }) => {
   const [myAccount, setMyAccount] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [state, setState] = useState(null);
   const [city, setCity] = useState(null);
   const [street, setStreet] = useState(null);
   const [zip, setZip] = useState(null);
+
   useEffect(() => {
     const loadMyAccount = async () => {
       setIsLoading(true);
       try {
         const fetchedAccount = await fetchUserAccount(token);
         console.log(fetchedAccount);
-        setMyAccount(fetchedAccount);
+        setMyAccount(fetchedAccount || []);
       } finally {
         setIsLoading(false);
       }
     };
     loadMyAccount();
-  }, [token, setIsLoading]);
-  const clickHandler = (e) => {
-    e.preventDefault();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const clickHandler = () => {
     setEditMode(true);
-    console.log(editMode);
-  }
-  const submitHandler = async (e) => {
+  };
+
+  const cancelHandler = (e) => {
     e.preventDefault();
     setEditMode(false);
-    // setState("");
-    // setCity("");
-    // setStreet("");
-    // setZip("");
-    // console.log(state, city, street, zip);
-   const result = await editUser ( 
-      token,
-      userId,
-      state,
-      city,
-      street,
-      zip
-    )
     setState(null);
     setCity(null);
     setStreet(null);
     setZip(null);
-    console.log(result)
-  }
-  const cancelHandler = () => {
+  };
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    const result = await editUsersAddress(token, userId, state, city, street, zip);
+    console.log("result of edit profile request", result);
+    const fetchedAccount = await fetchUserAccount(token);
+    setMyAccount(fetchedAccount || []);
+    setState(null);
+    setCity(null);
+    setStreet(null);
+    setZip(null);
     setEditMode(false);
-    // setState(null);
-    // setCity(null);
-    // setStreet(null);
-    // setZip(null);
-  }
+  };
 
   return (
-<>
-      <h1>Welcome {username}!</h1>
-      <h2> State: { myAccount.state }<br></br> City: {myAccount.city}<br></br> Street: {myAccount.street}<br></br> Zip: {myAccount.zip}<br></br> </h2>
-      <button onClick={clickHandler}> Edit Profile</button>
-      {editMode && (<>
-      <h3> Set address details!</h3>
-      <form onSubmit={submitHandler}>
-        <label>
-          State:
-        </label>
-        <input 
-        type="text" 
-        onChange={(e) => setState(e.target.value)}
-        />
-        <label>
-          City:
-        </label>
-        <input 
-        type="text" 
-        onChange={(e) => setCity(e.target.value)} />
-        <label>
-          Street:
-        </label>
-        <input 
-        type="text" 
-        onChange={(e) => setStreet(e.target.value)}/>
-        <label>
-          Zip:
-        </label>
-        <input 
-        type="number" 
-        min= '10000'
-        max= '99999'
-        onChange={(e) => setZip(e.target.value)} />
-        <button onClick={cancelHandler}>Cancel </button>
-        <button type="submit">Confirm address</button>
-      </form></>
+    <main>
+      <header>
+        <h2>Your Account</h2>
+      </header>
+      <section>
+        <div>
+          <h3>Account Info</h3>
+          <p>E-mail: {username}</p>
+          <div>
+            <p>Shipping Address:</p>
+            {myAccount.street &&
+            myAccount.city &&
+            myAccount.state &&
+            myAccount.zip ? (
+              <p>
+                {myAccount.street}
+                <br />
+                {myAccount.city}, {myAccount.state} {myAccount.zip}
+              </p>
+            ) : (
+              "You haven't entered your full address yet."
+            )}
+          </div>
+          <button onClick={clickHandler}>Edit Address</button>
+        </div>
+      </section>
+      {editMode===true && (
+        <>
+          <h3>Add Shipping Address</h3>
+          <form onSubmit={submitHandler}>
+            <label htmlFor="edit-street">Street:</label>
+            <input
+              id="edit-street"
+              type="text"
+              onChange={(e) => setStreet(e.target.value)}
+            />
+            <label htmlFor="edit-city">City:</label>
+            <input
+              id="edit-city"
+              type="text"
+              onChange={(e) => setCity(e.target.value)}
+            />
+            <label htmlFor="edit-state">State:</label>
+            <input
+              id="edit-state"
+              type="text"
+              onChange={(e) => setState(e.target.value)}
+            />
+            <label htmlFor="edit-zip">Zip:</label>
+            <input
+              id="edit-zip"
+              type="number"
+              min="10000"
+              max="99999"
+              onChange={(e) => setZip(e.target.value)}
+            />
+            <button onClick={cancelHandler}>Cancel</button>
+            <button type="submit">Submit</button>
+          </form>
+        </>
       )}
-      {myAccount.length < 1 ? (
+      {!myAccount.length ? (
         <h6>Your order history will appear here</h6>
       ) : (
         <>
@@ -142,7 +158,7 @@ const MyAccount = ({ token, username, userId, setIsLoading,}) => {
             })}
         </>
       )}
-    </>
+    </main>
   );
 };
 

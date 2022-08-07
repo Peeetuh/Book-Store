@@ -12,7 +12,7 @@ const SingleBookPage = ({ userId, token, setIsLoading, setGuestCart }) => {
       setIsLoading(true);
       try {
         const bookData = await fetchSingleBook(bookId);
-        setBookInfo(bookData);
+        setBookInfo(bookData || []);
       } finally {
         setIsLoading(false);
       }
@@ -39,26 +39,46 @@ const SingleBookPage = ({ userId, token, setIsLoading, setGuestCart }) => {
     year,
   } = bookInfo;
   return (
-    <>
-      <h3>{title}</h3>
-      <Link to={`/authors/${author}`}>{author}</Link>
-      <h4>Rated {rating}/5 stars</h4>
-      <img src={imageLinkL} alt={title} />
-      <h5>Genre: {genre}</h5>
-      <h4>{description}</h4>
-      <h5>Price: {price} | Current stock: {inventory} copies</h5>
-      <h6>
-        Published By: {publisher} in {year}
-      </h6>
-      <CartForm
-        setIsLoading={setIsLoading}
-        userId={userId}
-        price={price}
-        id={id}
-        inventory={inventory}
-        setGuestCart={setGuestCart}
-      />
-    </>
+    <main>
+      {bookInfo.length ? (
+        <>
+          <header>
+            <h2>{title}</h2>
+          </header>
+          <Link to={`/authors/${author}`}>{author}</Link>
+          <h4>Rated {rating}/5 stars</h4>
+          <img src={imageLinkL} alt={title} />
+          <h5>Genre: {genre}</h5>
+          <h4>{description}</h4>
+          <h5>
+            Price: ${price} | No. available:{" "}
+            {!inventory
+              ? "Currently out of stock!"
+              : inventory > 15
+              ? `${inventory} copies`
+              : inventory === 1
+              ? `Only 1 copy left!`
+              : `Only ${inventory} copies left!`}
+          </h5>
+          <h6>
+            Published By: {publisher} in {year}
+          </h6>
+          <CartForm
+            setIsLoading={setIsLoading}
+            userId={userId}
+            title={title}
+            price={price}
+            id={id}
+            inventory={inventory}
+            setGuestCart={setGuestCart}
+          />
+        </>
+      ) : (
+        <header>
+          <p>No results.</p>
+        </header>
+      )}
+    </main>
   );
 };
 

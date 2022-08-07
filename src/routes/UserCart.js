@@ -4,7 +4,7 @@ import {
   /* deleteFromCart, */ updateCartQuantity,
 } from "../api";
 import { stripeCheckoutRequest, userCompleteOrderReq } from "../api/checkout";
-import { Selector, DeleteFromCartButton } from "./components/";
+import { /* Selector, */ DeleteFromCartButton } from "./components/";
 
 const UserCart = ({ userId, username, token, setIsLoading }) => {
   const [userCart, setUserCart] = useState([]);
@@ -14,7 +14,6 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
   const [stripeMsg, setStripeMsg] = useState(false);
   const [stripeRes, setStripeRes] = useState(false);
   const [currOrderId, setCurrOrderId] = useState(null);
-  let inventory = 15;
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -35,6 +34,7 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
     try {
       const fetchedCart = await fetchUsersCart(token);
       setUserCart(fetchedCart);
+      console.log("fetched cart", fetchedCart);
     } finally {
       setIsLoading(false);
     }
@@ -47,7 +47,7 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
       setStripeConfirm(true);
       setCurrOrderId(Number(queryStr.slice(queryStr.indexOf("?") + 13)));
     }
-    if(query.get("canceled")) {
+    if (query.get("canceled")) {
       setStripeCancel(true);
     }
     if (token) loadUserCart();
@@ -64,7 +64,9 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
       loadUserCart();
       setStripeConfirm(false);
       setStripeRes(true);
-      setStripeMsg(`Your order ${currOrderId} is complete. We'll let you know when it ships. Thanks for your business, ${username}`)
+      setStripeMsg(
+        `Your order ${currOrderId} is complete. We'll let you know when it ships. Thanks for your business, ${username}`
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stripeConfirm]);
@@ -86,7 +88,7 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
   return (
     <main>
       <h2>{username}&#39;s Checkout Page</h2>
-      {stripeRes && (<p>{stripeMsg}</p>)}
+      {stripeRes && <p>{stripeMsg}</p>}
       {userCart.length < 1 ? (
         <p>Your shopping cart is empty.</p>
       ) : (
@@ -96,9 +98,11 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
             return (
               <div key={cart.bookId}>
                 <h3>{cart.title}</h3>
-                <img src={cart.imageLinkS} alt={cart.title} />
+                {/*  <img src={cart.imageLinkS} alt={cart.title} /> */}
                 <h6>Price: {cart.bookPrice}</h6>
-                <h6>Quantity: {cart.quantity}</h6>
+                <h6>
+                  No. in cart: {cart.quantity} | No. available: {cart.inventory}
+                </h6>
                 <DeleteFromCartButton
                   token={token}
                   userCart={userCart}
@@ -107,15 +111,24 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
                 />
                 <div>
                   <label>Change Order Quantity</label>
-                  <select
+                  <input
+                    type="number"
+                    min={1}
+                    max={cart.inventory}
+                    placeholder={1}
+                    onChange={(e) => {
+                      setBookQuantity(Number(e.target.value));
+                    }}
+                  />
+                  {/*                   <select
                     name="selectList"
                     onChange={(e) => setBookQuantity(e.target.value)}
                   >
                     <Selector inventory={inventory} />
-                  </select>
+                  </select> */}
                   <button
                     type="confirm"
-                    onClick={(event) => {
+                    onClick={async (event) => {
                       event.preventDefault();
                       updateCartQuantity(
                         userCart.orderId,
@@ -124,6 +137,8 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
                         cart.quantity,
                         bookQuantity
                       );
+                      const fetchedCart = await fetchUsersCart(token);
+                      setUserCart(fetchedCart);
                     }}
                   >
                     Confirm

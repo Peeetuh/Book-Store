@@ -14,6 +14,7 @@ import {
   AdminOrders,
   AdminProducts,
   Genres,
+  NotFoundPage,
 } from "./routes";
 import "./App.css";
 import {
@@ -87,7 +88,7 @@ function App() {
             Cart
           </Link>
         )}
-        {token && isAdmin && (
+        {token && isAdmin === true && (
           <Link className="links" to="/admin">
             Admin
           </Link>
@@ -178,6 +179,7 @@ function App() {
             />
           }
         />
+
         <Route
           path="GuestCart"
           element={
@@ -212,9 +214,14 @@ function App() {
         />
         <Route
           path="/authors/:authorName"
-          element={<Author userId={userId} setIsLoading={setIsLoading} setGuestCart={setGuestCart} />}
+          element={
+            <Author
+              userId={userId}
+              setIsLoading={setIsLoading}
+              setGuestCart={setGuestCart}
+            />
+          }
         />
-        {/* <Route path="/authors/:authorName" element={<Author />} /> */}
         <Route path="/admin" element={<Admin />}>
           <Route
             path="/admin/users"
@@ -231,7 +238,6 @@ function App() {
             }
           />
         </Route>
-        {/* <Route path="/CartForm" element={<CartForm />} /> */}
         <Route
           path="/SearchResult"
           element={<SearchResult searchResult={searchResult} />}
@@ -247,6 +253,7 @@ function App() {
             />
           }
         />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>
   );

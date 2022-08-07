@@ -51,6 +51,7 @@ function Author({ userId, setIsLoading, setGuestCart }) {
                   userId={userId}
                   price={book.price}
                   id={book.id}
+                  title={book.title}
                   inventory={book.inventory}
                   setGuestCart={setGuestCart}
                 />
