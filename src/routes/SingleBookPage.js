@@ -12,64 +12,69 @@ const SingleBookPage = ({ userId, token, setIsLoading, setGuestCart }) => {
       setIsLoading(true);
       try {
         const bookData = await fetchSingleBook(bookId);
-        setBookInfo(bookData || []);
+        console.log(bookData);
+        if(bookData !== undefined) {
+          setBookInfo(bookData);
+        } else setBookInfo(null);
+        
       } finally {
         setIsLoading(false);
       }
     };
     fetchBookData();
-  }, [bookId, setIsLoading]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const {
-    author,
-    description,
-    genre,
-    // globalRatings,
-    id,
-    imageLinkL,
-    // imageLinkM,
-    // imageLinkS,
-    inventory,
-    // isFeatured,
-    // isbn,
-    price,
-    publisher,
-    rating,
-    title,
-    year,
-  } = bookInfo;
+  // const {
+  //   author,
+  //   description,
+  //   genre,
+  //   // globalRatings,
+  //   id,
+  //   imageLinkL,
+  //   // imageLinkM,
+  //   // imageLinkS,
+  //   inventory,
+  //   // isFeatured,
+  //   // isbn,
+  //   price,
+  //   publisher,
+  //   rating,
+  //   title,
+  //   year,
+  // } = bookInfo;
   return (
     <main>
-      {bookInfo.length ? (
+      {bookInfo ? (
         <>
           <header>
-            <h2>{title}</h2>
+            <h2>{bookInfo.title}</h2>
           </header>
-          <Link to={`/authors/${author}`}>{author}</Link>
-          <h4>Rated {rating}/5 stars</h4>
-          <img src={imageLinkL} alt={title} />
-          <h5>Genre: {genre}</h5>
-          <h4>{description}</h4>
+          <Link to={`/authors/${bookInfo.author}`}>{bookInfo.author}</Link>
+          <h4>Rated {bookInfo.rating}/5 stars</h4>
+          <img src={bookInfo.imageLinkL} alt={bookInfo.title} />
+          <h5>Genre: {bookInfo.genre}</h5>
+          <h4>{bookInfo.description}</h4>
           <h5>
-            Price: ${price} | No. available:{" "}
-            {!inventory
+            Price: ${bookInfo.price} | No. available:{" "}
+            {!bookInfo.inventory
               ? "Currently out of stock!"
-              : inventory > 15
-              ? `${inventory} copies`
-              : inventory === 1
+              : bookInfo.inventory > 15
+              ? `${bookInfo.inventory} copies`
+              : bookInfo.inventory === 1
               ? `Only 1 copy left!`
-              : `Only ${inventory} copies left!`}
+              : `Only ${bookInfo.inventory} copies left!`}
           </h5>
           <h6>
-            Published By: {publisher} in {year}
+            Published By: {bookInfo.publisher} in {bookInfo.year}
           </h6>
           <CartForm
             setIsLoading={setIsLoading}
             userId={userId}
-            title={title}
-            price={price}
-            id={id}
-            inventory={inventory}
+            title={bookInfo.title}
+            price={bookInfo.price}
+            id={bookInfo.id}
+            inventory={bookInfo.inventory}
             setGuestCart={setGuestCart}
           />
         </>

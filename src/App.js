@@ -29,7 +29,6 @@ import {
 import img1 from "./routes/components/Images/logo.png";
 
 function App() {
-  const [searchResult, setSearchResult] = useState([]);
   const [username, setUsername] = useState(
     window.localStorage.getItem("username") || ""
   );
@@ -39,6 +38,7 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(
     window.localStorage.getItem("isAdmin")
   );
+  const [searchQuery, setSearchQuery] = useState("no-search-parameters-given");
   const [guestCart, setGuestCart] = useState(
     JSON.parse(window.localStorage.getItem("GuestCartData")) || []
   );
@@ -101,7 +101,8 @@ function App() {
         <div className="nav-bar-search">
           <SearchBar
             setIsLoading={setIsLoading}
-            setSearchResult={setSearchResult}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
           />
         </div>
       </nav>
@@ -240,7 +241,11 @@ function App() {
         </Route>
         <Route
           path="/SearchResult"
-          element={<SearchResult searchResult={searchResult} />}
+          element={
+            <SearchResult
+              searchQuery={searchQuery}
+            />
+          }
         />
         <Route
           path="/logout"

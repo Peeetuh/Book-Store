@@ -78,7 +78,7 @@ const MyAccount = ({ token, username, userId, setIsLoading }) => {
           <button onClick={clickHandler}>Edit Address</button>
         </div>
       </section>
-      {editMode===true && (
+      {editMode && (
         <>
           <h3>Add Shipping Address</h3>
           <form onSubmit={submitHandler}>

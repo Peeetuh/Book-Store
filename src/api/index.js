@@ -32,7 +32,7 @@ export const fetchLogin = async (userEmail, password, guestCart) => {
       body: JSON.stringify({
         userEmail,
         password,
-        guestCart
+        guestCart,
       }),
     });
     const data = await response.json();
@@ -57,7 +57,14 @@ export const fetchUserAccount = async (token) => {
   }
 };
 
-export const editUsersAddress = async (token, userId, state, city, street, zip) => {
+export const editUsersAddress = async (
+  token,
+  userId,
+  state,
+  city,
+  street,
+  zip
+) => {
   try {
     const response = await fetch(`${BASE_URL}/users/${userId}/update`, {
       method: "PATCH",
@@ -69,8 +76,8 @@ export const editUsersAddress = async (token, userId, state, city, street, zip) 
         state,
         city,
         street,
-        zip
-      })
+        zip,
+      }),
     });
     const data = await response.json();
     return data;
@@ -147,7 +154,7 @@ export const deleteFromCart = async (
   orderId,
   bookId,
   bookPrice,
-  quantity,
+  quantity
   // userCart,
   // setUserCart
 ) => {
@@ -204,14 +211,29 @@ export const requestFeatured = async () => {
   }
 };
 
-export const searchRequest = async (searchstring) => {
+export const searchRequestCount = async (searchString) => {
   try {
-    const response = await fetch(`${BASE_URL}/search/${searchstring}`, {
-      //
+    const response = await fetch(`${BASE_URL}/search/${searchString}`, {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-    });
+    })
+    const data = await response.json();
+    return data;
+  }
+  catch(err){console.error('An error occurred:',(err))};
+}
+
+export const searchRequest = async (searchString, currentPage) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/search/${searchString}/${currentPage}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     const data = await response.json();
     return data;
   } catch (error) {

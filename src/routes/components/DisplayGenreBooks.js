@@ -46,7 +46,7 @@ const DisplayGenreBooks = ({ genreSelect, setIsLoading }) => {
     setBooksData(genre);
   };
   return (
-    <main id="display-genre">
+    <main id="display-paginated">
       {booksData.length ? (
         <>
           <header>
@@ -57,7 +57,7 @@ const DisplayGenreBooks = ({ genreSelect, setIsLoading }) => {
               return (
                 <React.Fragment key={book.id}>
                   <Link to={`/books/${book.id}`}>
-                    <div className="display-genre-container">
+                    <div className="display-paginated-container">
                       <img src={book.imageLinkM} alt={book.title} />
                       <span>{book.title}</span>
                       <span>{book.author}</span>
