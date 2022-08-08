@@ -11,7 +11,6 @@ const AdminOrders = ({ token, setIsLoading }) => {
   const [openOrdersData, setOpenOrdersData] = useState([]);
   const [pages, setPages] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [filter, setFilter] = useState("");
   useEffect(() => {
     const fetchOrdersData = async () => {
       setIsLoading(true);
@@ -41,8 +40,6 @@ const AdminOrders = ({ token, setIsLoading }) => {
           setCurrentPage={setCurrentPage}
           pages={pages}
           setPages={setPages}
-          filter={filter}
-          setFilter={setFilter}
         />
       ) : null} 
       {closedOrdersData.length ? (
@@ -57,8 +54,6 @@ const AdminOrders = ({ token, setIsLoading }) => {
           setCurrentPage={setCurrentPage}
           pages={pages}
           setPages={setPages}
-          filter={filter}
-          setFilter={setFilter}
         />
       ): null} 
       {openOrdersData.length ? (
@@ -73,8 +68,6 @@ const AdminOrders = ({ token, setIsLoading }) => {
           setCurrentPage={setCurrentPage}
           pages={pages}
           setPages={setPages}
-          filter={filter}
-          setFilter={setFilter}
         />
       ): null }
     </div>

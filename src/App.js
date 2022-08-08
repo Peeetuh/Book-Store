@@ -88,11 +88,11 @@ function App() {
             Cart
           </Link>
         )}
-        {token && isAdmin === true && (
+        {token && isAdmin ? (
           <Link className="links" to="/admin">
             Admin
           </Link>
-        )}
+        ) : null}
         {token ? (
           <Link className="links" to="/logout">
             Logout
