@@ -4,7 +4,7 @@ import { fetchSingleBook } from "../api";
 import { CartForm } from "./components";
 import "./SingleBookPage.css";
 
-const SingleBookPage = ({ userId, token, setIsLoading }) => {
+const SingleBookPage = ({ userId, token, setIsLoading, setGuestCart }) => {
   const [bookInfo, setBookInfo] = useState([]);
   const { bookId } = useParams();
 
@@ -58,8 +58,15 @@ const SingleBookPage = ({ userId, token, setIsLoading }) => {
       <h6>
         Published By: {publisher} in {year}
       </h6>
-      <CartForm setIsLoading={setIsLoading} userId={userId} price={price} id={id} inventory={inventory} />
-      </div>
+      <CartForm
+        setIsLoading={setIsLoading}
+        userId={userId}
+        price={price}
+        id={id}
+        inventory={inventory}
+        setGuestCart={setGuestCart}
+      />
+       </div>
       </div>
       </div>
       </div>

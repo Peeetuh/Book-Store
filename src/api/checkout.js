@@ -85,9 +85,28 @@ const guestCompleteOrderReq = async (orderId, guestCart) => {
   }
 };
 
+const guestCancelOrder = async (orderId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/guests/checkout`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        orderId,
+      }),
+    });
+    const data = response.json();
+    return data;
+  } catch (err) {
+    console.error("An error occurred:", err);
+  }
+};
+
 export {
   stripeCheckoutRequest,
   guestCompleteOrderReq,
   userCompleteOrderReq,
   guestCheckoutRequest,
+  guestCancelOrder,
 };

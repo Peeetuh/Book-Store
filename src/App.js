@@ -81,16 +81,24 @@ function App() {
           </Link>
         ) : null}
         {token ? (
-          <Link className="links" to={`/${userId}/cart`}>Cart</Link>
+          <Link className="links" to={`/${userId}/cart`}>
+            Cart
+          </Link>
         ) : (
-          <Link className="links" to="/GuestCart">Cart</Link>
+          <Link className="links" to="/GuestCart">
+            Cart
+          </Link>
         )}
         {token && isAdmin && (
           <Link className="links" to="/admin">
             Admin
           </Link>
         )}
-        {token ? <Link className="links" to="/logout">Logout</Link> : null}
+        {token ? (
+          <Link className="links" to="/logout">
+            Logout
+          </Link>
+        ) : null}
         <div className="nav-bar-search">
           <SearchBar
             setIsLoading={setIsLoading}
@@ -108,6 +116,7 @@ function App() {
               userId={userId}
               username={username}
               token={token}
+              setGuestCart={setGuestCart}
             />
           }
         />
@@ -123,6 +132,8 @@ function App() {
               setPassword={setPassword}
               setUserId={setUserId}
               setIsAdmin={setIsAdmin}
+              guestCart={guestCart}
+              setGuestCart={setGuestCart}
             />
           }
         />
@@ -144,7 +155,6 @@ function App() {
         />
         <Route
           path="MyAccount"
-
           element={
             <MyAccount
               token={token}
@@ -153,6 +163,7 @@ function App() {
               username={username}
               setUserId={setUserId}
               setIsLoading={setIsLoading}
+              userId={userId}
             />
           }
         />
@@ -171,7 +182,13 @@ function App() {
         />
         <Route
           path="GuestCart"
-          element={<GuestCart guestCart={guestCart} setGuestCart={setGuestCart} setIsLoading={setIsLoading} />}
+          element={
+            <GuestCart
+              guestCart={guestCart}
+              setGuestCart={setGuestCart}
+              setIsLoading={setIsLoading}
+            />
+          }
         />
         <Route
           path={`/${userId}/cart`}
@@ -191,14 +208,15 @@ function App() {
               setIsLoading={setIsLoading}
               token={token}
               userId={userId}
+              setGuestCart={setGuestCart}
             />
           }
         />
         <Route
           path="/authors/:authorName"
-          element={<Author setIsLoading={setIsLoading} />}
+          element={<Author userId={userId} setIsLoading={setIsLoading} setGuestCart={setGuestCart} />}
         />
-        <Route path="/authors/:authorName" element={<Author />} />
+        {/* <Route path="/authors/:authorName" element={<Author />} /> */}
         <Route path="/admin" element={<Admin />}>
           <Route
             path="/admin/users"

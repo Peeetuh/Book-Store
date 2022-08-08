@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { CartForm } from "./";
 
-function DisplayCuratedRanking({ topCuratedRanking, userId, setIsLoading }) {
+function DisplayCuratedRanking({ topCuratedRanking, userId, setIsLoading, setGuestCart }) {
   return (
     <section>
       <header>
@@ -27,6 +27,7 @@ function DisplayCuratedRanking({ topCuratedRanking, userId, setIsLoading }) {
                 bookImage={book.imageLinkM}
                 title={book.title}
                 author={book.author}
+                setGuestCart={setGuestCart}
               />
             </div>
           );

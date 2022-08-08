@@ -6,7 +6,7 @@ import CartForm from "./CartForm";
 import { Link } from "react-router-dom";
 import "./SingleAuthor.css";
 
-function Author({ setIsLoading }) {
+function Author({ userId, setIsLoading, setGuestCart }) {
   const [author, setAuthor] = useState([]);
   const { authorName } = useParams();
   const fakeBio = faker.lorem.paragraph(6);
@@ -50,7 +50,14 @@ function Author({ setIsLoading }) {
                   <img id="author-book-img" src={book.imageLinkM} alt={book.title} />
                 </Link>
                 <p> By {book.author}</p>
-                <CartForm />
+                <CartForm
+                  setIsLoading={setIsLoading}
+                  userId={userId}
+                  price={book.price}
+                  id={book.id}
+                  inventory={book.inventory}
+                  setGuestCart={setGuestCart}
+                />
               </div>
             </>
           );

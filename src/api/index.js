@@ -22,7 +22,7 @@ export const fetchRegister = async (userEmail, password, guestCart) => {
   }
 };
 
-export const fetchLogin = async (userEmail, password) => {
+export const fetchLogin = async (userEmail, password, guestCart) => {
   try {
     const response = await fetch(`${BASE_URL}/users/login`, {
       method: "POST",
@@ -32,6 +32,7 @@ export const fetchLogin = async (userEmail, password) => {
       body: JSON.stringify({
         userEmail,
         password,
+        guestCart
       }),
     });
     const data = await response.json();
@@ -53,6 +54,51 @@ export const fetchUserAccount = async (token) => {
     return data;
   } catch (error) {
     console.log(error);
+  }
+};
+
+// export const setAddress = async (token, userId, state, city, street, zip) => {
+//   try {
+//     const response = await fetch(`${BASE_URL}/users/${userId}/update` , {
+//       method: "PATCH" ,
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${token}`,
+//       },
+//       body: JSON.stringify({
+//         state,
+//         city,
+//         street,
+//         zip,
+//       }),
+//     })
+//     const data = await response.json();
+//     return data;
+//   } catch (error) {
+//     console.log(error)
+//   }
+// };
+export const editUser = async (token, userId, state, city, street, zip) => {
+  try {
+    console.log(state, city, street, zip)
+    const response = await fetch(`${BASE_URL}/users/${userId}/update`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        state,
+        city,
+        street,
+        zip
+      })
+    });
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.error("An error occurred:", err);
   }
 };
 
