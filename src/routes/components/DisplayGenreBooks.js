@@ -17,7 +17,7 @@ const DisplayGenreBooks = ({ genreSelect, setIsLoading }) => {
           genreSelect,
           currentPage
         );
-        setBooksData(genre);
+        setBooksData(genre || []);
         setPages(Math.ceil(count / 20));
       } finally {
         setIsLoading(false);
@@ -46,39 +46,49 @@ const DisplayGenreBooks = ({ genreSelect, setIsLoading }) => {
     setBooksData(genre);
   };
   return (
-    <main id="display-genre">
-      <section>
-        <h2>{genreSelect}</h2>
-        {booksData.map((book) => {
-          return (
-            <React.Fragment key={book.id}>
-              <Link to={`/books/${book.id}`}>
-                <div className="display-genre-container">
-                  <img src={book.imageLinkM} alt={book.title} />
-                  <span>{book.title}</span>
-                  <span>{book.author}</span>
-                </div>
-              </Link>
-            </React.Fragment>
-          );
-        })}
-        <div>
-          {currentPage !== 1 ? (
-            <button onClick={prevClickHandler}>Prev</button>
-          ) : (
-            <button disabled>Prev</button>
-          )}
-          <span>
-            {" "}
-            | {currentPage} of {pages} |{" "}
-          </span>
-          {currentPage !== pages ? (
-            <button onClick={nextClickHandler}>Next</button>
-          ) : (
-            <button disabled>Next</button>
-          )}
-        </div>
-      </section>
+    <main id="display-paginated">
+      {booksData.length ? (
+        <>
+          <header>
+            <h2>{genreSelect}</h2>
+          </header>
+          <section>
+            {booksData.map((book) => {
+              return (
+                <React.Fragment key={book.id}>
+                  <Link to={`/books/${book.id}`}>
+                    <div className="display-paginated-container">
+                      <img src={book.imageLinkM} alt={book.title} />
+                      <span>{book.title}</span>
+                      <span>{book.author}</span>
+                    </div>
+                  </Link>
+                </React.Fragment>
+              );
+            })}
+            <div>
+              {currentPage !== 1 ? (
+                <button onClick={prevClickHandler}>Prev</button>
+              ) : (
+                <button disabled>Prev</button>
+              )}
+              <span>
+                {" "}
+                | {currentPage} of {pages} |{" "}
+              </span>
+              {currentPage !== pages ? (
+                <button onClick={nextClickHandler}>Next</button>
+              ) : (
+                <button disabled>Next</button>
+              )}
+            </div>
+          </section>
+        </>
+      ) : (
+        <header>
+          <p>Sorry, we don't have any results to show for that genre.</p>
+        </header>
+      )}
     </main>
   );
 };

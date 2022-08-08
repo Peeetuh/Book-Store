@@ -4,15 +4,16 @@ import {
   /* deleteFromCart, */ updateCartQuantity,
 } from "../api";
 import { stripeCheckoutRequest, userCompleteOrderReq } from "../api/checkout";
-import { Selector, DeleteFromCartButton } from "./components/";
+import { /* Selector, */ DeleteFromCartButton } from "./components/";
 
 const UserCart = ({ userId, username, token, setIsLoading }) => {
   const [userCart, setUserCart] = useState([]);
   const [bookQuantity, setBookQuantity] = useState(1);
   const [stripeConfirm, setStripeConfirm] = useState(false);
-  const [stripeMessage, setStripeMessage] = useState(false);
+  const [stripeCancel, setStripeCancel] = useState(false);
+  const [stripeMsg, setStripeMsg] = useState(false);
+  const [stripeRes, setStripeRes] = useState(false);
   const [currOrderId, setCurrOrderId] = useState(null);
-  let inventory = 15;
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -33,6 +34,7 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
     try {
       const fetchedCart = await fetchUsersCart(token);
       setUserCart(fetchedCart);
+      console.log("fetched cart", fetchedCart);
     } finally {
       setIsLoading(false);
     }
@@ -41,12 +43,13 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const queryStr = query.toString();
-    const idFromQuery = Number(queryStr.slice(queryStr.indexOf("?") + 13));
     if (query.get("success")) {
       setStripeConfirm(true);
-      setCurrOrderId(idFromQuery);
+      setCurrOrderId(Number(queryStr.slice(queryStr.indexOf("?") + 13)));
     }
-
+    if (query.get("canceled")) {
+      setStripeCancel(true);
+    }
     if (token) loadUserCart();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -60,20 +63,32 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
       closeOrder();
       loadUserCart();
       setStripeConfirm(false);
-      setStripeMessage(true);
+      setStripeRes(true);
+      setStripeMsg(
+        `Your order ${currOrderId} is complete. We'll let you know when it ships. Thanks for your business, ${username}`
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stripeConfirm]);
 
+  useEffect(() => {
+    setIsLoading(true);
+    try {
+      if (stripeCancel) {
+        setStripeCancel(false);
+        setStripeRes(true);
+        setStripeMsg("Your order has been cancelled.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stripeCancel]);
+
   return (
     <main>
       <h2>{username}&#39;s Checkout Page</h2>
-      {stripeMessage && (
-        <p>
-          Your order #{currOrderId} is complete. We'll let you know when it
-          ships. Thanks for your business, {username}!
-        </p>
-      )}
+      {stripeRes && <p>{stripeMsg}</p>}
       {userCart.length < 1 ? (
         <p>Your shopping cart is empty.</p>
       ) : (
@@ -83,26 +98,11 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
             return (
               <div key={cart.bookId}>
                 <h3>{cart.title}</h3>
-                <img src={cart.imageLinkS} alt={cart.title} />
+                {/*  <img src={cart.imageLinkS} alt={cart.title} /> */}
                 <h6>Price: {cart.bookPrice}</h6>
-                <h6>Quantity: {cart.quantity}</h6>
-                {/* <button
-                  className="button"
-                  type="button"
-                  onClick={async () => {
-                    deleteFromCart(
-                      userCart.orderId,
-                      userCart.orderPrice,
-                      cart.bookId,
-                      cart.bookPrice,
-                      cart.quantity,
-                      userCart,
-                      setUserCart
-                    );
-                  }}
-                >
-                  Delete
-                </button> */}
+                <h6>
+                  No. in cart: {cart.quantity} | No. available: {cart.inventory}
+                </h6>
                 <DeleteFromCartButton
                   token={token}
                   userCart={userCart}
@@ -111,15 +111,24 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
                 />
                 <div>
                   <label>Change Order Quantity</label>
-                  <select
+                  <input
+                    type="number"
+                    min={1}
+                    max={cart.inventory}
+                    placeholder={1}
+                    onChange={(e) => {
+                      setBookQuantity(Number(e.target.value));
+                    }}
+                  />
+                  {/*                   <select
                     name="selectList"
                     onChange={(e) => setBookQuantity(e.target.value)}
                   >
                     <Selector inventory={inventory} />
-                  </select>
+                  </select> */}
                   <button
                     type="confirm"
-                    onClick={(event) => {
+                    onClick={async (event) => {
                       event.preventDefault();
                       updateCartQuantity(
                         userCart.orderId,
@@ -128,6 +137,8 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
                         cart.quantity,
                         bookQuantity
                       );
+                      const fetchedCart = await fetchUsersCart(token);
+                      setUserCart(fetchedCart);
                     }}
                   >
                     Confirm

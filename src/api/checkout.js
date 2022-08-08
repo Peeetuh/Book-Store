@@ -6,8 +6,8 @@ const BASE_URL = "http://localhost:4000/api";
 const stripeCheckoutRequest = async (orderPrice, orderId, userId) => {
   try {
     const response = await fetch(
-      `http://localhost:4000/create-checkout-session`,
-      // `https://sensationnel-maison-12931.herokuapp.com/create-checkout-session`,
+      // `http://localhost:4000/create-checkout-session`,
+      `https://sensationnel-maison-12931.herokuapp.com/create-checkout-session`,
       {
         method: "POST",
         headers: {

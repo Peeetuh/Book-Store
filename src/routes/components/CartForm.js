@@ -62,14 +62,21 @@ const CartForm = ({
   return (
     <form onSubmit={addToCartSubmitHandler}>
       <label>Quantity</label>
-      <select
-        name="selectList"
-        onChange={(e) => setBookQuantity(Number(e.target.value))}
-      >
-        <Selector inventory={inventory} />
-      </select>
-      {inventory < 15 ? <h6>Only {inventory} left in stock</h6> : null}
-      <button type="submit">Add to Cart</button>
+      {inventory ? (
+        <select
+          name="selectList"
+          onChange={(e) => setBookQuantity(Number(e.target.value))}
+        >
+          <Selector inventory={inventory} />
+        </select>
+      ) : (
+        <select name="selectList" disabled></select>
+      )}
+      {inventory ? (
+        <button type="submit">Add to Cart</button>
+      ) : (
+        <button disabled>Add to Cart</button>
+      )}
     </form>
   );
 };
