@@ -25,7 +25,8 @@ const AdminOrders = ({ token, setIsLoading }) => {
       }
     };
     fetchOrdersData();
-  }, [currentPage, token, setIsLoading]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div>
       {ordersData.length ? (
@@ -39,10 +40,12 @@ const AdminOrders = ({ token, setIsLoading }) => {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           pages={pages}
+          setPages={setPages}
           filter={filter}
           setFilter={setFilter}
         />
-      ) : closedOrdersData.length ? (
+      ) : null} 
+      {closedOrdersData.length ? (
         <DisplayClosedOrders
           setIsLoading={setIsLoading}
           token={token}
@@ -53,10 +56,12 @@ const AdminOrders = ({ token, setIsLoading }) => {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           pages={pages}
+          setPages={setPages}
           filter={filter}
           setFilter={setFilter}
         />
-      ) : (
+      ): null} 
+      {openOrdersData.length ? (
         <DisplayOpenOrders
           setIsLoading={setIsLoading}
           token={token}
@@ -67,10 +72,11 @@ const AdminOrders = ({ token, setIsLoading }) => {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           pages={pages}
+          setPages={setPages}
           filter={filter}
           setFilter={setFilter}
         />
-      )}
+      ): null }
     </div>
   );
 };

@@ -2,6 +2,7 @@ import {
   paginatedOrdersRequest,
   closedOrdersRequest,
   openOrdersRequest,
+  openOrdersCountRequest,
 } from "../../api/admin";
 
 const DisplayPaginatedOrders = ({
@@ -14,15 +15,45 @@ const DisplayPaginatedOrders = ({
   currentPage,
   setCurrentPage,
   pages,
+  setPages,
   filter,
   setFilter,
 }) => {
+  const allClickHandler = async (e) => {
+    e.preventDefault();
+    setClosedOrdersData([]);
+    setOpenOrdersData([]);
+    const orders = await paginatedOrdersRequest(token, 1);
+    console.log(orders);
+    setOrdersData(orders);
+    setCurrentPage(1);
+  };
+  const openClickHandler = async (e) => {
+    e.preventDefault();
+    setOrdersData([]);
+    setClosedOrdersData([]);
+    const count = await openOrdersCountRequest();
+    const open = await openOrdersRequest(token, 1);
+    setPages(Math.ceil(count/100));
+    setOpenOrdersData(open);
+    setCurrentPage(1);
+  };
+  const closedClickHandler = async (e) => {
+    e.preventDefault();
+    setOrdersData([]);
+    setOpenOrdersData([]);
+    const closed = await closedOrdersRequest(token, 1);
+    setClosedOrdersData(closed);
+    setCurrentPage(1);
+  };
   const prevClickHandler = async (e) => {
     setIsLoading(true);
     try {
-      setCurrentPage(currentPage - 1);
+      setClosedOrdersData([]);
+      setOpenOrdersData([]);
       const orders = await paginatedOrdersRequest(token, currentPage - 1);
       setOrdersData(orders);
+      setCurrentPage(currentPage - 1);
     } finally {
       setIsLoading(false);
     }
@@ -30,46 +61,49 @@ const DisplayPaginatedOrders = ({
   const nextClickHandler = async (e) => {
     setIsLoading(true);
     try {
-      setCurrentPage(currentPage + 1);
+      setClosedOrdersData([]);
+      setOpenOrdersData([]);
       const orders = await paginatedOrdersRequest(token, currentPage + 1);
       setOrdersData(orders);
+      setCurrentPage(currentPage + 1);
     } finally {
       setIsLoading(false);
     }
   };
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    try {
-      if (filter === "open") {
-        const open = await openOrdersRequest(token, 1);
-        setOpenOrdersData(open);
-        setOrdersData([]);
-        setClosedOrdersData([]);
-        setCurrentPage(1);
-      } else if (filter === "closed") {
-        const closed = await closedOrdersRequest(token, 1);
-        setClosedOrdersData(closed);
-        setOrdersData([]);
-        setOpenOrdersData([]);
-        setCurrentPage(1);
-      } else {
-        setFilter("");
-        const orders = await paginatedOrdersRequest(token, 1);
-        setOrdersData(orders);
-        setClosedOrdersData([]);
-        setOpenOrdersData([]);
-        setCurrentPage(1);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
+
+  // const submitHandler = async (e) => {
+  //   e.preventDefault();
+  //   setIsLoading(true);
+  //   try {
+  //     if (filter === "open") {
+  //       const open = await openOrdersRequest(token, 1);
+  //       setOpenOrdersData(open);
+  //       setOrdersData([]);
+  //       setClosedOrdersData([]);
+  //       setCurrentPage(1);
+  //     } else if (filter === "closed") {
+  //       const closed = await closedOrdersRequest(token, 1);
+  //       setClosedOrdersData(closed);
+  //       setOrdersData([]);
+  //       setOpenOrdersData([]);
+  //       setCurrentPage(1);
+  //     } else {
+  //       setFilter("");
+  //       const orders = await paginatedOrdersRequest(token, 1);
+  //       setOrdersData(orders);
+  //       setClosedOrdersData([]);
+  //       setOpenOrdersData([]);
+  //       setCurrentPage(1);
+  //     }
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
   return (
     <section>
       <header className="inline">
         <h3>Showing Orders: All</h3>
-        <form onSubmit={submitHandler}>
+        {/* <form onSubmit={submitHandler}>
           <label>Filter Results:</label>
           <select onChange={(e) => setFilter(e.target.value)}>
             <option value="all">All Orders</option>
@@ -77,7 +111,13 @@ const DisplayPaginatedOrders = ({
             <option value="closed">Closed Orders</option>
           </select>
           <button type="submit">Submit</button>
-        </form>
+        </form> */}
+        <div>
+          <span>Filter by:</span>
+          <button onClick={allClickHandler}>All</button>
+          <button onClick={openClickHandler}>Open</button>
+          <button onClick={closedClickHandler}>Closed</button>
+        </div>
       </header>
       <div>
         <table>
