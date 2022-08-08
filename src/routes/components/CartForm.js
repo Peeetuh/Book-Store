@@ -10,34 +10,49 @@ const CartForm = ({
   bookImage,
   title,
   author,
+  setIsLoading,
 }) => {
   const [bookQuantity, setBookQuantity] = useState(1);
-  //const [guestCart, setGuestCart] = useState([])
 
   const addToCartSubmitHandler = async (event) => {
     event.preventDefault();
-
-    if (userId) {
-      await addBookToCart(userId, price, id, bookQuantity);
-      alert("Book added to cart");
-    } else {
-      let existingEntries = JSON.parse(localStorage.getItem("GuestCartData"));
-      if (existingEntries == null) {
-        existingEntries = [];
+    setIsLoading(true);
+    try {
+      if (userId) {
+        await addBookToCart(userId, price, id, bookQuantity);
+        alert("Book added to cart");
+      } else {
+        const existingEntries =
+          JSON.parse(localStorage.getItem("GuestCartData")) || [];
+        const newBook = {
+          id,
+          title,
+          author,
+          bookImage,
+          inventory,
+          price,
+          bookQuantity,
+        };
+        if (!existingEntries.length) {
+          existingEntries.push(newBook);
+          localStorage.setItem(
+            "GuestCartData",
+            JSON.stringify(existingEntries)
+          );
+        } else {
+          const checkForBook = existingEntries.filter((book) => {
+            if (book.id === newBook.id) {
+              const newQuantity = newBook.bookQuantity + book.bookQuantity;
+              newBook.bookQuantity = newQuantity;
+            }
+            return book.id !== newBook.id;
+          });
+          checkForBook.push(newBook);
+          localStorage.setItem("GuestCartData", JSON.stringify(checkForBook));
+        }
       }
-      let newBook = {
-        id,
-        title,
-        author,
-        bookImage,
-        inventory,
-        price,
-        bookQuantity,
-      };
-
-      localStorage.setItem("newBook", JSON.stringify(newBook));
-      existingEntries.push(newBook);
-      localStorage.setItem("GuestCartData", JSON.stringify(existingEntries));
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -46,7 +61,7 @@ const CartForm = ({
       <label>Quantity</label>
       <select
         name="selectList"
-        onChange={(e) => setBookQuantity(e.target.value)}
+        onChange={(e) => setBookQuantity(Number(e.target.value))}
       >
         <Selector inventory={inventory} />
       </select>

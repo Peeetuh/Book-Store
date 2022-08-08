@@ -4,8 +4,9 @@ import { useParams } from "react-router-dom";
 import { faker } from "@faker-js/faker";
 import CartForm from "./CartForm";
 import { Link } from "react-router-dom";
+import "./SingleAuthor.css";
 
-function Author() {
+function Author({ setIsLoading }) {
   const [author, setAuthor] = useState([]);
   const { authorName } = useParams();
   const fakeBio = faker.lorem.paragraph(6);
@@ -13,32 +14,40 @@ function Author() {
 
   useEffect(() => {
     const fetchAuthorData = async () => {
-      const authorData = await requestAuthor(authorName);
-      setAuthor(authorData);
+      setIsLoading(true);
+      try {
+        const authorData = await requestAuthor(authorName);
+        setAuthor(authorData);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchAuthorData();
-  }, [authorName]);
+  }, [authorName, setIsLoading]);
   return (
-    <section>
-      <header>
-        <h3>{authorName} </h3>
-        <img
-          className="authorPic"
-          style={{ width: 400, height: 400 }}
-          src={fakePic}
-          alt="Random stock"
-        ></img>
-        <p>
-          <strong> About author:</strong> {fakeBio}
-        </p>
+      <div id="background-color">
+      <section id="single-author-container">
+      <div className="float-child-author-1">
+      <img
+      id="author-pic"
+      src={fakePic}
+      alt="Random stock"
+      ></img>
+      </div>
+      <header id ="float-child-author-2">
+      <p>
+      <h3 id="single-author-name">{authorName}</h3>
+      <strong> About author:</strong> {fakeBio}
+      </p>
       </header>
-      <div className="authorPage">
-        {author.map((book) => {
+      </section>
+      <div id="author-child-3">
+      {author.map((book) => {
           return (
             <>
               <div key={book.id}>
                 <Link to={`/books/${book.id}`}>
-                  <img src={book.imageLinkM} alt={book.title} />
+                  <img id="author-book-img" src={book.imageLinkM} alt={book.title} />
                 </Link>
                 <p> By {book.author}</p>
                 <CartForm />
@@ -47,7 +56,7 @@ function Author() {
           );
         })}
       </div>
-    </section>
+      </div>
   );
 }
 

@@ -1,7 +1,7 @@
 // const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = "http://localhost:4000/api";
 
-export const fetchRegister = async (username, password) => {
+export const fetchRegister = async (userEmail, password, guestCart) => {
   try {
     const response = await fetch(`${BASE_URL}/users/register`, {
       method: "POST",
@@ -9,8 +9,9 @@ export const fetchRegister = async (username, password) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userEmail: username,
-        password: password,
+        userEmail,
+        password,
+        guestCart,
       }),
     });
     const data = await response.json();
@@ -21,7 +22,7 @@ export const fetchRegister = async (username, password) => {
   }
 };
 
-export const fetchLogin = async (username, password) => {
+export const fetchLogin = async (userEmail, password) => {
   try {
     const response = await fetch(`${BASE_URL}/users/login`, {
       method: "POST",
@@ -29,13 +30,11 @@ export const fetchLogin = async (username, password) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userEmail: username,
-        password: password,
+        userEmail,
+        password,
       }),
     });
     const data = await response.json();
-
-    // console.log(data);
     return data;
   } catch (error) {
     console.log(error);
@@ -51,7 +50,6 @@ export const fetchUserAccount = async (token) => {
       },
     });
     const data = await response.json();
-    // console.log(data);
     return data;
   } catch (error) {
     console.log(error);
@@ -73,7 +71,6 @@ export const addBookToCart = async (userId, price, bookId, quantity) => {
       }),
     });
     const data = await response.json();
-    console.log("datafromIndex", data);
     return data;
   } catch (error) {
     console.log(error);
@@ -125,12 +122,11 @@ export const updateCartQuantity = async (
 
 export const deleteFromCart = async (
   orderId,
-  orderPrice,
   bookId,
   bookPrice,
   quantity,
-  userCart,
-  setUserCart
+  // userCart,
+  // setUserCart
 ) => {
   try {
     const response = await fetch(`${BASE_URL}/orders/cart`, {
@@ -146,26 +142,11 @@ export const deleteFromCart = async (
       }),
     });
     const data = await response.json();
-    console.log("data", data);
-    if (data) {
-      const newCart = userCart.filter((cart) => cart.id !== bookId);
-      setUserCart(newCart);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const checkoutCart = async (token, orderId) => {
-  try {
-    const response = await fetch(`${BASE_URL}/orders/${orderId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const data = await response.json();
+    // console.log("data", data);
+    // if (data) {
+    //   const newCart = userCart.filter((cart) => cart.id !== bookId);
+    //   setUserCart(newCart);
+    // }
     return data;
   } catch (error) {
     console.log(error);
@@ -185,20 +166,6 @@ export const requestCuratedRanking = async () => {
     console.log(error);
   }
 };
-
-// export const requestTopRated = async () => {
-//   try {
-//     const response = await fetch(`${BASE_URL}/books/lists/curated-ratings`, {
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     });
-//     const data = await response.json();
-//     return data;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
 export const requestFeatured = async () => {
   try {
@@ -229,17 +196,6 @@ export const searchRequest = async (searchstring) => {
   }
 };
 
-// export const requestCuratedRanking = async () => {
-//   const response = await fetch(`${BASE_URL}/books/lists/curated-rankings`,{
-//     headers: {
-//       "Content-Type": "application/json"
-//     }
-//   });
-//   const data = await response.json();
-//   // console.log(data);
-//   return data;
-// }
-
 export const requestTopRated = async () => {
   const response = await fetch(`${BASE_URL}/books/lists/curated-ratings`, {
     headers: {
@@ -250,17 +206,6 @@ export const requestTopRated = async () => {
   // console.log(dataTopRated);
   return dataTopRated;
 };
-
-// export const requestFeatured = async () => {
-//   const response = await fetch(`${BASE_URL}/books/lists/featured`, {
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   });
-//   const dataFeatured = await response.json();
-//   // console.log(dataFeatured);
-//   return dataFeatured;
-// };
 
 export const fetchSingleBook = async (bookId) => {
   try {

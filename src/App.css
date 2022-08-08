@@ -87,3 +87,12 @@ a:hover:after{
 .register-page{
     min-height: 80vh;
 }
+
+.displays-top-ten{
+    font-weight: bolder;
+    font-stretch: ultra-expanded;
+}
+
+.my-account-page{
+    min-height: 50vw;
+}

@@ -3,7 +3,9 @@ import {
   openOrdersRequest,
   closedOrdersRequest,
 } from "../../api/admin";
+
 const DisplayOpenOrders = ({
+  setIsLoading,
   token,
   openOrdersData,
   setOrdersData,
@@ -16,36 +18,51 @@ const DisplayOpenOrders = ({
   setFilter,
 }) => {
   const prevClickHandler = async (e) => {
-    setCurrentPage(currentPage - 1);
-    const orders = await openOrdersRequest(token, currentPage - 1);
-    setOpenOrdersData(orders);
+    setIsLoading(true);
+    try {
+      setCurrentPage(currentPage - 1);
+      const orders = await openOrdersRequest(token, currentPage - 1);
+      setOpenOrdersData(orders);
+    } finally {
+      setIsLoading(false);
+    }
   };
   const nextClickHandler = async (e) => {
-    setCurrentPage(currentPage + 1);
-    const orders = await openOrdersRequest(token, currentPage + 1);
-    setOpenOrdersData(orders);
+    setIsLoading(true);
+    try {
+      setCurrentPage(currentPage + 1);
+      const orders = await openOrdersRequest(token, currentPage + 1);
+      setOpenOrdersData(orders);
+    } finally {
+      setIsLoading(false);
+    }
   };
   const submitHandler = async (e) => {
     e.preventDefault();
-    if (filter === "open") {
-      const open = await openOrdersRequest(token, 1);
-      setOpenOrdersData(open);
-      setOrdersData([]);
-      setClosedOrdersData([]);
-      setCurrentPage(1);
-    } else if (filter === "closed") {
-      const closed = await closedOrdersRequest(token, 1);
-      setClosedOrdersData(closed);
-      setOrdersData([]);
-      setOpenOrdersData([]);
-      setCurrentPage(1);
-    } else {
-      setFilter("");
-      const orders = await paginatedOrdersRequest(token, 1);
-      setOrdersData(orders);
-      setClosedOrdersData([]);
-      setOpenOrdersData([]);
-      setCurrentPage(1);
+    setIsLoading(true);
+    try {
+      if (filter === "open") {
+        const open = await openOrdersRequest(token, 1);
+        setOpenOrdersData(open);
+        setOrdersData([]);
+        setClosedOrdersData([]);
+        setCurrentPage(1);
+      } else if (filter === "closed") {
+        const closed = await closedOrdersRequest(token, 1);
+        setClosedOrdersData(closed);
+        setOrdersData([]);
+        setOpenOrdersData([]);
+        setCurrentPage(1);
+      } else {
+        setFilter("");
+        const orders = await paginatedOrdersRequest(token, 1);
+        setOrdersData(orders);
+        setClosedOrdersData([]);
+        setOpenOrdersData([]);
+        setCurrentPage(1);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
   return (

@@ -1,0 +1,64 @@
+#single-author-container{
+    min-height: 70vh;
+    flex-wrap: wrap;
+    display: flex;
+}
+
+#single-author-name{
+    font-weight: bolder;
+    font-size: larger;
+    font-style: italic;
+}
+
+#background-color{
+    background-color: #A8DADC;
+    margin-right: 70px;
+    margin-left: 70px;
+    margin-top: 50px;
+    margin-bottom: 70px;
+    box-shadow: 0px 0px 15px -5px;
+}
+
+#author-child-1{
+    display: flex;
+    flex-wrap: wrap;
+    float: left;
+   margin-left: 120px;
+   margin-right: 100px;
+   margin-top: 30px;
+}
+
+#float-child-author-2{
+    width: 50%;
+    float: left;
+    margin-top: 150px;
+    margin-right: 50px;
+}
+
+#author-child-3{
+    display: flex;
+    margin-left: 100px;
+    margin-right: 75px;
+    align-items: center;
+}
+
+
+#author-pic{
+    height: 25rem;
+    width: 25rem;
+    margin-top: 30px;
+    margin-left: 120px;
+}
+
+#author-book-img{
+    height: 100px;
+    width: 80px;
+    margin-left: 40px;
+}
+
+#author-name-header{
+    margin-left: 100px;
+    margin-right: 100px;
+    font-size: 20px;
+    font-weight: bolder;
+}

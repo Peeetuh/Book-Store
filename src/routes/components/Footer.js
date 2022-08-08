@@ -22,7 +22,7 @@ import {
    function Footer() {
     return (
       <Box
-        bg={useColorModeValue('#caf0f8')}
+        bg={useColorModeValue('#E0FBFC')}
         color={useColorModeValue('gray.700', 'gray.200')}>
         <Container as={Stack} maxW={'6xl'} py={10}>
           <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} spacing={8}>
