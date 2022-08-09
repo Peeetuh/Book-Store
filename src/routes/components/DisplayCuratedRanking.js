@@ -10,7 +10,7 @@ function DisplayCuratedRanking({ topCuratedRanking, userId, setIsLoading, setGue
       <div className="curated-container">
         {topCuratedRanking.map((book) => {
           return (
-            <div key={book.id}>
+            <div className="home-child-elements" key={book.id}>
               <Link to={`/books/${book.id}`}>
                 <img className="img-home-list" src={book.imageLinkM} alt={book.title} />
               </Link>

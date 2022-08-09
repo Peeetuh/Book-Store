@@ -19,7 +19,11 @@
 }
 
 .title-home{
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    font-size: 40px;
 }
 
 .links {
@@ -96,3 +100,33 @@ a:hover:after{
 .my-account-page{
     min-height: 50vw;
 }
+
+#genre-browse-title{
+    font-family: "Roboto", sans-serif;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    font-size: 40px;
+}
+
+.delete-from-cart{
+    background: lightslategray;
+    border-radius: 3px;
+    border: 1px solid black;
+    padding: 2px 4px;
+    margin: 0 auto;
+}
+
+.user-cart-confirm{
+    background-color: rgb(166, 195, 122);
+    border-radius: 3px;
+    margin-right: 10px;
+    padding: 2px 4px;
+    border: 1px solid black;
+}
+
+@media(max-width: 650px){
+    .links{
+      display: none;
+    }
+  }

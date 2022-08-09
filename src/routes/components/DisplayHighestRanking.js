@@ -10,7 +10,7 @@ function DisplayHighestRanking({ topRated, userId, setIsLoading, setGuestCart })
       <div className="curated-container">
         {topRated.map((book) => {
           return (
-            <div key={book.id}>
+            <div className="home-child-elements" key={book.id}>
               <Link to={`/books/${book.id}`}>
                 <img className="img-home-list" src={book.imageLinkM} alt={book.title} />
               </Link>

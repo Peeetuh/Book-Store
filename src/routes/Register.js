@@ -49,14 +49,13 @@ const Register = ({
       <section className="register-page">
       <h3>Register</h3>
       <h6>
-        To register please create a username and a password with at least 8
-        characters
+        To register please enter your email address, and a password with at least 8 characters.
       </h6>
       <form className="login" id="login" onSubmit={authFormSubmitHandler}>
         <div className="input-container">
         <label>Username</label>
         <input
-          placeholder="username"
+          placeholder="Enter your email address"
           id="username"
           type="email"
           value={username}

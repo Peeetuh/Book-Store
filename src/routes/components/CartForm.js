@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { addBookToCart } from "../../api";
 import Selector from "./Selector";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+
 
 const CartForm = ({
   userId,
@@ -69,7 +71,7 @@ const CartForm = ({
         <Selector inventory={inventory} />
       </select>
       {inventory < 15 ? <h6>Only {inventory} left in stock</h6> : null}
-      <button type="submit">Add to Cart</button>
+      <button type="submit"><AiOutlineShoppingCart onSubmit={addToCartSubmitHandler}/></button>
     </form>
   );
 };

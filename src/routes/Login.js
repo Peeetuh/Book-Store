@@ -54,7 +54,9 @@ const Login = ({
     <>
     <body className="body-page">
       <h3>Login</h3>
-      
+      <h6>
+        Enter your email address and password to login.
+      </h6>
       <form className="login" onSubmit={authFormSubmitHandler}>
         <div className="input-container">
         <label>Username</label>

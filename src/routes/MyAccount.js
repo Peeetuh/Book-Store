@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { fetchUserAccount } from "../api";
 import { editUser } from "../api";
+import "./MyAccount.css";
 
 const MyAccount = ({ token, username, userId, setIsLoading,}) => {
 
@@ -62,8 +63,8 @@ const MyAccount = ({ token, username, userId, setIsLoading,}) => {
 <>
 <section className="my-account-page">
       <h1>Welcome {username}!</h1>
-      <h2> State: { myAccount.state }<br></br> City: {myAccount.city}<br></br> Street: {myAccount.street}<br></br> Zip: {myAccount.zip}<br></br> </h2>
-      <button onClick={clickHandler}> Edit Profile</button>
+      <h2 id="account-info"> State: { myAccount.state }<br></br> City: {myAccount.city}<br></br> Street: {myAccount.street}<br></br> Zip: {myAccount.zip}<br></br> </h2>
+      <button className="edit-profile" onClick={clickHandler}> Edit Profile</button>
       {editMode && (<>
       <h3> Set address details!</h3>
       <form onSubmit={submitHandler}>
@@ -71,6 +72,7 @@ const MyAccount = ({ token, username, userId, setIsLoading,}) => {
           State:
         </label>
         <input 
+        className="inputs-account"
         type="text" 
         onChange={(e) => setState(e.target.value)}
         />
@@ -78,24 +80,27 @@ const MyAccount = ({ token, username, userId, setIsLoading,}) => {
           City:
         </label>
         <input 
+        className="inputs-account"
         type="text" 
         onChange={(e) => setCity(e.target.value)} />
         <label>
           Street:
         </label>
         <input 
+        className="inputs-account"
         type="text" 
         onChange={(e) => setStreet(e.target.value)}/>
         <label>
-          Zip:
+          Zipcode:
         </label>
         <input 
+        className="inputs-account"
         type="number" 
         min= '10000'
         max= '99999'
         onChange={(e) => setZip(e.target.value)} />
-        <button onClick={cancelHandler}>Cancel </button>
-        <button type="submit">Confirm address</button>
+        <button className="buttons" id="cancel" onClick={cancelHandler}>Cancel</button>
+        <button className="buttons" id="submit" type="submit">Confirm address</button>
       </form></>
       )}
       {myAccount.length < 1 ? (

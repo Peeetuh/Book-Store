@@ -1,0 +1,45 @@
+.my-account-page{
+    margin-top: 50px;
+    margin-left: 250px;
+    margin-right: 250px;
+    margin-bottom: 100px;
+    box-shadow: 0px 0px 15px -5px;
+    font-weight: bold;
+    background-color: #a8b8d0;
+}
+
+/* .inputs-accounts{
+    color: white;
+} */
+
+#cancel{
+   background: lightslategray;
+    border-radius: 3px;
+    border: 1px solid black;
+    padding: 2px 4px;
+}
+
+#submit{
+    background-color: rgb(166, 195, 122);
+    border-radius: 3px;
+    margin-right: 10px;
+    padding: 2px 4px;
+    border: 1px solid black;
+}
+
+.edit-profile{
+    background-color: rgb(166, 195, 122);
+    border-radius: 3px;
+    border: 1px solid black;
+    padding: 2px 4px;
+
+}
+
+.inputs-account{
+    padding-left: 2px;
+}
+
+.buttons{
+    display: inline-block;
+    margin: 0 auto;
+}

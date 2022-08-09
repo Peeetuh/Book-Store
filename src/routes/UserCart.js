@@ -67,7 +67,7 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
   }, [stripeConfirm]);
 
   return (
-    <main>
+    <main id="user-cart-main">
       <h2>{username}&#39;s Checkout Page</h2>
       {stripeMessage && (
         <p>

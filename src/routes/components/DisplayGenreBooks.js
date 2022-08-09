@@ -48,7 +48,7 @@ const DisplayGenreBooks = ({ genreSelect, setIsLoading }) => {
   return (
     <main id="display-genre">
       <section>
-        <h2>{genreSelect}</h2>
+        <h2 id="genre-select">{genreSelect}</h2>
         {booksData.map((book) => {
           return (
             <React.Fragment key={book.id}>

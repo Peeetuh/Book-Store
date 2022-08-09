@@ -42,11 +42,12 @@ function Author({ userId, setIsLoading, setGuestCart }) {
       </header>
       </section>
       <div id="author-child-3">
+      <div id="related-author-books">Titles by this author</div>
       {author.map((book) => {
           return (
             <>
               <div key={book.id}>
-                <Link to={`/books/${book.id}`}>
+                <Link to={`/books/${book.id}`}> 
                   <img id="author-book-img" src={book.imageLinkM} alt={book.title} />
                 </Link>
                 <p> By {book.author}</p>
