@@ -19,7 +19,11 @@
 }
 
 .title-home{
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    font-size: 40px;
 }
 
 .links {
@@ -61,4 +65,102 @@ a:hover:after{
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
+}
+
+.login
+
+.input-container{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px;
+}
+
+.login {
+    margin: auto;
+    width: 300px;
+    height: 200px;
+    background: #A8DADC;
+    box-shadow: 0px 0px 15px -5px;
+}
+
+.body-page{
+    min-height: 80vh;
+}
+
+.register-page{
+    min-height: 80vh;
+}
+
+.displays-top-ten{
+    font-weight: bolder;
+    font-stretch: ultra-expanded;
+}
+
+.my-account-page{
+    min-height: 50vw;
+}
+
+#genre-browse-title{
+    font-family: "Roboto", sans-serif;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    font-size: 40px;
+}
+
+.delete-from-cart{
+    background: lightslategray;
+    border-radius: 3px;
+    border: 1px solid black;
+    padding: 2px 4px;
+    margin: 0 auto;
+}
+
+.user-cart-confirm{
+    background-color: rgb(166, 195, 122);
+    border-radius: 3px;
+    margin-right: 10px;
+    padding: 2px 4px;
+    border: 1px solid black;
+}
+
+@media(max-width: 650px){
+    .links{
+      display: none;
+    }
+  }
+
+  #login-header{
+    font-family: 'Roboto', sans-serif;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    font-size: 30px;
+}
+
+#register-header{
+    font-family: 'Roboto', sans-serif;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    font-size: 30px;
+}
+
+#login-btn{
+    border-radius: 3px;
+    border: 1px solid black;
+    padding: 2px 4px;
+    margin: 0 auto;
+}
+
+#register-btn{
+    border-radius: 3px;
+    border: 1px solid black;
+    padding: 2px 4px;
+    margin: 0 auto;
+}
+
+.cartpage{
+    min-height: 80vh;
 }

@@ -9,7 +9,7 @@ const DeleteFromCartButton = ({token, userCart, setUserCart, cart}) => {
   }
 
   return (
-    <button onClick={deleteHandler}>Delete</button>
+    <button className="delete-from-cart" onClick={deleteHandler}>Delete</button>
   )
 }
 

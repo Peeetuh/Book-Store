@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { fetchSingleBook } from "../api";
 import { CartForm, AddToCartToast } from "./components";
+import "./SingleBookPage.css";
 
 const SingleBookPage = ({
   userId,
@@ -51,7 +52,8 @@ const SingleBookPage = ({
   //   year,
   // } = bookInfo;
   return (
-    <main>
+    <main className="single-book-container">
+      <div id="book-page-background">
       {cartToast && (
         <AddToCartToast setCartToast={setCartToast} cartItem={cartItem} />
       )}
@@ -60,9 +62,9 @@ const SingleBookPage = ({
           <header>
             <h2>{bookInfo.title}</h2>
           </header>
-          <Link to={`/authors/${bookInfo.author}`}>{bookInfo.author}</Link>
+          <Link className="author" to={`/authors/${bookInfo.author}`}>{bookInfo.author}</Link>
           <h4>Rated {bookInfo.rating}/5 stars</h4>
-          <img src={bookInfo.imageLinkL} alt={bookInfo.title} />
+          <img className="single-book-img" src={bookInfo.imageLinkL} alt={bookInfo.title} />
           <h5>Genre: {bookInfo.genre}</h5>
           <h4>{bookInfo.description}</h4>
           <h5>
@@ -95,6 +97,7 @@ const SingleBookPage = ({
           <p>No results.</p>
         </header>
       )}
+      </div>
     </main>
   );
 };

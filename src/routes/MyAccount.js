@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { fetchUserAccount } from "../api";
+import { editUser } from "../api";
 import { EditProfileModal } from "./components";
+import "./MyAccount.css";
 
 const MyAccount = ({ token, username, userId, setIsLoading }) => {
   const [myAccount, setMyAccount] = useState({});
@@ -26,7 +28,7 @@ const MyAccount = ({ token, username, userId, setIsLoading }) => {
   };
 
   return (
-    <main>
+    <main id="my-account">
       <header>
         <h2>Your Account</h2>
       </header>

@@ -26,6 +26,10 @@ import {
   Author,
 } from "./routes/components/";
 
+import Burger from "./routes/components/Burger";
+
+import Footer from "./routes/components/Footer";
+
 import img1 from "./routes/components/Images/logo.png";
 
 function App() {
@@ -63,6 +67,7 @@ function App() {
     <div className="App">
       <nav className="nav-bar">
         <img src={img1} alt="logo" className="logo" />
+        <Burger token={token}/>
         <Link className="links" to="/">
           Home
         </Link>
@@ -277,6 +282,7 @@ function App() {
         />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

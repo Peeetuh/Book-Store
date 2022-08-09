@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { requestAuthor } from "../../api";
 import CartForm from "./CartForm";
 import AddToCartToast from "./modals/AddToCartToast";
+import "./SingleAuthor.css";
 
 function Author({
   userId,
@@ -34,14 +35,14 @@ function Author({
   }, []);
 
   return (
-    <main>
+    <main id="author-container">
       {cartToast && (
         <AddToCartToast setCartToast={setCartToast} cartItem={cartItem} />
       )}
       <header>
-        <h2>{authorName}</h2>
+        <h2 id="author-name">{authorName}</h2>
         <img
-          className="authorPic"
+          id="author-pic"
           style={{ width: 400, height: 400 }}
           src={fakePic}
           alt="Random stock"
@@ -77,14 +78,15 @@ function Author({
           facilisis mauris.
         </p>
         <div>
-          <h3>Books by {authorName}</h3>
+          <h3 id="books-by">Books by {authorName}</h3>
           {authorBooks.map((book) => {
             return (
               <div key={book.id}>
-                <Link to={`/books/${book.id}`}>
-                  <img src={book.imageLinkM} alt={book.title} />
+                <Link to={`/books/${book.id}`}> 
+                  <img id="author-book-img" src={book.imageLinkM} alt={book.title} />
                 </Link>
                 <CartForm
+                  className="cart-form"
                   setIsLoading={setIsLoading}
                   userId={userId}
                   price={book.price}

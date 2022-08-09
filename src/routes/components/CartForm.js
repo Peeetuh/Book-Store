@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { addBookToCart } from "../../api";
 import Selector from "./Selector";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+
 
 const CartForm = ({
   userId,
@@ -80,7 +82,7 @@ const CartForm = ({
         <select name="selectList" disabled></select>
       )}
       {inventory ? (
-        <button type="submit">Add to Cart</button>
+        <button type="submit"><AiOutlineShoppingCart /></button>
       ) : (
         <button disabled>Add to Cart</button>
       )}
