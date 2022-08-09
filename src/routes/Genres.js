@@ -12,7 +12,7 @@ function Genres({ genres, setGenreSelect }) {
   return (
     <main>
       <header>
-        <h2>Browse Books by Genre</h2>
+        <h2 id="genre-browse-title">Browse Books by Genre</h2>
       </header>
       <div>
     

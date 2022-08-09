@@ -91,7 +91,7 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
   }, [stripeCancel]);
 
   return (
-    <main>
+    <main className="cartpage">
       <h2>Guest Checkout</h2>
       {isCheckingOut && (
         <GuestCheckoutModal

@@ -20,6 +20,15 @@ body {
   border: 1px solid #ccc;
   background-color: #a8dadc;
   box-shadow: 0px 0px 15px -5px;
+  font-size: 14px;
+}
+
+.img-home-list{
+  margin-left: 20px;
+}
+
+#title{
+  font-weight: bolder;
 }
 
 .curated-container img {
@@ -55,6 +64,9 @@ body {
   transform: translate(-50%, -50%);
 }
 
+.home-child-elements{
+  margin: 20px;
+}
 /* Paginated Results */
 
 #display-paginated {

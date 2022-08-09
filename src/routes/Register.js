@@ -47,32 +47,41 @@ const Register = ({
   };
   return (
     <>
-      {resModal && (
+    {resModal && (
         <AuthResponseModal resData={resData} setResModal={setResModal} />
       )}
-      <main>
-        <header>
-          <h3>Register</h3>
-        </header>
-        <section>
-          <form id="login" onSubmit={authFormSubmitHandler}>
-            <label>E-mail Address</label>
-            <input
-              id="username"
-              type="email"
-              value={username}
-              onChange={usernameChangeHandler}
-            />
-            <label>Password (must be at least 8 characters)</label>
-            <input
-              id="pasword"
-              type="password"
-              value={password}
-              onChange={passwordChangeHandler}
-            />
-            <button type="submit">Submit</button>
-          </form>
-        </section>
+      <main className="register-page">
+      <header id="register-header">
+      <h3>Register</h3>
+      </header>
+      <h6>
+        To register please enter your email address, and a password with at least 8 characters.
+      </h6>
+      <section className="login">
+      <form onSubmit={authFormSubmitHandler}>
+        <div className="input-container">
+        <label>Username</label>
+        <input
+          placeholder="Enter your email address"
+          id="username"
+          type="email"
+          value={username}
+          onChange={usernameChangeHandler}
+        />
+        </div>
+        <div className="input-container">
+        <label>Password</label>
+        <input
+          placeholder="minimum of 8 characters"
+          id="pasword"
+          type="password"
+          value={password}
+          onChange={passwordChangeHandler}
+        />
+        </div>
+        <button id="register-btn" type="submit">Submit</button>
+      </form>
+      </section>
       </main>
     </>
   );

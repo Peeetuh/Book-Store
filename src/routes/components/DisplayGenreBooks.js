@@ -49,7 +49,7 @@ const DisplayGenreBooks = ({ genreSelect, setIsLoading }) => {
     <main id="display-paginated">
       {booksData.length ? (
         <>
-          <header>
+          <header id="genre-header">
             <h2>{genreSelect}</h2>
           </header>
           <section>

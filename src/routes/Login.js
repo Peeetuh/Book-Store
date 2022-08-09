@@ -52,30 +52,39 @@ const Login = ({
     {resModal && (
         <AuthResponseModal resData={resData} setResModal={setResModal} />
       )}
-      <main>
-        <header>
-          <h3>Login</h3>
-        </header>
-        <section>
-          <form id="login" onSubmit={authFormSubmitHandler}>
-            <label>Username</label>
-            <input
-              placeholder="username"
-              id="username"
-              type="email"
-              onChange={usernameChangeHandler}
-            />
-            <label>Password</label>
-            <input
-              placeholder="password"
-              id="pasword"
-              type="password"
-              minLength={5}
-              onChange={passwordChangeHandler}
-            />
-            <button type="submit">Submit</button>
-          </form>
-        </section>
+    <main className="body-page">
+      <header id="login-header">
+      <h3>Login</h3>
+      </header>
+      <section>
+      <h6>
+        Enter your email address and password to login.
+      </h6>
+      <form className="login" onSubmit={authFormSubmitHandler}>
+        <div className="input-container">
+        <label>Username</label>
+        <input
+          placeholder="username"
+          id="username"
+          type="email"
+          onChange={usernameChangeHandler}
+        />
+        </div>
+        <div className="input-container">
+        <label>Password</label>
+        <input
+          placeholder="password"
+          id="pasword"
+          type="password"
+          minLength={5}
+          onChange={passwordChangeHandler}
+        />
+        </div>
+        <div className="button-container">
+        <button id="login-btn" type="submit">Submit</button>
+        </div>
+      </form>
+      </section>
       </main>
     </>
   );

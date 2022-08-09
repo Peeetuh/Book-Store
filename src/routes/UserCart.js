@@ -5,6 +5,7 @@ import {
 } from "../api";
 import { stripeCheckoutRequest, userCompleteOrderReq } from "../api/checkout";
 import { /* Selector, */ DeleteFromCartButton } from "./components/";
+import "./UserCart.css"
 
 const UserCart = ({ userId, username, token, setIsLoading }) => {
   const [userCart, setUserCart] = useState([]);
@@ -86,7 +87,7 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
   }, [stripeCancel]);
 
   return (
-    <main>
+    <main id="user-cart-main">
       <h2>{username}&#39;s Checkout Page</h2>
       {stripeRes && <p>{stripeMsg}</p>}
       {userCart.length < 1 ? (
@@ -96,7 +97,7 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
           {userCart.orderDetails.map((cart) => {
             console.log("cart", cart);
             return (
-              <div key={cart.bookId}>
+              <div id="user-cart-container" key={cart.bookId}>
                 <h3>{cart.title}</h3>
                 {/*  <img src={cart.imageLinkS} alt={cart.title} /> */}
                 <h6>Price: {cart.bookPrice}</h6>

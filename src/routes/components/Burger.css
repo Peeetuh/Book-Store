@@ -1,0 +1,60 @@
+.navBar {
+    position: relative;
+  }
+  
+  .navBar button {
+    z-index: 10;
+    cursor: pointer;
+  }
+  
+  .menuNav {
+    overflow-y: scroll;
+    list-style: none;
+    position: fixed;
+    top: 0;
+    background: #0B0B45;
+    left: 0;
+    bottom: 0;
+    height:100vh;
+    width: 0;
+    overflow: hidden;
+    max-width: 290px;
+    z-index: 9;
+  }
+  
+  .menuNav.showMenu {
+    width: 50%;
+  }
+  
+  
+  .menuNav li:first-child { 
+    margin-top: 7rem;
+  }
+
+  .burger-btn{
+    background: transparent;
+    border: none;
+    position: fixed;
+    z-index: 10;
+    cursor: pointer;
+    margin-top: -19px;
+    display: none;
+}
+
+@media(max-width: 649px){
+    .burger-btn{
+        display: block;
+    }
+}
+
+.close-btn{
+    position: fixed;
+    top: 0;
+    left: 22%;
+}
+
+.active-link{
+  color: white;
+  font-weight: bolder;
+  text-decoration: underline;
+}
