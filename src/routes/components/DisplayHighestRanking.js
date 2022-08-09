@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
 import { CartForm } from "./";
 
-function DisplayHighestRanking({ topRated, userId, setIsLoading, setGuestCart }) {
+function DisplayHighestRanking({
+  topRated,
+  userId,
+  setIsLoading,
+  setGuestCart,
+  setCartToast,
+  setCartItem,
+}) {
   return (
     <section>
       <header>
@@ -27,6 +34,8 @@ function DisplayHighestRanking({ topRated, userId, setIsLoading, setGuestCart })
                 title={book.title}
                 author={book.author}
                 setGuestCart={setGuestCart}
+                setCartToast={setCartToast}
+                setCartItem={setCartItem}
               />
             </div>
           );

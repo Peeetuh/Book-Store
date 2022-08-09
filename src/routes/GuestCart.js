@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react";
-/* import { Selector } from "./components"; */
 import {
-  guestCheckoutRequest,
-  stripeCheckoutRequest,
   guestCompleteOrderReq,
   guestCancelOrder,
 } from "../api/checkout";
+import { GuestCheckoutModal } from "./components";
 
 const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
-  // const [guestCart, setGuestCart] = useState(
-  //   JSON.parse(window.localStorage.getItem("GuestCartData")) || []
-  // );
   const [updatedBookQuantity, setUpdatedBookQuantity] = useState(1);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [guestEmail, setGuestEmail] = useState("");
@@ -27,23 +22,6 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
     return totalPrice.toFixed(2);
   };
   const checkoutClickHandler = () => setIsCheckingOut(true);
-  const cancelClickHandler = () => setIsCheckingOut(false);
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    try {
-      console.log(guestEmail, guestCart);
-      const result = await guestCheckoutRequest(guestEmail, guestCart);
-      console.log("result", result);
-      result.error && alert(result.message);
-      if (result.status && result.status === "checkout") {
-        const { orderPrice, orderId } = result;
-        await stripeCheckoutRequest(orderPrice, orderId);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
@@ -116,22 +94,13 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
     <main>
       <h2>Guest Checkout</h2>
       {isCheckingOut && (
-        <div>
-          <form onSubmit={submitHandler}>
-            <h3>Checking Out as Guest</h3>
-            <label htmlFor="guest-email">
-              Please enter your email address:
-            </label>
-            <input
-              id="guest-email"
-              type="email"
-              required
-              onChange={(e) => setGuestEmail(e.target.value)}
-            />
-            <button onClick={cancelClickHandler}>Cancel</button>
-            <button type="submit">Proceed to Checkout</button>
-          </form>
-        </div>
+        <GuestCheckoutModal
+          setIsCheckingOut={setIsCheckingOut}
+          setIsLoading={setIsLoading}
+          guestEmail={guestEmail}
+          setGuestEmail={setGuestEmail}
+          guestCart={guestCart}
+        />
       )}
       {stripeRes && <p>{stripeMsg}</p>}
       {!guestCart.length ? (
@@ -142,9 +111,11 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
             return (
               <div key={cart.id}>
                 <h3>{cart.title}</h3>
-                {/*  <img src={cart.bookImage} alt={cart.title} /> */}
                 <h6>Price: {cart.price}</h6>
-                <h6>No. in your cart: {cart.bookQuantity} | No. available: {cart.inventory}</h6>
+                <h6>
+                  No. in your cart: {cart.bookQuantity} | No. available:{" "}
+                  {cart.inventory}
+                </h6>
                 <button
                   type="button"
                   onClick={() => {
@@ -171,14 +142,6 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
                       setUpdatedBookQuantity(Number(e.target.value));
                     }}
                   />
-                  {/* <select
-                    name="selectList"
-                    onChange={(e) =>
-                      setUpdatedBookQuantity(Number(e.target.value))
-                    }
-                  >
-                    <Selector inventory={cart.inventory} />
-                  </select> */}
                   <button
                     type="confirm"
                     onClick={(event) => {

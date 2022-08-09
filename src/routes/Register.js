@@ -1,5 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { fetchRegister } from "../api";
+import { AuthResponseModal } from "./components";
 
 const Register = ({
   setIsLoading,
@@ -12,7 +13,8 @@ const Register = ({
   guestCart,
   setGuestCart,
 }) => {
-  const navigate = useNavigate();
+  const [resModal, setResModal] = useState(false);
+  const [resData, setResData] = useState({});
   const usernameChangeHandler = (event) => {
     setUsername(event.target.value);
   };
@@ -24,8 +26,9 @@ const Register = ({
   const authFormSubmitHandler = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    try {      
+    try {
       const data = await fetchRegister(username, password, guestCart);
+      console.log("register", data);
       if (data.token) {
         setToken(data.token);
         setUserId(data.user.id);
@@ -35,41 +38,42 @@ const Register = ({
         window.localStorage.setItem("username", username);
         window.localStorage.setItem("token", data.token);
         window.localStorage.setItem("userId", data.user.id);
-        alert("You've successfully registered");
-        navigate("/");
-      } else {
-        alert(`${data.message}`);
       }
+      setResModal(true);
+      setResData(data);
     } finally {
       setIsLoading(false);
     }
   };
   return (
     <>
-      <h3>Register</h3>
-      <h6>
-        To register please create a username and a password with at least 8
-        characters
-      </h6>
-      <form id="login" onSubmit={authFormSubmitHandler}>
-        <label>Username</label>
-        <input
-          placeholder="username"
-          id="username"
-          type="email"
-          value={username}
-          onChange={usernameChangeHandler}
-        />
-        <label>Password</label>
-        <input
-          placeholder="minimum of 8 characters"
-          id="pasword"
-          type="password"
-          value={password}
-          onChange={passwordChangeHandler}
-        />
-        <button type="submit">Submit</button>
-      </form>
+      {resModal && (
+        <AuthResponseModal resData={resData} setResModal={setResModal} />
+      )}
+      <main>
+        <header>
+          <h3>Register</h3>
+        </header>
+        <section>
+          <form id="login" onSubmit={authFormSubmitHandler}>
+            <label>E-mail Address</label>
+            <input
+              id="username"
+              type="email"
+              value={username}
+              onChange={usernameChangeHandler}
+            />
+            <label>Password (must be at least 8 characters)</label>
+            <input
+              id="pasword"
+              type="password"
+              value={password}
+              onChange={passwordChangeHandler}
+            />
+            <button type="submit">Submit</button>
+          </form>
+        </section>
+      </main>
     </>
   );
 };

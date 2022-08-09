@@ -10,4 +10,8 @@ export { default as DisplayGenreBooks } from "./DisplayGenreBooks";
 export { default as Author } from "./SingleAuthor";
 export { default as Loading } from "./Loading";
 export { default as DeleteFromCartButton } from "./DeleteFromCartButton";
-
+export { default as AuthResponseModal } from "./modals/AuthResponseModal";
+export { default as GuestCheckoutModal } from "./modals/GuestCheckoutModal";
+export { default as EditProfileModal } from "./modals/EditProfileModal";
+export { default as LogOutToast } from "./modals/LogOutToast";
+export { default as AddToCartToast } from "./modals/AddToCartToast";

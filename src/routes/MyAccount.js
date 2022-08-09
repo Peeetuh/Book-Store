@@ -1,14 +1,10 @@
 import { useState, useEffect } from "react";
 import { fetchUserAccount } from "../api";
-import { editUsersAddress } from "../api";
+import { EditProfileModal } from "./components";
 
 const MyAccount = ({ token, username, userId, setIsLoading }) => {
   const [myAccount, setMyAccount] = useState([]);
   const [editMode, setEditMode] = useState(false);
-  const [state, setState] = useState(null);
-  const [city, setCity] = useState(null);
-  const [street, setStreet] = useState(null);
-  const [zip, setZip] = useState(null);
 
   useEffect(() => {
     const loadMyAccount = async () => {
@@ -27,28 +23,6 @@ const MyAccount = ({ token, username, userId, setIsLoading }) => {
 
   const clickHandler = () => {
     setEditMode(true);
-  };
-
-  const cancelHandler = (e) => {
-    e.preventDefault();
-    setEditMode(false);
-    setState(null);
-    setCity(null);
-    setStreet(null);
-    setZip(null);
-  };
-
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    const result = await editUsersAddress(token, userId, state, city, street, zip);
-    console.log("result of edit profile request", result);
-    const fetchedAccount = await fetchUserAccount(token);
-    setMyAccount(fetchedAccount || []);
-    setState(null);
-    setCity(null);
-    setStreet(null);
-    setZip(null);
-    setEditMode(false);
   };
 
   return (
@@ -72,46 +46,23 @@ const MyAccount = ({ token, username, userId, setIsLoading }) => {
                 {myAccount.city}, {myAccount.state} {myAccount.zip}
               </p>
             ) : (
-              "You haven't entered your full address yet."
+              "Please provide your full shipping address."
             )}
           </div>
-          <button onClick={clickHandler}>Edit Address</button>
+          {myAccount.street ||
+            myAccount.city ||
+            myAccount.state ||
+            myAccount.zip ?
+          <button onClick={clickHandler}>Edit Address</button> : <button onClick={clickHandler}>Add Address</button>}
         </div>
       </section>
       {editMode && (
-        <>
-          <h3>Add Shipping Address</h3>
-          <form onSubmit={submitHandler}>
-            <label htmlFor="edit-street">Street:</label>
-            <input
-              id="edit-street"
-              type="text"
-              onChange={(e) => setStreet(e.target.value)}
-            />
-            <label htmlFor="edit-city">City:</label>
-            <input
-              id="edit-city"
-              type="text"
-              onChange={(e) => setCity(e.target.value)}
-            />
-            <label htmlFor="edit-state">State:</label>
-            <input
-              id="edit-state"
-              type="text"
-              onChange={(e) => setState(e.target.value)}
-            />
-            <label htmlFor="edit-zip">Zip:</label>
-            <input
-              id="edit-zip"
-              type="number"
-              min="10000"
-              max="99999"
-              onChange={(e) => setZip(e.target.value)}
-            />
-            <button onClick={cancelHandler}>Cancel</button>
-            <button type="submit">Submit</button>
-          </form>
-        </>
+        <EditProfileModal
+          token={token}
+          userId={userId}
+          setEditMode={setEditMode}
+          setMyAccount={setMyAccount}
+        />
       )}
       {!myAccount.length ? (
         <h6>Your order history will appear here</h6>

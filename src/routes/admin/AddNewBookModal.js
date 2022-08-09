@@ -65,7 +65,7 @@ const AddNewBookModal = ({
         <header>
           <h3>Add a New Book</h3>
         </header>
-        <form id="add-new-book" onSubmit={submitHandler}>
+        <form className="modal-form" onSubmit={submitHandler}>
           <label>ISBN</label>
           <input
             type="text"
@@ -124,7 +124,7 @@ const AddNewBookModal = ({
             required
             onChange={(e) => setInventory(e.target.value)}
           />
-          <div className="add-book-buttons">
+          <div className="modal-form-buttons">
           <button onClick={cancelClickHandler}>Cancel</button>
           <button type="submit">Submit</button>
           </div>
