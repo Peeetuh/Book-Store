@@ -26,7 +26,7 @@ const handleToggle = () => {
         {navbarOpen ? (
      <MdClose className="close-btn" style={{ color: "#fff", width: "40px", height: "40px" }} />
       ) : (
-      <FiMenu style={{ color: "#7b7b7b", width: "40px", height: "40px" }} />
+      <FiMenu style={{ color: "#fff", width: "40px", height: "40px" }} />
       )}
         </button>
         <ul className={`menuNav ${navbarOpen ? " showMenu" : ""}`}>

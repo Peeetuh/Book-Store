@@ -53,7 +53,10 @@ const Login = ({
         <AuthResponseModal resData={resData} setResModal={setResModal} />
       )}
     <main className="body-page">
-      <h3 id="login-header">Login</h3>
+      <header id="login-header">
+      <h3>Login</h3>
+      </header>
+      <section>
       <h6>
         Enter your email address and password to login.
       </h6>
@@ -81,6 +84,7 @@ const Login = ({
         <button id="login-btn" type="submit">Submit</button>
         </div>
       </form>
+      </section>
       </main>
     </>
   );

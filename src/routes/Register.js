@@ -50,12 +50,15 @@ const Register = ({
     {resModal && (
         <AuthResponseModal resData={resData} setResModal={setResModal} />
       )}
-      <section className="register-page">
-      <h3 id="register-header">Register</h3>
+      <main className="register-page">
+      <header id="register-header">
+      <h3>Register</h3>
+      </header>
       <h6>
         To register please enter your email address, and a password with at least 8 characters.
       </h6>
-      <form className="login" id="login" onSubmit={authFormSubmitHandler}>
+      <section className="login">
+      <form onSubmit={authFormSubmitHandler}>
         <div className="input-container">
         <label>Username</label>
         <input
@@ -79,6 +82,7 @@ const Register = ({
         <button id="register-btn" type="submit">Submit</button>
       </form>
       </section>
+      </main>
     </>
   );
 };
