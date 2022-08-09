@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./SearchBar.css";
 import searchicon from "./Images/searchicon.png";
 
-const SearchBar = ({ searchQuery, setSearchQuery, setSearchResult, setIsLoading }) => {
+const SearchBar = ({ setSearchQuery, setIsLoading }) => {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
   const changeHandler = (e) => {
@@ -13,7 +13,6 @@ const SearchBar = ({ searchQuery, setSearchQuery, setSearchResult, setIsLoading 
     e.preventDefault();
     setIsLoading(true);
     try {
-      // const result = await searchRequest(searchQuery, 1);
       setSearchQuery(query || "no-search-parameters-given");
       navigate("./SearchResult");
     } finally {

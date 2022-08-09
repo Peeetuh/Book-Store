@@ -86,6 +86,20 @@ const ordersCountRequest = async () => {
   }
 };
 
+const openOrdersCountRequest = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/admin/orders/open/list/count`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error("An error occurred:", err);
+  }
+};
+
 const paginatedOrdersRequest = async (token, currentPage) => {
   try {
     const response = await fetch(`${BASE_URL}/admin/orders/${currentPage}`, {
@@ -279,4 +293,5 @@ export {
   editBookRequest,
   productCountRequest,
   usersCountRequest,
+  openOrdersCountRequest,
 };

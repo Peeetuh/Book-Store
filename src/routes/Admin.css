@@ -50,6 +50,28 @@
   align-items: center;
 }
 
+/* Forms */
+
+#add-new-book {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+#add-new-book input, textarea {
+  padding:.5rem .2rem;
+  width:70%;
+  margin:.2rem auto .5rem;
+  border-radius: 4px;
+  border:1px solid #999;
+}
+
+.add-book-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top:1rem;
+}
+
 /* Tables */
 
 table {
@@ -69,6 +91,14 @@ th {
 
 .wrap {
   width:15rem;
+}
+
+/* Headers */
+.order-buttons {
+  margin-left:2rem;
+}
+.order-buttons button {
+  margin:0 .3rem;
 }
 
 /* Buttons */
@@ -100,12 +130,12 @@ th {
   padding:3rem 1rem;
 }
 
-.modal p {
-  margin:2rem 0;
+.add-new-book-modal {
+  top:15vh;
 }
 
-.modal form {
-  display: block;
+.modal p {
+  margin:2rem 0;
 }
 
 .modal button {
