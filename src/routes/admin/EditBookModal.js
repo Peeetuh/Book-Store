@@ -70,7 +70,7 @@ const EditBookModal = ({
         <header>
           <h3>Edit Book</h3>
         </header>
-        <form id="add-new-book" onSubmit={submitHandler}>
+        <form className="modal-form" onSubmit={submitHandler}>
           <label>ISBN</label>
           <input type="text" onChange={(e) => setIsbn(e.target.value)} />
           <label>Title</label>
@@ -96,7 +96,7 @@ const EditBookModal = ({
             max="100"
             onChange={(e) => setInventory(e.target.value)}
           />
-          <div className="add-book-buttons">
+          <div className="modal-form-buttons">
           <button onClick={cancelClickHandler}>Cancel</button>
           <button type="submit">Submit</button>
           </div>

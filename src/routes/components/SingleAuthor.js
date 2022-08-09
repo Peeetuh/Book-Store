@@ -4,8 +4,17 @@ import { Link, useParams } from "react-router-dom";
 
 import { requestAuthor } from "../../api";
 import CartForm from "./CartForm";
+import AddToCartToast from "./modals/AddToCartToast";
 
-function Author({ userId, setIsLoading, setGuestCart }) {
+function Author({
+  userId,
+  setIsLoading,
+  setGuestCart,
+  cartToast,
+  setCartToast,
+  cartItem,
+  setCartItem,
+}) {
   const [authorBooks, setAuthorBooks] = useState([]);
   const { authorName } = useParams();
   const fakePic = faker.image.people(600, 400, true);
@@ -26,6 +35,9 @@ function Author({ userId, setIsLoading, setGuestCart }) {
 
   return (
     <main>
+      {cartToast && (
+        <AddToCartToast setCartToast={setCartToast} cartItem={cartItem} />
+      )}
       <header>
         <h2>{authorName}</h2>
         <img
@@ -68,20 +80,22 @@ function Author({ userId, setIsLoading, setGuestCart }) {
           <h3>Books by {authorName}</h3>
           {authorBooks.map((book) => {
             return (
-                <div key={book.id}>
-                  <Link to={`/books/${book.id}`}>
-                    <img src={book.imageLinkM} alt={book.title} />
-                  </Link>
-                  <CartForm
-                    setIsLoading={setIsLoading}
-                    userId={userId}
-                    price={book.price}
-                    id={book.id}
-                    title={book.title}
-                    inventory={book.inventory}
-                    setGuestCart={setGuestCart}
-                  />
-                </div>
+              <div key={book.id}>
+                <Link to={`/books/${book.id}`}>
+                  <img src={book.imageLinkM} alt={book.title} />
+                </Link>
+                <CartForm
+                  setIsLoading={setIsLoading}
+                  userId={userId}
+                  price={book.price}
+                  id={book.id}
+                  title={book.title}
+                  inventory={book.inventory}
+                  setGuestCart={setGuestCart}
+                  setCartToast={setCartToast}
+                  setCartItem={setCartItem}
+                />
+              </div>
             );
           })}
         </div>

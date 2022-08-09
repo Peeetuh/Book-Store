@@ -53,7 +53,9 @@ function App() {
   ]);
   const [genreSelect, setGenreSelect] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
+  const [toast, setToast] = useState(false);
+  const [cartToast, setCartToast] = useState(false);
+  const [cartItem, setCartItem] = useState({});
   return (
     <div className="App">
       <nav className="nav-bar">
@@ -88,7 +90,7 @@ function App() {
             Cart
           </Link>
         )}
-        {token && isAdmin ? (
+        {token && (isAdmin === true || isAdmin === "true") ? (
           <Link className="links" to="/admin">
             Admin
           </Link>
@@ -117,6 +119,12 @@ function App() {
               username={username}
               token={token}
               setGuestCart={setGuestCart}
+              toast={toast}
+              setToast={setToast}
+              cartToast={cartToast}
+              setCartToast={setCartToast}
+              cartItem={cartItem}
+              setCartItem={setCartItem}
             />
           }
         />
@@ -210,6 +218,10 @@ function App() {
               token={token}
               userId={userId}
               setGuestCart={setGuestCart}
+              cartToast={cartToast}
+              setCartToast={setCartToast}
+              cartItem={cartItem}
+              setCartItem={setCartItem}
             />
           }
         />
@@ -220,6 +232,10 @@ function App() {
               userId={userId}
               setIsLoading={setIsLoading}
               setGuestCart={setGuestCart}
+              cartToast={cartToast}
+              setCartToast={setCartToast}
+              cartItem={cartItem}
+              setCartItem={setCartItem}
             />
           }
         />
@@ -241,11 +257,7 @@ function App() {
         </Route>
         <Route
           path="/SearchResult"
-          element={
-            <SearchResult
-              searchQuery={searchQuery}
-            />
-          }
+          element={<SearchResult searchQuery={searchQuery} />}
         />
         <Route
           path="/logout"
@@ -255,6 +267,8 @@ function App() {
               setToken={setToken}
               setUsername={setUsername}
               setUserId={setUserId}
+              setIsAdmin={setIsAdmin}
+              setToast={setToast}
             />
           }
         />

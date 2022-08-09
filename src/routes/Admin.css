@@ -50,28 +50,6 @@
   align-items: center;
 }
 
-/* Forms */
-
-#add-new-book {
-  display: flex;
-  flex-flow: column nowrap;
-}
-
-#add-new-book input, textarea {
-  padding:.5rem .2rem;
-  width:70%;
-  margin:.2rem auto .5rem;
-  border-radius: 4px;
-  border:1px solid #999;
-}
-
-.add-book-buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-top:1rem;
-}
-
 /* Tables */
 
 table {
@@ -108,36 +86,6 @@ th {
 
 /* Modals */
 
-.background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 10;
-  background: rgba(100,100,100, 0.75);
-}
-
-.modal {
-  position:fixed;
-  top:30vh;
-  left:35%;
-  width:30%;
-  border-radius: 8px;
-  z-index: 100;
-  box-shadow: 0 3px 10px rgb(0, 0, 0, 0.4);
-  background-color: white;
-  padding:3rem 1rem;
-}
-
 .add-new-book-modal {
   top:15vh;
-}
-
-.modal p {
-  margin:2rem 0;
-}
-
-.modal button {
-  margin:0 1rem;
 }

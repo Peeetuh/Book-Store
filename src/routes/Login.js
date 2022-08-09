@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { fetchLogin } from "../api";
-
+import { AuthResponseModal } from "./components";
 const Login = ({
   setIsLoading,
   setToken,
@@ -13,8 +13,8 @@ const Login = ({
   guestCart,
   setGuestCart,
 }) => {
-  const navigate = useNavigate();
-
+  const [resModal, setResModal] = useState(false);
+  const [resData, setResData] = useState({});
   const usernameChangeHandler = (event) => {
     setUsername(event.target.value);
   };
@@ -27,10 +27,9 @@ const Login = ({
     event.preventDefault();
     setIsLoading(true);
     try {
-      console.log("guest cart before log on", guestCart);
       const data = await fetchLogin(username, password, guestCart);
+      console.log("login data:", data);
       if (data.token) {
-        console.log("login data:", data);
         setToken(data.token);
         setUserId(data.user.id);
         setUsername(data.user.userEmail);
@@ -41,36 +40,43 @@ const Login = ({
         window.localStorage.setItem("token", data.token);
         window.localStorage.setItem("userId", data.user.id);
         window.localStorage.setItem("isAdmin", data.user.isAdmin);
-        alert("You've logged on!");
-        navigate("/");
-      } else {
-        alert(`${data.message}`);
       }
+      setResModal(true);
+      setResData(data);
     } finally {
       setIsLoading(false);
     }
   };
   return (
     <>
-      <h3>Login</h3>
-      <form id="login" onSubmit={authFormSubmitHandler}>
-        <label>Username</label>
-        <input
-          placeholder="username"
-          id="username"
-          type="email"
-          onChange={usernameChangeHandler}
-        />
-        <label>Password</label>
-        <input
-          placeholder="password"
-          id="pasword"
-          type="password"
-          minLength={5}
-          onChange={passwordChangeHandler}
-        />
-        <button type="submit">Submit</button>
-      </form>
+    {resModal && (
+        <AuthResponseModal resData={resData} setResModal={setResModal} />
+      )}
+      <main>
+        <header>
+          <h3>Login</h3>
+        </header>
+        <section>
+          <form id="login" onSubmit={authFormSubmitHandler}>
+            <label>Username</label>
+            <input
+              placeholder="username"
+              id="username"
+              type="email"
+              onChange={usernameChangeHandler}
+            />
+            <label>Password</label>
+            <input
+              placeholder="password"
+              id="pasword"
+              type="password"
+              minLength={5}
+              onChange={passwordChangeHandler}
+            />
+            <button type="submit">Submit</button>
+          </form>
+        </section>
+      </main>
     </>
   );
 };

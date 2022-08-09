@@ -3,6 +3,8 @@ import {
   DisplayCuratedRanking,
   DisplayHighestRanking,
   DisplayFeatured,
+  LogOutToast,
+  AddToCartToast,
 } from "./components";
 import {
   requestCuratedRanking,
@@ -10,7 +12,18 @@ import {
   requestFeatured,
 } from "../api";
 
-function Home({ userId, username, setIsLoading, setGuestCart }) {
+function Home({
+  userId,
+  username,
+  setIsLoading,
+  setGuestCart,
+  toast,
+  setToast,
+  cartToast,
+  setCartToast,
+  cartItem,
+  setCartItem,
+}) {
   const [topCuratedRanking, setTopCuratedRanking] = useState([]);
   const [topRated, setTopRated] = useState([]);
   const [featured, setFeatured] = useState([]);
@@ -48,28 +61,42 @@ function Home({ userId, username, setIsLoading, setGuestCart }) {
       }
     };
     fetchFeatured();
-  }, [setIsLoading]);
+    setTimeout(() => {
+      setToast(false);
+    }, 5500);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <main>
+      {toast && <LogOutToast setCartToast={setCartToast} />}
+      {cartToast && (
+        <AddToCartToast setCartToast={setCartToast} cartItem={cartItem} />
+      )}
       <h1 className="title-home">TBM Bookstore</h1>
       <DisplayCuratedRanking
         topCuratedRanking={topCuratedRanking}
         userId={userId}
         setIsLoading={setIsLoading}
         setGuestCart={setGuestCart}
+        setCartToast={setCartToast}
+        setCartItem={setCartItem}
       />
       <DisplayHighestRanking
         topRated={topRated}
         userId={userId}
         setIsLoading={setIsLoading}
         setGuestCart={setGuestCart}
+        setCartToast={setCartToast}
+        setCartItem={setCartItem}
       />
       <DisplayFeatured
         featured={featured}
         userId={userId}
         setIsLoading={setIsLoading}
         setGuestCart={setGuestCart}
+        setCartToast={setCartToast}
+        setCartItem={setCartItem}
       />
     </main>
   );

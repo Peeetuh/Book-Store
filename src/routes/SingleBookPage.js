@@ -1,9 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { fetchSingleBook } from "../api";
-import { CartForm } from "./components";
+import { CartForm, AddToCartToast } from "./components";
 
-const SingleBookPage = ({ userId, token, setIsLoading, setGuestCart }) => {
+const SingleBookPage = ({
+  userId,
+  setIsLoading,
+  setGuestCart,
+  cartToast,
+  setCartToast,
+  cartItem,
+  setCartItem,
+}) => {
   const [bookInfo, setBookInfo] = useState([]);
   const { bookId } = useParams();
 
@@ -13,10 +21,9 @@ const SingleBookPage = ({ userId, token, setIsLoading, setGuestCart }) => {
       try {
         const bookData = await fetchSingleBook(bookId);
         console.log(bookData);
-        if(bookData !== undefined) {
+        if (bookData !== undefined) {
           setBookInfo(bookData);
         } else setBookInfo(null);
-        
       } finally {
         setIsLoading(false);
       }
@@ -45,6 +52,9 @@ const SingleBookPage = ({ userId, token, setIsLoading, setGuestCart }) => {
   // } = bookInfo;
   return (
     <main>
+      {cartToast && (
+        <AddToCartToast setCartToast={setCartToast} cartItem={cartItem} />
+      )}
       {bookInfo ? (
         <>
           <header>
@@ -76,6 +86,8 @@ const SingleBookPage = ({ userId, token, setIsLoading, setGuestCart }) => {
             id={bookInfo.id}
             inventory={bookInfo.inventory}
             setGuestCart={setGuestCart}
+            setCartToast={setCartToast}
+            setCartItem={setCartItem}
           />
         </>
       ) : (
