@@ -10,3 +10,4 @@ export { default as AdminUsers } from './AdminUsers';
 export { default as AdminOrders } from './AdminOrders';
 export { default as AdminProducts } from './AdminProducts';
 export { default as Genres } from './Genres';
+export { default as NotFoundPage } from "./NotFoundPage";

@@ -11,7 +11,6 @@ const AdminOrders = ({ token, setIsLoading }) => {
   const [openOrdersData, setOpenOrdersData] = useState([]);
   const [pages, setPages] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [filter, setFilter] = useState("");
   useEffect(() => {
     const fetchOrdersData = async () => {
       setIsLoading(true);
@@ -25,7 +24,8 @@ const AdminOrders = ({ token, setIsLoading }) => {
       }
     };
     fetchOrdersData();
-  }, [currentPage, token, setIsLoading]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div>
       {ordersData.length ? (
@@ -39,10 +39,10 @@ const AdminOrders = ({ token, setIsLoading }) => {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           pages={pages}
-          filter={filter}
-          setFilter={setFilter}
+          setPages={setPages}
         />
-      ) : closedOrdersData.length ? (
+      ) : null} 
+      {closedOrdersData.length ? (
         <DisplayClosedOrders
           setIsLoading={setIsLoading}
           token={token}
@@ -53,10 +53,10 @@ const AdminOrders = ({ token, setIsLoading }) => {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           pages={pages}
-          filter={filter}
-          setFilter={setFilter}
+          setPages={setPages}
         />
-      ) : (
+      ): null} 
+      {openOrdersData.length ? (
         <DisplayOpenOrders
           setIsLoading={setIsLoading}
           token={token}
@@ -67,10 +67,9 @@ const AdminOrders = ({ token, setIsLoading }) => {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           pages={pages}
-          filter={filter}
-          setFilter={setFilter}
+          setPages={setPages}
         />
-      )}
+      ): null }
     </div>
   );
 };

@@ -1,8 +1,8 @@
-#single-author-container{
-    min-height: 70vh;
-    flex-wrap: wrap;
-    display: flex;
-}
+#author-container{
+    min-height: 80vh;
+    margin-left: 30px;
+    margin-right: 30px;
+  }
 
 #single-author-name{
     font-weight: bolder;
@@ -35,32 +35,24 @@
     margin-right: 50px;
 }
 
-#author-child-3{
-    display: flex;
-    margin-left: 100px;
-    margin-right: 75px;
-    align-items: center;
-}
 
-@media(max-width:1085px){
-    #author-child-3{
-        display: none;
-    }
+#books-by{
+    font-weight: bolder;
 }
-
 
 #author-pic{
-    flex-wrap: wrap;
-    height: 20rem;
-    width: 20rem;
-    margin-top: 30px;
-    margin-left: 120px;
+   margin: 0 auto;
+   margin-bottom: 30px;
+}
+
+#author-name{
+    font-weight: bolder;
+    font-size: 30px;
 }
 
 #author-book-img{
-    height: 100px;
-    width: 80px;
-    margin-left: 40px;
+   margin: 0 auto;
+   margin-top: 10px;
 }
 
 #author-name-header{
@@ -75,4 +67,8 @@
     position: absolute;
     margin-bottom: 200px;
     flex-wrap: wrap;
+}
+
+.cart-form{
+    margin-bottom: 10px;
 }

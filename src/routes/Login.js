@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { fetchLogin } from "../api";
-
+import { AuthResponseModal } from "./components";
 const Login = ({
   setIsLoading,
   setToken,
@@ -13,8 +13,8 @@ const Login = ({
   guestCart,
   setGuestCart,
 }) => {
-  const navigate = useNavigate();
-
+  const [resModal, setResModal] = useState(false);
+  const [resData, setResData] = useState({});
   const usernameChangeHandler = (event) => {
     setUsername(event.target.value);
   };
@@ -27,10 +27,9 @@ const Login = ({
     event.preventDefault();
     setIsLoading(true);
     try {
-      console.log("guest cart before log on", guestCart);
       const data = await fetchLogin(username, password, guestCart);
+      console.log("login data:", data);
       if (data.token) {
-        console.log("login data:", data);
         setToken(data.token);
         setUserId(data.user.id);
         setUsername(data.user.userEmail);
@@ -41,19 +40,20 @@ const Login = ({
         window.localStorage.setItem("token", data.token);
         window.localStorage.setItem("userId", data.user.id);
         window.localStorage.setItem("isAdmin", data.user.isAdmin);
-        alert("You've logged on!");
-        navigate("/");
-      } else {
-        alert(`${data.message}`);
       }
+      setResModal(true);
+      setResData(data);
     } finally {
       setIsLoading(false);
     }
   };
   return (
     <>
-    <body className="body-page">
-      <h3>Login</h3>
+    {resModal && (
+        <AuthResponseModal resData={resData} setResModal={setResModal} />
+      )}
+    <main className="body-page">
+      <h3 id="login-header">Login</h3>
       <h6>
         Enter your email address and password to login.
       </h6>
@@ -78,10 +78,10 @@ const Login = ({
         />
         </div>
         <div className="button-container">
-        <button type="submit">Submit</button>
+        <button id="login-btn" type="submit">Submit</button>
         </div>
       </form>
-      </body>
+      </main>
     </>
   );
 };

@@ -14,6 +14,7 @@ import {
   AdminOrders,
   AdminProducts,
   Genres,
+  NotFoundPage,
 } from "./routes";
 import "./App.css";
 import {
@@ -32,7 +33,6 @@ import Footer from "./routes/components/Footer";
 import img1 from "./routes/components/Images/logo.png";
 
 function App() {
-  const [searchResult, setSearchResult] = useState([]);
   const [username, setUsername] = useState(
     window.localStorage.getItem("username") || ""
   );
@@ -42,6 +42,7 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(
     window.localStorage.getItem("isAdmin")
   );
+  const [searchQuery, setSearchQuery] = useState("no-search-parameters-given");
   const [guestCart, setGuestCart] = useState(
     JSON.parse(window.localStorage.getItem("GuestCartData")) || []
   );
@@ -56,7 +57,9 @@ function App() {
   ]);
   const [genreSelect, setGenreSelect] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
+  const [toast, setToast] = useState(false);
+  const [cartToast, setCartToast] = useState(false);
+  const [cartItem, setCartItem] = useState({});
   return (
     <div className="App">
       <nav className="nav-bar">
@@ -92,11 +95,11 @@ function App() {
             Cart
           </Link>
         )}
-        {token && isAdmin && (
+        {token && (isAdmin === true || isAdmin === "true") ? (
           <Link className="links" to="/admin">
             Admin
           </Link>
-        )}
+        ) : null}
         {token ? (
           <Link className="links" to="/logout">
             Logout
@@ -105,7 +108,8 @@ function App() {
         <div className="nav-bar-search">
           <SearchBar
             setIsLoading={setIsLoading}
-            setSearchResult={setSearchResult}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
           />
         </div>
       </nav>
@@ -120,6 +124,12 @@ function App() {
               username={username}
               token={token}
               setGuestCart={setGuestCart}
+              toast={toast}
+              setToast={setToast}
+              cartToast={cartToast}
+              setCartToast={setCartToast}
+              cartItem={cartItem}
+              setCartItem={setCartItem}
             />
           }
         />
@@ -183,6 +193,7 @@ function App() {
             />
           }
         />
+
         <Route
           path="GuestCart"
           element={
@@ -212,14 +223,27 @@ function App() {
               token={token}
               userId={userId}
               setGuestCart={setGuestCart}
+              cartToast={cartToast}
+              setCartToast={setCartToast}
+              cartItem={cartItem}
+              setCartItem={setCartItem}
             />
           }
         />
         <Route
           path="/authors/:authorName"
-          element={<Author userId={userId} setIsLoading={setIsLoading} setGuestCart={setGuestCart} />}
+          element={
+            <Author
+              userId={userId}
+              setIsLoading={setIsLoading}
+              setGuestCart={setGuestCart}
+              cartToast={cartToast}
+              setCartToast={setCartToast}
+              cartItem={cartItem}
+              setCartItem={setCartItem}
+            />
+          }
         />
-        {/* <Route path="/authors/:authorName" element={<Author />} /> */}
         <Route path="/admin" element={<Admin />}>
           <Route
             path="/admin/users"
@@ -236,10 +260,9 @@ function App() {
             }
           />
         </Route>
-        {/* <Route path="/CartForm" element={<CartForm />} /> */}
         <Route
           path="/SearchResult"
-          element={<SearchResult searchResult={searchResult} />}
+          element={<SearchResult searchQuery={searchQuery} />}
         />
         <Route
           path="/logout"
@@ -249,9 +272,12 @@ function App() {
               setToken={setToken}
               setUsername={setUsername}
               setUserId={setUserId}
+              setIsAdmin={setIsAdmin}
+              setToast={setToast}
             />
           }
         />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
     </div>

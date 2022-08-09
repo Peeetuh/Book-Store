@@ -1,11 +1,5 @@
-.my-account-page{
-    margin-top: 50px;
-    margin-left: 250px;
-    margin-right: 250px;
-    margin-bottom: 100px;
-    box-shadow: 0px 0px 15px -5px;
-    font-weight: bold;
-    background-color: #a8b8d0;
+#my-account{
+    min-height: 80vh;
 }
 
 /* .inputs-accounts{

@@ -1,7 +1,15 @@
 .single-book-container{
     min-height: 80vh;
-    flex-wrap: wrap;
   }
+
+.single-book-img{
+  margin: 0 auto;
+}  
+
+.author{
+  font-weight: bolder;
+  font-style: italic;
+}
 
   #book-page-background{
     background-color: #A8DADC;

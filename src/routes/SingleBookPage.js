@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { fetchSingleBook } from "../api";
-import { CartForm } from "./components";
+import { CartForm, AddToCartToast } from "./components";
 import "./SingleBookPage.css";
 
-const SingleBookPage = ({ userId, token, setIsLoading, setGuestCart }) => {
+const SingleBookPage = ({
+  userId,
+  setIsLoading,
+  setGuestCart,
+  cartToast,
+  setCartToast,
+  cartItem,
+  setCartItem,
+}) => {
   const [bookInfo, setBookInfo] = useState([]);
   const { bookId } = useParams();
 
@@ -13,64 +21,84 @@ const SingleBookPage = ({ userId, token, setIsLoading, setGuestCart }) => {
       setIsLoading(true);
       try {
         const bookData = await fetchSingleBook(bookId);
-        setBookInfo(bookData);
+        console.log(bookData);
+        if (bookData !== undefined) {
+          setBookInfo(bookData);
+        } else setBookInfo(null);
       } finally {
         setIsLoading(false);
       }
     };
     fetchBookData();
-  }, [bookId, setIsLoading]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const {
-    author,
-    description,
-    genre,
-    // globalRatings,
-    id,
-    imageLinkL,
-    // imageLinkM,
-    // imageLinkS,
-    inventory,
-    // isFeatured,
-    // isbn,
-    price,
-    publisher,
-    rating,
-    title,
-    year,
-  } = bookInfo;
+  // const {
+  //   author,
+  //   description,
+  //   genre,
+  //   // globalRatings,
+  //   id,
+  //   imageLinkL,
+  //   // imageLinkM,
+  //   // imageLinkS,
+  //   inventory,
+  //   // isFeatured,
+  //   // isbn,
+  //   price,
+  //   publisher,
+  //   rating,
+  //   title,
+  //   year,
+  // } = bookInfo;
   return (
-    <>
-    
-    <div id="book-page-background">
-    <div className="single-book-container">
-      <div className="float-child1">
-    <img className="single-book-img" src={imageLinkL} alt={title} />
-    </div>
-    <div className="float-child2">
-      <div className="single-page-text">
-      <h3 id="title">{title}</h3>
-      <Link className="author-name" to={`/authors/${author}`}>{author}</Link>
-      <h4>Rated {rating}/5 stars</h4>
-      <h5>Genre: {genre}</h5>
-      <h4>{description}</h4>
-      <h5>Price: {price}</h5>
-      <h6>
-        Published By: {publisher} in {year}
-      </h6>
-      <CartForm
-        setIsLoading={setIsLoading}
-        userId={userId}
-        price={price}
-        id={id}
-        inventory={inventory}
-        setGuestCart={setGuestCart}
-      />
-       </div>
+    <main className="single-book-container">
+      <div id="book-page-background">
+      {cartToast && (
+        <AddToCartToast setCartToast={setCartToast} cartItem={cartItem} />
+      )}
+      {bookInfo ? (
+        <>
+          <header>
+            <h2>{bookInfo.title}</h2>
+          </header>
+          <Link className="author" to={`/authors/${bookInfo.author}`}>{bookInfo.author}</Link>
+          <h4>Rated {bookInfo.rating}/5 stars</h4>
+          <img className="single-book-img" src={bookInfo.imageLinkL} alt={bookInfo.title} />
+          <h5>Genre: {bookInfo.genre}</h5>
+          <h4>{bookInfo.description}</h4>
+          <h5>
+            Price: ${bookInfo.price} | No. available:{" "}
+            {!bookInfo.inventory
+              ? "Currently out of stock!"
+              : bookInfo.inventory > 15
+              ? `${bookInfo.inventory} copies`
+              : bookInfo.inventory === 1
+              ? `Only 1 copy left!`
+              : `Only ${bookInfo.inventory} copies left!`}
+          </h5>
+          <h6>
+            Published By: {bookInfo.publisher} in {bookInfo.year}
+          </h6>
+          <CartForm
+            setIsLoading={setIsLoading}
+            userId={userId}
+            title={bookInfo.title}
+            price={bookInfo.price}
+            id={bookInfo.id}
+            inventory={bookInfo.inventory}
+            setGuestCart={setGuestCart}
+            setCartToast={setCartToast}
+            setCartItem={setCartItem}
+          />
+        </>
+      ) : (
+        <header>
+          <p>No results.</p>
+        </header>
+      )}
       </div>
-      </div>
-      </div>
-    </>
+    </main>
   );
 };
 

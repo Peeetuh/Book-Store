@@ -12,7 +12,7 @@
     list-style: none;
     position: fixed;
     top: 0;
-    background: #C4A484;
+    background: #0B0B45;
     left: 0;
     bottom: 0;
     height:100vh;
@@ -51,4 +51,10 @@
     position: fixed;
     top: 0;
     left: 22%;
+}
+
+.active-link{
+  color: white;
+  font-weight: bolder;
+  text-decoration: underline;
 }

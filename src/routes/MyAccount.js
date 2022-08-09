@@ -1,109 +1,72 @@
 import { useState, useEffect } from "react";
 import { fetchUserAccount } from "../api";
 import { editUser } from "../api";
+import { EditProfileModal } from "./components";
 import "./MyAccount.css";
 
-const MyAccount = ({ token, username, userId, setIsLoading,}) => {
-
+const MyAccount = ({ token, username, userId, setIsLoading }) => {
   const [myAccount, setMyAccount] = useState([]);
   const [editMode, setEditMode] = useState(false);
-  const [state, setState] = useState(null);
-  const [city, setCity] = useState(null);
-  const [street, setStreet] = useState(null);
-  const [zip, setZip] = useState(null);
+
   useEffect(() => {
     const loadMyAccount = async () => {
       setIsLoading(true);
       try {
         const fetchedAccount = await fetchUserAccount(token);
         console.log(fetchedAccount);
-        setMyAccount(fetchedAccount);
+        setMyAccount(fetchedAccount || []);
       } finally {
         setIsLoading(false);
       }
     };
     loadMyAccount();
-  }, [token, setIsLoading]);
-  const clickHandler = (e) => {
-    e.preventDefault();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const clickHandler = () => {
     setEditMode(true);
-    console.log(editMode);
-  }
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    setEditMode(false);
-    // setState("");
-    // setCity("");
-    // setStreet("");
-    // setZip("");
-    // console.log(state, city, street, zip);
-   const result = await editUser ( 
-      token,
-      userId,
-      state,
-      city,
-      street,
-      zip
-    )
-    setState(null);
-    setCity(null);
-    setStreet(null);
-    setZip(null);
-    console.log(result)
-  }
-  const cancelHandler = () => {
-    setEditMode(false);
-    // setState(null);
-    // setCity(null);
-    // setStreet(null);
-    // setZip(null);
-  }
+  };
 
   return (
-<>
-<section className="my-account-page">
-      <h1>Welcome {username}!</h1>
-      <h2 id="account-info"> State: { myAccount.state }<br></br> City: {myAccount.city}<br></br> Street: {myAccount.street}<br></br> Zip: {myAccount.zip}<br></br> </h2>
-      <button className="edit-profile" onClick={clickHandler}> Edit Profile</button>
-      {editMode && (<>
-      <h3> Set address details!</h3>
-      <form onSubmit={submitHandler}>
-        <label>
-          State:
-        </label>
-        <input 
-        className="inputs-account"
-        type="text" 
-        onChange={(e) => setState(e.target.value)}
+    <main id="my-account">
+      <header>
+        <h2>Your Account</h2>
+      </header>
+      <section>
+        <div>
+          <h3>Account Info</h3>
+          <p>E-mail: {username}</p>
+          <div>
+            <p>Shipping Address:</p>
+            {myAccount.street &&
+            myAccount.city &&
+            myAccount.state &&
+            myAccount.zip ? (
+              <p>
+                {myAccount.street}
+                <br />
+                {myAccount.city}, {myAccount.state} {myAccount.zip}
+              </p>
+            ) : (
+              "Please provide your full shipping address."
+            )}
+          </div>
+          {myAccount.street ||
+            myAccount.city ||
+            myAccount.state ||
+            myAccount.zip ?
+          <button onClick={clickHandler}>Edit Address</button> : <button onClick={clickHandler}>Add Address</button>}
+        </div>
+      </section>
+      {editMode && (
+        <EditProfileModal
+          token={token}
+          userId={userId}
+          setEditMode={setEditMode}
+          setMyAccount={setMyAccount}
         />
-        <label>
-          City:
-        </label>
-        <input 
-        className="inputs-account"
-        type="text" 
-        onChange={(e) => setCity(e.target.value)} />
-        <label>
-          Street:
-        </label>
-        <input 
-        className="inputs-account"
-        type="text" 
-        onChange={(e) => setStreet(e.target.value)}/>
-        <label>
-          Zipcode:
-        </label>
-        <input 
-        className="inputs-account"
-        type="number" 
-        min= '10000'
-        max= '99999'
-        onChange={(e) => setZip(e.target.value)} />
-        <button className="buttons" id="cancel" onClick={cancelHandler}>Cancel</button>
-        <button className="buttons" id="submit" type="submit">Confirm address</button>
-      </form></>
       )}
-      {myAccount.length < 1 ? (
+      {!myAccount.length ? (
         <h6>Your order history will appear here</h6>
       ) : (
         <>
@@ -148,8 +111,7 @@ const MyAccount = ({ token, username, userId, setIsLoading,}) => {
             })}
         </>
       )}
-      </section>
-    </>
+    </main>
   );
 };
 

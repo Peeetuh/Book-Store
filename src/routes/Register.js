@@ -1,5 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { fetchRegister } from "../api";
+import { AuthResponseModal } from "./components";
 
 const Register = ({
   setIsLoading,
@@ -12,7 +13,8 @@ const Register = ({
   guestCart,
   setGuestCart,
 }) => {
-  const navigate = useNavigate();
+  const [resModal, setResModal] = useState(false);
+  const [resData, setResData] = useState({});
   const usernameChangeHandler = (event) => {
     setUsername(event.target.value);
   };
@@ -24,8 +26,9 @@ const Register = ({
   const authFormSubmitHandler = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    try {      
+    try {
       const data = await fetchRegister(username, password, guestCart);
+      console.log("register", data);
       if (data.token) {
         setToken(data.token);
         setUserId(data.user.id);
@@ -35,19 +38,20 @@ const Register = ({
         window.localStorage.setItem("username", username);
         window.localStorage.setItem("token", data.token);
         window.localStorage.setItem("userId", data.user.id);
-        alert("You've successfully registered");
-        navigate("/");
-      } else {
-        alert(`${data.message}`);
       }
+      setResModal(true);
+      setResData(data);
     } finally {
       setIsLoading(false);
     }
   };
   return (
     <>
+    {resModal && (
+        <AuthResponseModal resData={resData} setResModal={setResModal} />
+      )}
       <section className="register-page">
-      <h3>Register</h3>
+      <h3 id="register-header">Register</h3>
       <h6>
         To register please enter your email address, and a password with at least 8 characters.
       </h6>
@@ -72,7 +76,7 @@ const Register = ({
           onChange={passwordChangeHandler}
         />
         </div>
-        <button type="submit">Submit</button>
+        <button id="register-btn" type="submit">Submit</button>
       </form>
       </section>
     </>

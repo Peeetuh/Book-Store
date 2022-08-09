@@ -130,3 +130,37 @@ a:hover:after{
       display: none;
     }
   }
+
+  #login-header{
+    font-family: 'Roboto', sans-serif;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    font-size: 30px;
+}
+
+#register-header{
+    font-family: 'Roboto', sans-serif;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    font-size: 30px;
+}
+
+#login-btn{
+    border-radius: 3px;
+    border: 1px solid black;
+    padding: 2px 4px;
+    margin: 0 auto;
+}
+
+#register-btn{
+    border-radius: 3px;
+    border: 1px solid black;
+    padding: 2px 4px;
+    margin: 0 auto;
+}
+
+.cartpage{
+    min-height: 80vh;
+}
