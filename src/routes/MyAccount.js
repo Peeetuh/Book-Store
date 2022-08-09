@@ -3,7 +3,7 @@ import { fetchUserAccount } from "../api";
 import { EditProfileModal } from "./components";
 
 const MyAccount = ({ token, username, userId, setIsLoading }) => {
-  const [myAccount, setMyAccount] = useState([]);
+  const [myAccount, setMyAccount] = useState({});
   const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
@@ -11,8 +11,8 @@ const MyAccount = ({ token, username, userId, setIsLoading }) => {
       setIsLoading(true);
       try {
         const fetchedAccount = await fetchUserAccount(token);
-        console.log(fetchedAccount);
-        setMyAccount(fetchedAccount || []);
+        console.log("fetched account", fetchedAccount);
+        setMyAccount(fetchedAccount);
       } finally {
         setIsLoading(false);
       }

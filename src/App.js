@@ -50,6 +50,9 @@ function App() {
     "Comedy",
     "Romance",
     "Mystery",
+    "Rom-Com",
+    "Classic",
+    "Historical-Fiction"
   ]);
   const [genreSelect, setGenreSelect] = useState("");
   const [isLoading, setIsLoading] = useState(false);
