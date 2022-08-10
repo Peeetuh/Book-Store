@@ -4,6 +4,8 @@ const AuthResponseModal = ({ resData, setResModal }) => {
   const navigate = useNavigate();
   const clickHandler = () => {
     setResModal(false);
+    if (resData.error && resData.name === 'Guest Checkout Error')
+      navigate("/Login");
     if (!resData.error) navigate("/");
   };
   return (

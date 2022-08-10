@@ -1,25 +1,31 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { fetchUserAccount } from "../api";
-import { editUser } from "../api";
+// import { editUser } from "../api";
 import { EditProfileModal } from "./components";
 import "./MyAccount.css";
 
 const MyAccount = ({ token, username, userId, setIsLoading }) => {
-  const [myAccount, setMyAccount] = useState([]);
+  const [myAccount, setMyAccount] = useState({});
+  const [myOrders, setMyOrders] = useState([]);
   const [editMode, setEditMode] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
-    const loadMyAccount = async () => {
-      setIsLoading(true);
-      try {
-        const fetchedAccount = await fetchUserAccount(token);
-        console.log(fetchedAccount);
-        setMyAccount(fetchedAccount || []);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    loadMyAccount();
+    if (localStorage.getItem("token") === null) navigate("/");
+    else {
+      const loadMyAccount = async () => {
+        setIsLoading(true);
+        try {
+          const fetchedAccount = await fetchUserAccount(token);
+          console.log("fetched account", fetchedAccount);
+          setMyAccount(fetchedAccount);
+          setMyOrders(fetchedAccount.orders || []);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      loadMyAccount();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -52,10 +58,13 @@ const MyAccount = ({ token, username, userId, setIsLoading }) => {
             )}
           </div>
           {myAccount.street ||
-            myAccount.city ||
-            myAccount.state ||
-            myAccount.zip ?
-          <button onClick={clickHandler}>Edit Address</button> : <button onClick={clickHandler}>Add Address</button>}
+          myAccount.city ||
+          myAccount.state ||
+          myAccount.zip ? (
+            <button onClick={clickHandler}>Edit Address</button>
+          ) : (
+            <button onClick={clickHandler}>Add Address</button>
+          )}
         </div>
       </section>
       {editMode && (
@@ -66,7 +75,7 @@ const MyAccount = ({ token, username, userId, setIsLoading }) => {
           setMyAccount={setMyAccount}
         />
       )}
-      {!myAccount.length ? (
+      {!myOrders.length ? (
         <h6>Your order history will appear here</h6>
       ) : (
         <>
