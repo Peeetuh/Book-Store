@@ -8,7 +8,7 @@ import {
 } from "./components";
 import "./MyAccount.css";
 
-const MyAccount = ({ token, username, userId, setIsLoading }) => {
+const MyAccount = ({ token, username, userId, setIsLoading, setCartToast, setCartItem }) => {
   const [myAccount, setMyAccount] = useState({});
   const [myOrders, setMyOrders] = useState([]);
   const [userInfoPage, setUserInfoPage] = useState(false);
@@ -81,7 +81,7 @@ const MyAccount = ({ token, username, userId, setIsLoading }) => {
         />
       ) : null}
       {userWishlist ? (
-        <UserWishlist token={token} />
+        <UserWishlist token={token} username={username} userId={userId} setCartToast={setCartToast} setCartItem={setCartItem} />
       ) : null}
     </main>
   );

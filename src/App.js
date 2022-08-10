@@ -180,6 +180,8 @@ function App() {
               setUserId={setUserId}
               setIsLoading={setIsLoading}
               userId={userId}
+              setCartToast={setCartToast} 
+              setCartItem={setCartItem}
             />
           }
         />

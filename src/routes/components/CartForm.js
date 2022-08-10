@@ -29,6 +29,7 @@ const CartForm = ({
         await addBookToCart(userId, price, id, bookQuantity);
         setCartToast(true);
         setCartItem({title, price, bookQuantity})
+        console.log(userId, price, id, bookQuantity)
       } else {
         const existingEntries =
           JSON.parse(localStorage.getItem("GuestCartData")) || [];

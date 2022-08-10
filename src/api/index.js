@@ -1,5 +1,5 @@
-const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
-// const BASE_URL = "http://localhost:4000/api";
+// const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
+const BASE_URL = "http://localhost:4000/api";
 
 export const fetchRegister = async (userEmail, password, guestCart) => {
   try {
@@ -111,14 +111,33 @@ export const addBookToWishlist = async (token, userId, bookId) => {
       },
       body: JSON.stringify({
         userId,
-        bookId
+        bookId,
       }),
     });
     const data = await response.json();
-    console.log("wishlistData", data.result[0])
+    console.log("wishlistData", data.result[0]);
     return data;
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const deleteBookFromWishlist = async (token, wishlistId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/me/wishlist`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        wishlistId,
+      }),
+    });
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error("An error occurred:", err);
   }
 };
 
@@ -246,14 +265,15 @@ export const searchRequestCount = async (searchString) => {
   try {
     const response = await fetch(`${BASE_URL}/search/${searchString}`, {
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-    })
+    });
     const data = await response.json();
     return data;
+  } catch (err) {
+    console.error("An error occurred:", err);
   }
-  catch(err){console.error('An error occurred:',(err))};
-}
+};
 
 export const searchRequest = async (searchString, currentPage) => {
   try {
