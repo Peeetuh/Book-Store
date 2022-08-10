@@ -58,12 +58,6 @@ const MyAccount = ({ token, username, userId, setIsLoading }) => {
             )}
           </div>
           {myAccount.street ||
-<<<<<<< HEAD
-            myAccount.city ||
-            myAccount.state ||
-            myAccount.zip ?
-          <button className="myaccount-btn" onClick={clickHandler}>Edit Address</button> : <button className="myaccount-btn" onClick={clickHandler}>Add Address</button>}
-=======
           myAccount.city ||
           myAccount.state ||
           myAccount.zip ? (
@@ -71,7 +65,6 @@ const MyAccount = ({ token, username, userId, setIsLoading }) => {
           ) : (
             <button onClick={clickHandler}>Add Address</button>
           )}
->>>>>>> development
         </div>
       </section>
       {editMode && (

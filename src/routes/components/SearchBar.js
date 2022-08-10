@@ -24,7 +24,7 @@ const SearchBar = ({ setSearchQuery, setIsLoading }) => {
     <div className="search-container">
       <div className="elements-container">
         <form className="search-bar">
-          <input className="input" type="search" onChange={changeHandler} />
+          <input className="input" placeholder="Search by titles..." type="search" onChange={changeHandler} />
           <button className="search-button" onClick={clickHandler}>
             <img src={searchicon} alt="searchicon" className="search-icon" />
           </button>

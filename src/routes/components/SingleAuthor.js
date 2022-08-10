@@ -79,7 +79,7 @@ function Author({
         </p>
         <div>
           <h3 id="books-by">Books by {authorName}</h3>
-          <div className="bbc-books">
+          <div className="related-books-display">
           
           {authorBooks.map((book) => {
             return (

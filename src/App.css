@@ -65,6 +65,7 @@ a:hover:after{
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
+    padding-bottom: 30px;
 }
 
 .login

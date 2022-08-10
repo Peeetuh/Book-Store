@@ -35,7 +35,6 @@
     font-weight: bolder;
     position: absolute;
     margin-bottom: 200px;
-    /* flex-wrap: wrap; */
 }
 
 #author-row{
@@ -43,8 +42,9 @@
     flex-direction: column;
 }
 
-.bbc-books{
+.related-books-display{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    padding-bottom: 30px;
 }
