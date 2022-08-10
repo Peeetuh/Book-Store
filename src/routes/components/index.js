@@ -10,4 +10,7 @@ export { default as DisplayGenreBooks } from "./DisplayGenreBooks";
 export { default as Author } from "./SingleAuthor";
 export { default as Loading } from "./Loading";
 export { default as DeleteFromCartButton } from "./DeleteFromCartButton";
-
+export { default as UserWishlist } from './UserWishlist';
+export { default as UserOrders } from './UserOrders';
+export { default as UserInfo } from './UserInfo';
+export { default as WishlistButton } from './WishlistButton';

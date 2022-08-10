@@ -54,8 +54,7 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
   useEffect(() => {
     if (stripeConfirm) {
       const closeOrder = async () => {
-        const result = await userCompleteOrderReq(token, currOrderId);
-        console.log("result", result);
+        await userCompleteOrderReq(token, currOrderId);
       };
       closeOrder();
       loadUserCart();

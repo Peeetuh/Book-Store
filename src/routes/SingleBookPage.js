@@ -57,6 +57,7 @@ const SingleBookPage = ({ userId, token, setIsLoading, setGuestCart }) => {
         id={id}
         inventory={inventory}
         setGuestCart={setGuestCart}
+        token={token}
       />
     </>
   );

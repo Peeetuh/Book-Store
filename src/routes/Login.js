@@ -27,10 +27,8 @@ const Login = ({
     event.preventDefault();
     setIsLoading(true);
     try {
-      console.log("guest cart before log on", guestCart);
       const data = await fetchLogin(username, password, guestCart);
       if (data.token) {
-        console.log("login data:", data);
         setToken(data.token);
         setUserId(data.user.id);
         setUsername(data.user.userEmail);

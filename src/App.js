@@ -212,9 +212,15 @@ function App() {
         />
         <Route
           path="/authors/:authorName"
-          element={<Author userId={userId} setIsLoading={setIsLoading} setGuestCart={setGuestCart} />}
+          element={
+            <Author
+              userId={userId}
+              setIsLoading={setIsLoading}
+              setGuestCart={setGuestCart}
+              token={token}
+            />
+          }
         />
-        {/* <Route path="/authors/:authorName" element={<Author />} /> */}
         <Route path="/admin" element={<Admin />}>
           <Route
             path="/admin/users"
@@ -231,7 +237,6 @@ function App() {
             }
           />
         </Route>
-        {/* <Route path="/CartForm" element={<CartForm />} /> */}
         <Route
           path="/SearchResult"
           element={<SearchResult searchResult={searchResult} />}

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { CartForm } from "./";
 
-function DisplayFeatured({ featured, userId, setIsLoading, setGuestCart }) {
+function DisplayFeatured({ token, featured, userId, setIsLoading, setGuestCart }) {
   return (
     <section>
       <header>
@@ -27,6 +27,7 @@ function DisplayFeatured({ featured, userId, setIsLoading, setGuestCart }) {
                 title={book.title}
                 author={book.author}
                 setGuestCart={setGuestCart}
+                token={token}
               />
             </div>
           );

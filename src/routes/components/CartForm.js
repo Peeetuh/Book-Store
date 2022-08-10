@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { addBookToCart } from "../../api";
 import Selector from "./Selector";
+import WishlistButton from "./WishlistButton";
 
 const CartForm = ({
+  token,
   userId,
   price,
   id,
@@ -60,7 +62,7 @@ const CartForm = ({
   };
 
   return (
-    <form onSubmit={addToCartSubmitHandler}>
+    <form>
       <label>Quantity</label>
       <select
         name="selectList"
@@ -69,7 +71,15 @@ const CartForm = ({
         <Selector inventory={inventory} />
       </select>
       {inventory < 15 ? <h6>Only {inventory} left in stock</h6> : null}
-      <button type="submit">Add to Cart</button>
+      <button onClick={addToCartSubmitHandler}>Add to Cart</button>
+      {userId ? (
+        <WishlistButton
+          setIsLoading={setIsLoading}
+          userId={userId}
+          bookId={id}
+          token={token}
+        />
+      ) : null}
     </form>
   );
 };

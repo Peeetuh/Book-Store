@@ -32,7 +32,6 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      console.log(guestEmail, guestCart);
       const result = await guestCheckoutRequest(guestEmail, guestCart);
       console.log(result);
       result.error && alert(result.message);
@@ -156,7 +155,6 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
                       return book.id !== cart.id;
                     });
 
-                    //console.log("newCartData", newCartData)
                     localStorage.setItem(
                       "GuestCartData",
                       JSON.stringify(newCartData)

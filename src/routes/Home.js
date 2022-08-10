@@ -10,7 +10,7 @@ import {
   requestFeatured,
 } from "../api";
 
-function Home({ userId, username, setIsLoading, setGuestCart }) {
+function Home({ token, userId, username, setIsLoading, setGuestCart }) {
   const [topCuratedRanking, setTopCuratedRanking] = useState([]);
   const [topRated, setTopRated] = useState([]);
   const [featured, setFeatured] = useState([]);
@@ -54,18 +54,21 @@ function Home({ userId, username, setIsLoading, setGuestCart }) {
     <main>
       <h1 className="title-home">TBM Bookstore</h1>
       <DisplayCuratedRanking
+        token={token}
         topCuratedRanking={topCuratedRanking}
         userId={userId}
         setIsLoading={setIsLoading}
         setGuestCart={setGuestCart}
       />
       <DisplayHighestRanking
+        token={token}
         topRated={topRated}
         userId={userId}
         setIsLoading={setIsLoading}
         setGuestCart={setGuestCart}
       />
       <DisplayFeatured
+        token={token}
         featured={featured}
         userId={userId}
         setIsLoading={setIsLoading}

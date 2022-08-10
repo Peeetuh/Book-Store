@@ -1,5 +1,5 @@
-// const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
-const BASE_URL = "http://localhost:4000/api";
+const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
+//const BASE_URL = "http://localhost:4000/api";
 
 export const fetchRegister = async (userEmail, password, guestCart) => {
   try {
@@ -15,7 +15,6 @@ export const fetchRegister = async (userEmail, password, guestCart) => {
       }),
     });
     const data = await response.json();
-    // console.log("data", data);
     return data;
   } catch (error) {
     console.log(error);
@@ -32,7 +31,7 @@ export const fetchLogin = async (userEmail, password, guestCart) => {
       body: JSON.stringify({
         userEmail,
         password,
-        guestCart
+        guestCart,
       }),
     });
     const data = await response.json();
@@ -59,7 +58,7 @@ export const fetchUserAccount = async (token) => {
 
 // export const setAddress = async (token, userId, state, city, street, zip) => {
 //   try {
-//     const response = await fetch(`${BASE_URL}/users/${userId}/update` , {
+//     const response = await fetch(`${BASE_URL}/users/${userId}/update`, {
 //       method: "PATCH" ,
 //       headers: {
 //         "Content-Type": "application/json",
@@ -78,9 +77,9 @@ export const fetchUserAccount = async (token) => {
 //     console.log(error)
 //   }
 // };
+
 export const editUser = async (token, userId, state, city, street, zip) => {
   try {
-    console.log(state, city, street, zip)
     const response = await fetch(`${BASE_URL}/users/${userId}/update`, {
       method: "PATCH",
       headers: {
@@ -91,14 +90,49 @@ export const editUser = async (token, userId, state, city, street, zip) => {
         state,
         city,
         street,
-        zip
-      })
+        zip,
+      }),
     });
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (err) {
     console.error("An error occurred:", err);
+  }
+};
+
+export const getUserWishlist = async (token) => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/me/wishlist`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    console.log("wishlistData", data);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addBookToWishlist = async (token, userId, bookId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/me/wishlist`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        userId,
+        bookId,
+      }),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -170,9 +204,7 @@ export const deleteFromCart = async (
   orderId,
   bookId,
   bookPrice,
-  quantity,
-  // userCart,
-  // setUserCart
+  quantity
 ) => {
   try {
     const response = await fetch(`${BASE_URL}/orders/cart`, {
@@ -188,11 +220,6 @@ export const deleteFromCart = async (
       }),
     });
     const data = await response.json();
-    // console.log("data", data);
-    // if (data) {
-    //   const newCart = userCart.filter((cart) => cart.id !== bookId);
-    //   setUserCart(newCart);
-    // }
     return data;
   } catch (error) {
     console.log(error);
@@ -249,7 +276,6 @@ export const requestTopRated = async () => {
     },
   });
   const dataTopRated = await response.json();
-  // console.log(dataTopRated);
   return dataTopRated;
 };
 

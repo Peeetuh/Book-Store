@@ -16,7 +16,6 @@ const SearchBar = ({ setSearchResult, setIsLoading }) => {
     try {
       navigate("./SearchResult");
       const result = await searchRequest(searchQuery);
-      console.log(result);
       setSearchResult(result);
     } finally {
       setIsLoading(false);

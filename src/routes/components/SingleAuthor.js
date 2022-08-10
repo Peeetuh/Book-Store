@@ -5,7 +5,7 @@ import { faker } from "@faker-js/faker";
 import CartForm from "./CartForm";
 import { Link } from "react-router-dom";
 
-function Author({ userId, setIsLoading, setGuestCart }) {
+function Author({ token, userId, setIsLoading, setGuestCart }) {
   const [author, setAuthor] = useState([]);
   const { authorName } = useParams();
   const fakeBio = faker.lorem.paragraph(6);
@@ -53,6 +53,7 @@ function Author({ userId, setIsLoading, setGuestCart }) {
                   id={book.id}
                   inventory={book.inventory}
                   setGuestCart={setGuestCart}
+                  token={token}
                 />
               </div>
             </>
