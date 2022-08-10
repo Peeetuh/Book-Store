@@ -3,7 +3,7 @@ import {
   guestCompleteOrderReq,
   guestCancelOrder,
 } from "../api/checkout";
-import { GuestCheckoutModal } from "./components";
+import { GuestCheckoutModal, AuthResponseModal } from "./components";
 
 const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
   const [updatedBookQuantity, setUpdatedBookQuantity] = useState(1);
@@ -14,6 +14,8 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
   const [stripeRes, setStripeRes] = useState(false);
   const [stripeMsg, setStripeMsg] = useState("");
   const [currOrderId, setCurrOrderId] = useState(null);
+  const [resModal, setResModal] = useState(false);
+  const [resData, setResData] = useState({});
 
   const calculateOrderPrice = (guestCart) => {
     const totalPrice = guestCart.reduce((total, cart) => {
@@ -93,6 +95,9 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
   return (
     <main className="cartpage">
       <h2>Guest Checkout</h2>
+      {resModal && (
+        <AuthResponseModal resData={resData} setResModal={setResModal} />
+      )}
       {isCheckingOut && (
         <GuestCheckoutModal
           setIsCheckingOut={setIsCheckingOut}
@@ -100,6 +105,8 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
           guestEmail={guestEmail}
           setGuestEmail={setGuestEmail}
           guestCart={guestCart}
+          setResModal={setResModal}
+          setResData={setResData}
         />
       )}
       {stripeRes && <p>{stripeMsg}</p>}
