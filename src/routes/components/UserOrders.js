@@ -1,9 +1,8 @@
-const UserOrders = ({ myAccount }) => {
+const UserOrders = ({ myAccount, myOrders }) => {
 
   return (
     <>
-      <h1>Orders</h1>
-      {myAccount.length < 1 ? (
+      {myOrders.length < 1 ? (
         <h6>Your order history will appear here</h6>
       ) : (
         <>

@@ -1,23 +1,18 @@
 import { useEffect, useState } from "react";
 import { getUserWishlist } from "../../api";
 
-const UserWishlist = ({ setIsLoading, token }) => {
+const UserWishlist = ({ token }) => {
   const [wishlist, setWishlist] = useState("");
 
   useEffect(() => {
     const loadWishlist = async () => {
-      setIsLoading(true);
-      try {
-        const fetchedAccount = await getUserWishlist(token);
-        setWishlist(fetchedAccount);
-      } finally {
-        setIsLoading(false);
-      }
+      const fetchedAccount = await getUserWishlist(token);
+      setWishlist(fetchedAccount);
     };
     loadWishlist();
-  }, [token, setIsLoading]);
+  }, [token]);
 
-  console.log("wishlist", wishlist)
+  console.log("wishlist", wishlist);
   return (
     <>
       <h1>Wishlist</h1>
