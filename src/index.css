@@ -76,6 +76,7 @@ body {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
+  min-height: 80vh;
 }
 
 .display-paginated-container {
@@ -232,4 +233,8 @@ textarea {
 select{
   border: 0.5px solid black;
   cursor: pointer;
+}
+
+#search-result-h2{
+  margin: 0 auto;  
 }

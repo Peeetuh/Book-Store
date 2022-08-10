@@ -39,7 +39,7 @@ function SearchResult({ searchQuery }) {
   return (
     <main id="display-paginated">
       <header>
-        <h2>
+        <h2 id="search-result-h2">
           {resCount} results found for "{searchQuery}"
         </h2>
       </header>
