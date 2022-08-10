@@ -47,7 +47,7 @@ const MyAccount = ({ token, username, userId, setIsLoading }) => {
           setUserWishlist(false);
         }}
       >
-        Your Account
+        Account Info
       </button>
       <button
         onClick={() => {

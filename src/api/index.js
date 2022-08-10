@@ -111,10 +111,11 @@ export const addBookToWishlist = async (token, userId, bookId) => {
       },
       body: JSON.stringify({
         userId,
-        bookId,
+        bookId
       }),
     });
     const data = await response.json();
+    console.log("wishlistData", data.result[0])
     return data;
   } catch (error) {
     console.log(error);

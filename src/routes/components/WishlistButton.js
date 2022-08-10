@@ -3,8 +3,7 @@ import { addBookToWishlist } from "../../api";
 const WishlistButton = ({userId, bookId, token}) => {
   const addToWishlist = async (event) => {
     event.preventDefault();
-    const wishlistBook = await addBookToWishlist(token, userId, bookId);
-    console.log("wishlistBook", wishlistBook)
+    await addBookToWishlist(token, userId, bookId);
     alert("Book added to wishlist");
   };
 

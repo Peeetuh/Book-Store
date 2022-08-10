@@ -3,11 +3,11 @@ import { getUserWishlist } from "../../api";
 
 const UserWishlist = ({ token }) => {
   const [wishlist, setWishlist] = useState("");
-
+  
   useEffect(() => {
     const loadWishlist = async () => {
-      const fetchedAccount = await getUserWishlist(token);
-      setWishlist(fetchedAccount);
+      const fetchedWishlist = await getUserWishlist(token);
+      setWishlist(fetchedWishlist);
     };
     loadWishlist();
   }, [token]);

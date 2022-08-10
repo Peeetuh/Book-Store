@@ -19,3 +19,4 @@ export { default as UserWishlist } from './UserWishlist';
 export { default as UserOrders } from './UserOrders';
 export { default as UserInfo } from './UserInfo';
 export { default as WishlistButton } from './WishlistButton';
+export { default as SingleAuthor } from './SingleAuthor';
