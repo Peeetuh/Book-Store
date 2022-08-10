@@ -36,6 +36,7 @@ const AdminProducts = ({ token, setIsLoading }) => {
           token={token}
           setNewBookModal={setNewBookModal}
           currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
           setBooksData={setBooksData}
         />
       )}

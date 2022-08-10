@@ -69,7 +69,7 @@ function Home({
 
   return (
     <main>
-      {toast && <LogOutToast setCartToast={setCartToast} />}
+      {toast && <LogOutToast setToast={setToast} />}
       {cartToast && (
         <AddToCartToast setCartToast={setCartToast} cartItem={cartItem} />
       )}

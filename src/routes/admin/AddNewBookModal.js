@@ -6,7 +6,7 @@ const AddNewBookModal = ({
   setNewBookModal,
   currentPage,
   setBooksData,
-  setIsLoading,
+  setCurrentPage
 }) => {
   const [isbn, setIsbn] = useState("");
   const [title, setTitle] = useState("");
@@ -24,39 +24,34 @@ const AddNewBookModal = ({
   };
   const submitHandler = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    try {
-      const result = await addBookRequest(
-        token,
-        isbn,
-        title,
-        author,
-        year,
-        publisher,
-        imageLink,
-        genre,
-        description,
-        price,
-        inventory
-      );
-      console.log("result of adding book:", result);
-      const books = await paginatedBooksData(token, currentPage + 1);
-      console.log(books, currentPage);
-      setBooksData(books);
-      setIsbn("");
-      setTitle("");
-      setAuthor("");
-      setYear("");
-      setPublisher("");
-      setImageLink("");
-      setGenre("");
-      setDescription("");
-      setPrice("");
-      setInventory("");
-      setNewBookModal(false);
-    } finally {
-      setIsLoading(false);
-    }
+    const result = await addBookRequest(
+      token,
+      isbn,
+      title,
+      author,
+      year,
+      publisher,
+      imageLink,
+      genre,
+      description,
+      price,
+      inventory
+    );
+    console.log("result of adding book:", result);
+    const books = await paginatedBooksData(token, 1);
+    setBooksData(books);
+    setCurrentPage(1);
+    setIsbn("");
+    setTitle("");
+    setAuthor("");
+    setYear("");
+    setPublisher("");
+    setImageLink("");
+    setGenre("");
+    setDescription("");
+    setPrice("");
+    setInventory("");
+    setNewBookModal(false);
   };
   return (
     <>
@@ -109,7 +104,11 @@ const AddNewBookModal = ({
             onChange={(e) => setGenre(e.target.value)}
           />
           <label>Description</label>
-          <textarea rows="5" required onChange={(e) => setDescription(e.target.value)} />
+          <textarea
+            rows="5"
+            required
+            onChange={(e) => setDescription(e.target.value)}
+          />
           <label>Price</label>
           <input
             type="text"
@@ -125,8 +124,8 @@ const AddNewBookModal = ({
             onChange={(e) => setInventory(e.target.value)}
           />
           <div className="modal-form-buttons">
-          <button onClick={cancelClickHandler}>Cancel</button>
-          <button type="submit">Submit</button>
+            <button onClick={cancelClickHandler}>Cancel</button>
+            <button type="submit">Submit</button>
           </div>
         </form>
       </div>

@@ -9,6 +9,8 @@ const GuestCheckoutModal = ({
   guestEmail,
   setGuestEmail,
   guestCart,
+  setResModal,
+  setResData,
 }) => {
   const cancelClickHandler = () => setIsCheckingOut(false);
   const submitHandler = async (e) => {
@@ -17,7 +19,11 @@ const GuestCheckoutModal = ({
     try {
       const result = await guestCheckoutRequest(guestEmail, guestCart);
       console.log("result", result);
-      result.error && alert(result.message);
+      if(result.error) {
+        setIsCheckingOut(false);
+        setResModal(true);
+        setResData(result);
+      }
       if (result.status && result.status === "checkout") {
         const { orderPrice, orderId } = result;
         await stripeCheckoutRequest(orderPrice, orderId);

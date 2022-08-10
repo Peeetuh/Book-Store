@@ -109,6 +109,10 @@ textarea {
   border: 1px solid #999;
 }
 
+.modal-form textarea {
+  margin: 0.2rem auto 0.5rem;
+}
+
 .modal-form-buttons {
   display: flex;
   flex-direction: row;
