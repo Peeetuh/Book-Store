@@ -4,37 +4,6 @@
     margin-right: 30px;
   }
 
-#single-author-name{
-    font-weight: bolder;
-    font-size: larger;
-    font-style: italic;
-}
-
-#background-color{
-    background-color: #A8DADC;
-    margin-right: 70px;
-    margin-left: 70px;
-    margin-top: 50px;
-    margin-bottom: 70px;
-    box-shadow: 0px 0px 15px -5px;
-}
-
-#author-child-1{
-    display: flex;
-    flex-wrap: wrap;
-    float: left;
-   margin-left: 120px;
-   margin-right: 100px;
-   margin-top: 30px;
-}
-
-#float-child-author-2{
-    width: 50%;
-    float: right;
-    margin-top: 150px;
-    margin-right: 50px;
-}
-
 
 #books-by{
     font-weight: bolder;
@@ -66,9 +35,16 @@
     font-weight: bolder;
     position: absolute;
     margin-bottom: 200px;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
 }
 
-.cart-form{
-    margin-bottom: 10px;
+#author-row{
+    display: flex;
+    flex-direction: column;
+}
+
+.bbc-books{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }

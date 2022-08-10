@@ -59,8 +59,8 @@ const DisplayGenreBooks = ({ genreSelect, setIsLoading }) => {
                   <Link to={`/books/${book.id}`}>
                     <div className="display-paginated-container">
                       <img src={book.imageLinkM} alt={book.title} />
-                      <span>{book.title}</span>
-                      <span>{book.author}</span>
+                      <span id="book-title">{book.title}</span>
+                      <span id="book-author">{book.author}</span>
                     </div>
                   </Link>
                 </React.Fragment>

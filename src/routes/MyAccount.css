@@ -33,7 +33,8 @@
     padding-left: 2px;
 }
 
-.buttons{
-    display: inline-block;
-    margin: 0 auto;
+.myaccount-btn{
+    border: 1px solid black;
+    padding-left: 3px;
+    padding-right: 3px;
 }

@@ -48,7 +48,7 @@ function Author({
           alt="Random stock"
         ></img>
       </header>
-      <section>
+      <section id="author-bio">
         <p>
           <b>About {authorName}:</b> Lorem ipsum dolor sit amet, consectetur
           adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
@@ -79,9 +79,11 @@ function Author({
         </p>
         <div>
           <h3 id="books-by">Books by {authorName}</h3>
+          <div className="bbc-books">
+          
           {authorBooks.map((book) => {
             return (
-              <div key={book.id}>
+              <div key={book.id} id="author-row">
                 <Link to={`/books/${book.id}`}> 
                   <img id="author-book-img" src={book.imageLinkM} alt={book.title} />
                 </Link>
@@ -100,6 +102,7 @@ function Author({
               </div>
             );
           })}
+          </div>
         </div>
       </section>
     </main>
