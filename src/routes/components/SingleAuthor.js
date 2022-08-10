@@ -8,6 +8,7 @@ import AddToCartToast from "./modals/AddToCartToast";
 import "./SingleAuthor.css";
 
 function Author({
+  token,
   userId,
   setIsLoading,
   setGuestCart,
@@ -98,6 +99,7 @@ function Author({
                   setGuestCart={setGuestCart}
                   setCartToast={setCartToast}
                   setCartItem={setCartItem}
+                  token={token}
                 />
               </div>
             );

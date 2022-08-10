@@ -2,9 +2,11 @@ import { useState } from "react";
 import { addBookToCart } from "../../api";
 import Selector from "./Selector";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import WishlistButton from "./WishlistButton";
 
 
 const CartForm = ({
+  token,
   userId,
   price,
   id,
@@ -69,7 +71,7 @@ const CartForm = ({
   };
 
   return (
-    <form onSubmit={addToCartSubmitHandler}>
+    <form>
       <label>Quantity</label>
       {inventory ? (
         <select
@@ -86,6 +88,14 @@ const CartForm = ({
       ) : (
         <button disabled>Add to Cart</button>
       )}
+      {userId ? (
+        <WishlistButton
+          setIsLoading={setIsLoading}
+          userId={userId}
+          bookId={id}
+          token={token}
+        />
+      ) : null}
     </form>
   );
 };

@@ -15,7 +15,6 @@ const AdminUsers = ({ token, setIsLoading }) => {
       try {
         const count = await usersCountRequest();
         const users = await paginatedUsersRequest(token, currentPage);
-        console.log("Users:", users);
         setPages(Math.ceil(count / 100));
         setUsersData(users);
       } finally {

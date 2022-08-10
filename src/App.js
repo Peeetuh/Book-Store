@@ -244,6 +244,7 @@ function App() {
               setCartToast={setCartToast}
               cartItem={cartItem}
               setCartItem={setCartItem}
+              token={token}
             />
           }
         />

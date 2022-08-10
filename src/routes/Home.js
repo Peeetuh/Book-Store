@@ -13,6 +13,7 @@ import {
 } from "../api";
 
 function Home({
+  token,
   userId,
   username,
   setIsLoading,
@@ -75,6 +76,7 @@ function Home({
       )}
       <h1 className="title-home">TBM Bookstore</h1>
       <DisplayCuratedRanking
+        token={token}
         topCuratedRanking={topCuratedRanking}
         userId={userId}
         setIsLoading={setIsLoading}
@@ -83,6 +85,7 @@ function Home({
         setCartItem={setCartItem}
       />
       <DisplayHighestRanking
+        token={token}
         topRated={topRated}
         userId={userId}
         setIsLoading={setIsLoading}
@@ -91,6 +94,7 @@ function Home({
         setCartItem={setCartItem}
       />
       <DisplayFeatured
+        token={token}
         featured={featured}
         userId={userId}
         setIsLoading={setIsLoading}
