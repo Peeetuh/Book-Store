@@ -84,7 +84,7 @@ const CartForm = ({
         <select name="selectList" disabled></select>
       )}
       {inventory ? (
-        <button type="submit"><AiOutlineShoppingCart /></button>
+        <button onClick={addToCartSubmitHandler}><AiOutlineShoppingCart /></button>
       ) : (
         <button disabled>Add to Cart</button>
       )}

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { EditProfileModal } from "./components";
+import EditProfileModal from "./modals/EditProfileModal";
+
 
 const UserInfo = ({ token, userId, myAccount, username, setMyAccount }) => {
   const [editMode, setEditMode] = useState(false);
