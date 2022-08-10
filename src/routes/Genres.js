@@ -7,6 +7,10 @@ import Mystery from "./components/Images/mystery.png"
 import Thriller from "./components/Images/thriller.png"
 import Romance from "./components/Images/romance.png"
 import ScienceFiction from "./components/Images/sciencefiction.png"
+import RomCom from "./components/Images/rom-com.png"
+import Classic from "./components/Images/classic.png"
+import HistoricalFiction from "./components/Images/historical-fiction.png"
+
 
 function Genres({ genres, setGenreSelect }) {
   return (
@@ -34,6 +38,12 @@ function Genres({ genres, setGenreSelect }) {
             imgSrc = GeneralFiction
           } if (genre === "Mystery") {
             imgSrc = Mystery
+          } if (genre ==="Rom-Com") {
+            imgSrc = RomCom
+          } if (genre ==="Classic") {
+            imgSrc = Classic
+          } if (genre === "Historical-Fiction") {
+            imgSrc = HistoricalFiction
           }
 
           return (

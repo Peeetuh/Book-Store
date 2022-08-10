@@ -113,6 +113,7 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
                 <div>
                   <label>Change Order Quantity</label>
                   <input
+                    id="input-quantity"
                     type="number"
                     min={1}
                     max={cart.inventory}
@@ -128,6 +129,7 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
                     <Selector inventory={inventory} />
                   </select> */}
                   <button
+                    className="user-cart-confirm"
                     type="confirm"
                     onClick={async (event) => {
                       event.preventDefault();
@@ -150,7 +152,7 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
           })}
           <h4>Cart Total: {userCart.orderPrice}</h4>
           <form onSubmit={submitHandler}>
-            <button type="submit">Proceed to Checkout</button>
+            <button className="user-cart-confirm" type="submit">Proceed to Checkout</button>
           </form>
         </>
       )}

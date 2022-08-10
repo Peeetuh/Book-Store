@@ -18,3 +18,12 @@
   font-weight: bolder;
   font-size: 30px;
 }
+
+#book-title{
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#book-author{
+  font-style: italic;
+}

@@ -84,6 +84,7 @@ const handleToggle = () => {
             <li>
             {token ? (
                 <Link
+                className="active-link"
                 to="/logout">
                     Logout
                 </Link>
