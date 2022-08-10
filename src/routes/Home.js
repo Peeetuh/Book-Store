@@ -3,6 +3,8 @@ import {
   DisplayCuratedRanking,
   DisplayHighestRanking,
   DisplayFeatured,
+  LogOutToast,
+  AddToCartToast,
 } from "./components";
 import {
   requestCuratedRanking,
@@ -10,7 +12,19 @@ import {
   requestFeatured,
 } from "../api";
 
-function Home({ token, userId, username, setIsLoading, setGuestCart }) {
+function Home({
+  token,
+  userId,
+  username,
+  setIsLoading,
+  setGuestCart,
+  toast,
+  setToast,
+  cartToast,
+  setCartToast,
+  cartItem,
+  setCartItem,
+}) {
   const [topCuratedRanking, setTopCuratedRanking] = useState([]);
   const [topRated, setTopRated] = useState([]);
   const [featured, setFeatured] = useState([]);
@@ -48,10 +62,18 @@ function Home({ token, userId, username, setIsLoading, setGuestCart }) {
       }
     };
     fetchFeatured();
-  }, [setIsLoading]);
+    setTimeout(() => {
+      setToast(false);
+    }, 5500);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <main>
+      {toast && <LogOutToast setToast={setToast} />}
+      {cartToast && (
+        <AddToCartToast setCartToast={setCartToast} cartItem={cartItem} />
+      )}
       <h1 className="title-home">TBM Bookstore</h1>
       <DisplayCuratedRanking
         token={token}
@@ -59,6 +81,8 @@ function Home({ token, userId, username, setIsLoading, setGuestCart }) {
         userId={userId}
         setIsLoading={setIsLoading}
         setGuestCart={setGuestCart}
+        setCartToast={setCartToast}
+        setCartItem={setCartItem}
       />
       <DisplayHighestRanking
         token={token}
@@ -66,6 +90,8 @@ function Home({ token, userId, username, setIsLoading, setGuestCart }) {
         userId={userId}
         setIsLoading={setIsLoading}
         setGuestCart={setGuestCart}
+        setCartToast={setCartToast}
+        setCartItem={setCartItem}
       />
       <DisplayFeatured
         token={token}
@@ -73,6 +99,8 @@ function Home({ token, userId, username, setIsLoading, setGuestCart }) {
         userId={userId}
         setIsLoading={setIsLoading}
         setGuestCart={setGuestCart}
+        setCartToast={setCartToast}
+        setCartItem={setCartItem}
       />
     </main>
   );

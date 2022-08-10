@@ -1,5 +1,5 @@
 const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
-//const BASE_URL = "http://localhost:4000/api";
+// const BASE_URL = "http://localhost:4000/api";
 
 export const fetchRegister = async (userEmail, password, guestCart) => {
   try {
@@ -56,29 +56,14 @@ export const fetchUserAccount = async (token) => {
   }
 };
 
-// export const setAddress = async (token, userId, state, city, street, zip) => {
-//   try {
-//     const response = await fetch(`${BASE_URL}/users/${userId}/update`, {
-//       method: "PATCH" ,
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${token}`,
-//       },
-//       body: JSON.stringify({
-//         state,
-//         city,
-//         street,
-//         zip,
-//       }),
-//     })
-//     const data = await response.json();
-//     return data;
-//   } catch (error) {
-//     console.log(error)
-//   }
-// };
-
-export const editUser = async (token, userId, state, city, street, zip) => {
+export const editUsersAddress = async (
+  token,
+  userId,
+  state,
+  city,
+  street,
+  zip
+) => {
   try {
     const response = await fetch(`${BASE_URL}/users/${userId}/update`, {
       method: "PATCH",
@@ -205,6 +190,8 @@ export const deleteFromCart = async (
   bookId,
   bookPrice,
   quantity
+  // userCart,
+  // setUserCart
 ) => {
   try {
     const response = await fetch(`${BASE_URL}/orders/cart`, {
@@ -254,14 +241,29 @@ export const requestFeatured = async () => {
   }
 };
 
-export const searchRequest = async (searchstring) => {
+export const searchRequestCount = async (searchString) => {
   try {
-    const response = await fetch(`${BASE_URL}/search/${searchstring}`, {
-      //
+    const response = await fetch(`${BASE_URL}/search/${searchString}`, {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-    });
+    })
+    const data = await response.json();
+    return data;
+  }
+  catch(err){console.error('An error occurred:',(err))};
+}
+
+export const searchRequest = async (searchString, currentPage) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/search/${searchString}/${currentPage}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     const data = await response.json();
     return data;
   } catch (error) {

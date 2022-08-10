@@ -1,7 +1,6 @@
 import { deactivateBookRequest, paginatedBooksData } from "../../api/admin";
 
 const DeactivateBookModal = ({
-  setIsLoading,
   token,
   setDeactivateBookModal,
   currentBookId,
@@ -14,16 +13,11 @@ const DeactivateBookModal = ({
   };
   const removeClickHandler = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    try {
-      const result = await deactivateBookRequest(token, currentBookId);
-      console.log("result of deactivating book:", result);
-      const books = await paginatedBooksData(token, currentPage);
-      setBooksData(books);
-      setDeactivateBookModal(false);
-    } finally {
-      setIsLoading(true);
-    }
+    const result = await deactivateBookRequest(token, currentBookId);
+    console.log("result of deactivating book:", result);
+    const books = await paginatedBooksData(token, currentPage);
+    setBooksData(books);
+    setDeactivateBookModal(false);
   };
   return (
     <>

@@ -1,24 +1,21 @@
 import { useEffect, useState } from "react";
-import { Selector } from "./components";
 import {
-  guestCheckoutRequest,
-  stripeCheckoutRequest,
   guestCompleteOrderReq,
   guestCancelOrder,
 } from "../api/checkout";
+import { GuestCheckoutModal, AuthResponseModal } from "./components";
 
 const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
-  // const [guestCart, setGuestCart] = useState(
-  //   JSON.parse(window.localStorage.getItem("GuestCartData")) || []
-  // );
-  const [updatedBookQuantity, setUpdatedBookQuantity] = useState();
+  const [updatedBookQuantity, setUpdatedBookQuantity] = useState(1);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [guestEmail, setGuestEmail] = useState("");
   const [stripeConfirm, setStripeConfirm] = useState(false);
   const [stripeCancel, setStripeCancel] = useState(false);
-  const [stripeMessage, setStripeMessage] = useState(false);
-  // const []
+  const [stripeRes, setStripeRes] = useState(false);
+  const [stripeMsg, setStripeMsg] = useState("");
   const [currOrderId, setCurrOrderId] = useState(null);
+  const [resModal, setResModal] = useState(false);
+  const [resData, setResData] = useState({});
 
   const calculateOrderPrice = (guestCart) => {
     const totalPrice = guestCart.reduce((total, cart) => {
@@ -27,27 +24,10 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
     return totalPrice.toFixed(2);
   };
   const checkoutClickHandler = () => setIsCheckingOut(true);
-  const cancelClickHandler = () => setIsCheckingOut(false);
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    try {
-      const result = await guestCheckoutRequest(guestEmail, guestCart);
-      console.log(result);
-      result.error && alert(result.message);
-      if (result.status === "checkout") {
-        const { orderPrice, orderId } = result;
-        await stripeCheckoutRequest(orderPrice, orderId);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const queryStr = query.toString();
-    // const idFromQuery = Number(queryStr.slice(queryStr.indexOf("?") + 13));
     setIsLoading(true);
 
     if (query.get("success")) {
@@ -83,7 +63,10 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
         setGuestCart([]);
         window.localStorage.removeItem("GuestCartData");
         setStripeConfirm(false);
-        setStripeMessage(true);
+        setStripeRes(true);
+        setStripeMsg(
+          `Your order ${currOrderId} is complete. We'll let you know when it ships. Thanks for your business!`
+        );
       }
     } finally {
       setIsLoading(false);
@@ -100,7 +83,8 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
         };
         deleteOrder();
         setStripeCancel(false);
-        setStripeMessage(true);
+        setStripeRes(true);
+        setStripeMsg("Your order has been cancelled.");
       }
     } finally {
       setIsLoading(false);
@@ -109,34 +93,23 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
   }, [stripeCancel]);
 
   return (
-    <main>
+    <main className="cartpage">
       <h2>Guest Checkout</h2>
+      {resModal && (
+        <AuthResponseModal resData={resData} setResModal={setResModal} />
+      )}
       {isCheckingOut && (
-        <div>
-          <form onSubmit={submitHandler}>
-            <h3>Checking Out as Guest</h3>
-            <label htmlFor="guest-email">
-              Please enter your email address:
-            </label>
-            <input
-              id="guest-email"
-              type="email"
-              required
-              onChange={(e) => setGuestEmail(e.target.value)}
-            />
-            <button onClick={cancelClickHandler}>Cancel</button>
-            <button type="submit">Proceed to Checkout</button>
-          </form>
-        </div>
+        <GuestCheckoutModal
+          setIsCheckingOut={setIsCheckingOut}
+          setIsLoading={setIsLoading}
+          guestEmail={guestEmail}
+          setGuestEmail={setGuestEmail}
+          guestCart={guestCart}
+          setResModal={setResModal}
+          setResData={setResData}
+        />
       )}
-      {stripeMessage && !guestCart.length ? (
-        <p>
-          Your order #{currOrderId} is complete. We'll let you know when it
-          ships. Thanks for your business, {guestEmail}!
-        </p>
-      ) : stripeMessage && guestCart.length (
-        <p>Order cancelled.</p>
-      )}
+      {stripeRes && <p>{stripeMsg}</p>}
       {!guestCart.length ? (
         <h5>There is nothing in your cart</h5>
       ) : (
@@ -145,16 +118,17 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
             return (
               <div key={cart.id}>
                 <h3>{cart.title}</h3>
-                <img src={cart.bookImage} alt={cart.title} />
                 <h6>Price: {cart.price}</h6>
-                <h6>Quantity: {cart.bookQuantity}</h6>
+                <h6>
+                  No. in your cart: {cart.bookQuantity} | No. available:{" "}
+                  {cart.inventory}
+                </h6>
                 <button
                   type="button"
                   onClick={() => {
                     const newCartData = guestCart.filter((book) => {
                       return book.id !== cart.id;
                     });
-
                     localStorage.setItem(
                       "GuestCartData",
                       JSON.stringify(newCartData)
@@ -166,14 +140,15 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
                 </button>
                 <div>
                   <label>Change Order Quantity</label>
-                  <select
-                    name="selectList"
-                    onChange={(e) =>
-                      setUpdatedBookQuantity(Number(e.target.value))
-                    }
-                  >
-                    <Selector inventory={cart.inventory} />
-                  </select>
+                  <input
+                    type="number"
+                    min={1}
+                    max={cart.inventory}
+                    placeholder={1}
+                    onChange={(e) => {
+                      setUpdatedBookQuantity(Number(e.target.value));
+                    }}
+                  />
                   <button
                     type="confirm"
                     onClick={(event) => {

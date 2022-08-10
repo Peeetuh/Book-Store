@@ -1,5 +1,5 @@
 const BASE_URL = "https://sensationnel-maison-12931.herokuapp.com/api";
-//const BASE_URL = "http://localhost:4000/api";
+// const BASE_URL = "http://localhost:4000/api";
 
 // USERS
 
@@ -75,6 +75,20 @@ const promoteUserRequest = async (token, userId) => {
 const ordersCountRequest = async () => {
   try {
     const response = await fetch(`${BASE_URL}/admin/orders`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error("An error occurred:", err);
+  }
+};
+
+const openOrdersCountRequest = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/admin/orders/open/list/count`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -279,4 +293,5 @@ export {
   editBookRequest,
   productCountRequest,
   usersCountRequest,
+  openOrdersCountRequest,
 };

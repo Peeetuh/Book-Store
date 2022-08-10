@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { addBookToCart } from "../../api";
 import Selector from "./Selector";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 import WishlistButton from "./WishlistButton";
+
 
 const CartForm = ({
   token,
@@ -14,6 +16,8 @@ const CartForm = ({
   author,
   setIsLoading,
   setGuestCart,
+  setCartToast,
+  setCartItem
 }) => {
   const [bookQuantity, setBookQuantity] = useState(1);
 
@@ -23,7 +27,8 @@ const CartForm = ({
     try {
       if (userId) {
         await addBookToCart(userId, price, id, bookQuantity);
-        alert("Book added to cart");
+        setCartToast(true);
+        setCartItem({title, price, bookQuantity})
       } else {
         const existingEntries =
           JSON.parse(localStorage.getItem("GuestCartData")) || [];
@@ -43,6 +48,8 @@ const CartForm = ({
             JSON.stringify(existingEntries)
           );
           setGuestCart(existingEntries);
+          setCartToast(true);
+          setCartItem({title, price, bookQuantity})
         } else {
           const checkForBook = existingEntries.filter((book) => {
             if (book.id === newBook.id) {
@@ -54,6 +61,8 @@ const CartForm = ({
           checkForBook.push(newBook);
           localStorage.setItem("GuestCartData", JSON.stringify(checkForBook));
           setGuestCart(checkForBook);
+          setCartToast(true);
+          setCartItem({title, price, bookQuantity})
         }
       }
     } finally {
@@ -64,14 +73,21 @@ const CartForm = ({
   return (
     <form>
       <label>Quantity</label>
-      <select
-        name="selectList"
-        onChange={(e) => setBookQuantity(Number(e.target.value))}
-      >
-        <Selector inventory={inventory} />
-      </select>
-      {inventory < 15 ? <h6>Only {inventory} left in stock</h6> : null}
-      <button onClick={addToCartSubmitHandler}>Add to Cart</button>
+      {inventory ? (
+        <select
+          name="selectList"
+          onChange={(e) => setBookQuantity(Number(e.target.value))}
+        >
+          <Selector inventory={inventory} />
+        </select>
+      ) : (
+        <select name="selectList" disabled></select>
+      )}
+      {inventory ? (
+        <button type="submit"><AiOutlineShoppingCart /></button>
+      ) : (
+        <button disabled>Add to Cart</button>
+      )}
       {userId ? (
         <WishlistButton
           setIsLoading={setIsLoading}

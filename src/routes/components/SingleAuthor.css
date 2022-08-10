@@ -1,0 +1,50 @@
+#author-container{
+    min-height: 80vh;
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+
+
+#books-by{
+    font-weight: bolder;
+}
+
+#author-pic{
+   margin: 0 auto;
+   margin-bottom: 30px;
+}
+
+#author-name{
+    font-weight: bolder;
+    font-size: 30px;
+}
+
+#author-book-img{
+   margin: 0 auto;
+   margin-top: 10px;
+}
+
+#author-name-header{
+    margin-left: 100px;
+    margin-right: 100px;
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+#related-author-books{
+    font-weight: bolder;
+    position: absolute;
+    margin-bottom: 200px;
+}
+
+#author-row{
+    display: flex;
+    flex-direction: column;
+}
+
+.related-books-display{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-bottom: 30px;
+}

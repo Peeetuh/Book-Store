@@ -5,6 +5,7 @@
   margin: 0 auto;
   width:100%;
   text-align: center;
+  min-height: 80vh;
 }
 
 .admin-main nav {
@@ -71,6 +72,14 @@ th {
   width:15rem;
 }
 
+/* Headers */
+.order-buttons {
+  margin-left:2rem;
+}
+.order-buttons button {
+  margin:0 .3rem;
+}
+
 /* Buttons */
 .admin-main button {
   padding:0.2rem 0.5rem;
@@ -78,36 +87,6 @@ th {
 
 /* Modals */
 
-.background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 10;
-  background: rgba(100,100,100, 0.75);
-}
-
-.modal {
-  position:fixed;
-  top:30vh;
-  left:35%;
-  width:30%;
-  border-radius: 8px;
-  z-index: 100;
-  box-shadow: 0 3px 10px rgb(0, 0, 0, 0.4);
-  background-color: white;
-  padding:3rem 1rem;
-}
-
-.modal p {
-  margin:2rem 0;
-}
-
-.modal form {
-  display: block;
-}
-
-.modal button {
-  margin:0 1rem;
+.add-new-book-modal {
+  top:15vh;
 }

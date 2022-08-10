@@ -6,7 +6,7 @@ const AddNewBookModal = ({
   setNewBookModal,
   currentPage,
   setBooksData,
-  setIsLoading,
+  setCurrentPage
 }) => {
   const [isbn, setIsbn] = useState("");
   const [title, setTitle] = useState("");
@@ -24,48 +24,43 @@ const AddNewBookModal = ({
   };
   const submitHandler = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    try {
-      const result = await addBookRequest(
-        token,
-        isbn,
-        title,
-        author,
-        year,
-        publisher,
-        imageLink,
-        genre,
-        description,
-        price,
-        inventory
-      );
-      console.log("result of adding book:", result);
-      const books = await paginatedBooksData(token, currentPage + 1);
-      console.log(books, currentPage);
-      setBooksData(books);
-      setIsbn("");
-      setTitle("");
-      setAuthor("");
-      setYear("");
-      setPublisher("");
-      setImageLink("");
-      setGenre("");
-      setDescription("");
-      setPrice("");
-      setInventory("");
-      setNewBookModal(false);
-    } finally {
-      setIsLoading(false);
-    }
+    const result = await addBookRequest(
+      token,
+      isbn,
+      title,
+      author,
+      year,
+      publisher,
+      imageLink,
+      genre,
+      description,
+      price,
+      inventory
+    );
+    console.log("result of adding book:", result);
+    const books = await paginatedBooksData(token, 1);
+    setBooksData(books);
+    setCurrentPage(1);
+    setIsbn("");
+    setTitle("");
+    setAuthor("");
+    setYear("");
+    setPublisher("");
+    setImageLink("");
+    setGenre("");
+    setDescription("");
+    setPrice("");
+    setInventory("");
+    setNewBookModal(false);
   };
   return (
     <>
       <div className="background" />
-      <div className="modal">
+      <div className="modal add-new-book-modal">
         <header>
           <h3>Add a New Book</h3>
         </header>
-        <form onSubmit={submitHandler}>
+        <form className="modal-form" onSubmit={submitHandler}>
           <label>ISBN</label>
           <input
             type="text"
@@ -109,7 +104,11 @@ const AddNewBookModal = ({
             onChange={(e) => setGenre(e.target.value)}
           />
           <label>Description</label>
-          <textarea required onChange={(e) => setDescription(e.target.value)} />
+          <textarea
+            rows="5"
+            required
+            onChange={(e) => setDescription(e.target.value)}
+          />
           <label>Price</label>
           <input
             type="text"
@@ -119,13 +118,15 @@ const AddNewBookModal = ({
           <label>Inventory Count</label>
           <input
             type="number"
-            min="10"
+            min="1"
             max="100"
             required
             onChange={(e) => setInventory(e.target.value)}
           />
-          <button onClick={cancelClickHandler}>Cancel</button>
-          <button type="submit">Submit</button>
+          <div className="modal-form-buttons">
+            <button onClick={cancelClickHandler}>Cancel</button>
+            <button type="submit">Submit</button>
+          </div>
         </form>
       </div>
     </>

@@ -66,11 +66,11 @@ const EditBookModal = ({
   return (
     <>
       <div className="background" />
-      <div className="modal">
+      <div className="modal add-new-book-modal">
         <header>
           <h3>Edit Book</h3>
         </header>
-        <form onSubmit={submitHandler}>
+        <form className="modal-form" onSubmit={submitHandler}>
           <label>ISBN</label>
           <input type="text" onChange={(e) => setIsbn(e.target.value)} />
           <label>Title</label>
@@ -96,8 +96,10 @@ const EditBookModal = ({
             max="100"
             onChange={(e) => setInventory(e.target.value)}
           />
+          <div className="modal-form-buttons">
           <button onClick={cancelClickHandler}>Cancel</button>
           <button type="submit">Submit</button>
+          </div>
         </form>
       </div>
     </>

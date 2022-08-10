@@ -43,6 +43,10 @@ const DisplayPaginatedUsers = ({
             <tr>
               <th>User Id#</th>
               <th>Email</th>
+              <th>Address: Street</th>
+              <th>Address: City</th>
+              <th>Address: State</th>
+              <th>Address: Zip</th>
               <th>Status</th>
               <th>Make Admin</th>
               <th>Deactivate User</th>
@@ -52,13 +56,26 @@ const DisplayPaginatedUsers = ({
                 <tr key={user.id}>
                   <td>{user.id}</td>
                   <td>{user.userEmail}</td>
+                  <td>{user.street || "-"}</td>
+                  <td>{user.city || "-"}</td>
+                  <td>{user.state || "-"}</td>
+                  <td>{user.zip || "-"}</td>
                   <td>
+                    {/* {user.isAdmin ? (
+                      "Administrator"
+                    ) ? !user.isActive ? (
+                      <b>Deactivated</b>
+                    ) ? !user.isGuest (
+                      <b>Deactivated</b>
+                    ) : 'Active Guest'} */}
                     {user.isAdmin ? (
                       "Administrator"
-                    ) : user.isActive ? (
-                      "Active User"
-                    ) : (
+                    ) : !user.isActive ? (
                       <b>Deactivated</b>
+                    ) : user.isGuest ? (
+                      "Active Guest"
+                    ) : (
+                      "Active User"
                     )}
                   </td>
                   <td>
