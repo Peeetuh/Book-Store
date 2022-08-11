@@ -1,4 +1,4 @@
-const CartInventoryModal = ({ setCartModal, title, inventory }) => {
+const CartInventoryModal = ({ setCartModal, currTitle, currInv }) => {
   const clickHandler = () => {
     setCartModal(false);
   };
@@ -11,11 +11,11 @@ const CartInventoryModal = ({ setCartModal, title, inventory }) => {
           <h2>Uh-Oh!</h2>
         </header>
         <p>
-          <b>Max Inventory Exceeded:</b> Only {inventory} copies of <i>{title}</i> are available in our warehouse.<br />
+          <b>Max Inventory Exceeded:</b> Only {currInv} copies of <i>{currTitle}</i> are available in our warehouse.<br />
           Please try again!
         </p>
         <div>
-          <button onClick={clickHandler}>Okay</button>
+          <button onClick={clickHandler} className="modal-confirm">Okay</button>
         </div>
       </div>
     </>

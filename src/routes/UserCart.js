@@ -19,6 +19,8 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
   const [stripeRes, setStripeRes] = useState(false);
   const [currOrderId, setCurrOrderId] = useState(null);
   const [cartModal, setCartModal] = useState(false);
+  const [currInv, setCurrInv] = useState("");
+  const [currTitle, setCurrTitle] = useState("");
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -130,6 +132,8 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
                       event.preventDefault();
                       if (bookQuantity > cart.inventory) {
                         setCartModal(true);
+                        setCurrInv(cart.inventory)
+                        setCurrTitle(cart.title);
                       } else {
                         updateCartQuantity(
                           userCart.orderId,
@@ -149,8 +153,8 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
                 {cartModal && (
                   <CartInventoryModal
                     setCartModal={setCartModal}
-                    title={cart.title}
-                    inventory={cart.inventory}
+                    currTitle={currTitle}
+                    currInv={currInv}
                   />
                 )}
               </div>

@@ -32,10 +32,11 @@ const DeactivateUserModal = ({
             e.preventDefault();
             setDeactivateModal(false);
           }}
+          className="modal-cancel"
         >
           Cancel
         </button>
-        <button onClick={deactivateHandler}>Submit</button>
+        <button onClick={deactivateHandler} className="modal-confirm">Submit</button>
       </div>
     </>
   );

@@ -15,21 +15,16 @@ const GuestCheckoutModal = ({
   const cancelClickHandler = () => setIsCheckingOut(false);
   const submitHandler = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    try {
-      const result = await guestCheckoutRequest(guestEmail, guestCart);
-      console.log("result", result);
-      if(result.error) {
-        setIsCheckingOut(false);
-        setResModal(true);
-        setResData(result);
-      }
-      if (result.status && result.status === "checkout") {
-        const { orderPrice, orderId } = result;
-        await stripeCheckoutRequest(orderPrice, orderId);
-      }
-    } finally {
-      setIsLoading(false);
+    const result = await guestCheckoutRequest(guestEmail, guestCart);
+    console.log("result", result);
+    if (result.error) {
+      setIsCheckingOut(false);
+      setResModal(true);
+      setResData(result);
+    }
+    if (result.status && result.status === "checkout") {
+      const { orderPrice, orderId } = result;
+      await stripeCheckoutRequest(orderPrice, orderId);
     }
   };
   return (
@@ -46,8 +41,12 @@ const GuestCheckoutModal = ({
             onChange={(e) => setGuestEmail(e.target.value)}
           />
           <div className="modal-form-buttons">
-          <button className="cancel-btn-guest" onClick={cancelClickHandler}>Cancel</button>
-          <button id="proceed-checkout-btn" type="submit">Proceed to Checkout</button>
+            <button className="modal-cancel" onClick={cancelClickHandler}>
+              Cancel
+            </button>
+            <button className="modal-confirm" type="submit">
+              Submit
+            </button>
           </div>
         </form>
       </div>

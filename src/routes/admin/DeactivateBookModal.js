@@ -31,8 +31,8 @@ const DeactivateBookModal = ({
             Are you sure you want to remove this product from sales inventory?
             Note: product will <b>not</b> be removed from database.
           </p>
-          <button onClick={cancelClickHandler}>Cancel</button>
-          <button onClick={removeClickHandler}>Remove</button>
+          <button onClick={cancelClickHandler} className="modal-cancel">Cancel</button>
+          <button onClick={removeClickHandler} className="modal-confirm">Remove</button>
         </div>
       </div>
     </>

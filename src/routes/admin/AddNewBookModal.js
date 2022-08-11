@@ -124,8 +124,8 @@ const AddNewBookModal = ({
             onChange={(e) => setInventory(e.target.value)}
           />
           <div className="modal-form-buttons">
-            <button onClick={cancelClickHandler}>Cancel</button>
-            <button type="submit">Submit</button>
+            <button onClick={cancelClickHandler} className="modal-cancel">Cancel</button>
+            <button type="submit" className="modal-confirm">Submit</button>
           </div>
         </form>
       </div>

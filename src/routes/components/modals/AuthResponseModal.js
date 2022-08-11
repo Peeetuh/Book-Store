@@ -14,7 +14,7 @@ const AuthResponseModal = ({ resData, setResModal }) => {
       <div className="modal">
         <header>{!resData.error ? <h2>Success!</h2> : <h2>Uh-Oh!</h2>}</header>
         <p>{resData.message}</p>
-        <button onClick={clickHandler}>Okay</button>
+        <button onClick={clickHandler} className="modal-confirm">Okay</button>
       </div>
     </>
   );
