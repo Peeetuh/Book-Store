@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchUserAccount } from "../api";
-import { UserInfo, UserOrders, UserWishlist, AddToCartToast } from "./components";
+import {
+  UserInfo,
+  UserOrders,
+  UserWishlist,
+  AddToCartToast,
+} from "./components";
 import "./MyAccount.css";
 
 const MyAccount = ({
@@ -12,7 +17,7 @@ const MyAccount = ({
   cartToast,
   setCartToast,
   cartItem,
-  setCartItem
+  setCartItem,
 }) => {
   const [myAccount, setMyAccount] = useState({});
   const [myOrders, setMyOrders] = useState([]);
@@ -77,7 +82,11 @@ const MyAccount = ({
       </button>
 
       {userOrders ? (
-        <UserOrders myAccount={myAccount} myOrders={myOrders} />
+        <UserOrders
+          myAccount={myAccount}
+          myOrders={myOrders}
+          username={username}
+        />
       ) : null}
       {userInfoPage ? (
         <UserInfo

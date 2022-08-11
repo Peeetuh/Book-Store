@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import { guestCompleteOrderReq, guestCancelOrder } from "../api/checkout";
 import {
-  guestCompleteOrderReq,
-  guestCancelOrder,
-} from "../api/checkout";
-import { GuestCheckoutModal, AuthResponseModal } from "./components";
+  GuestCheckoutModal,
+  AuthResponseModal,
+  CartInventoryModal,
+} from "./components";
 
 const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
   const [updatedBookQuantity, setUpdatedBookQuantity] = useState(1);
@@ -16,6 +17,7 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
   const [currOrderId, setCurrOrderId] = useState(null);
   const [resModal, setResModal] = useState(false);
   const [resData, setResData] = useState({});
+  const [cartModal, setCartModal] = useState(false);
 
   const calculateOrderPrice = (guestCart) => {
     const totalPrice = guestCart.reduce((total, cart) => {
@@ -153,22 +155,33 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
                     type="confirm"
                     onClick={(event) => {
                       event.preventDefault();
-                      const newCartData = guestCart.filter((book) => {
-                        if (book.id === cart.id) {
-                          cart.bookQuantity = updatedBookQuantity;
-                        }
-                        return book;
-                      });
-                      localStorage.setItem(
-                        "GuestCartData",
-                        JSON.stringify(newCartData)
-                      );
-                      setGuestCart(newCartData);
+                      if (updatedBookQuantity > cart.inventory) {
+                        setCartModal(true);
+                      } else {
+                        const newCartData = guestCart.filter((book) => {
+                          if (book.id === cart.id) {
+                            cart.bookQuantity = updatedBookQuantity;
+                          }
+                          return book;
+                        });
+                        localStorage.setItem(
+                          "GuestCartData",
+                          JSON.stringify(newCartData)
+                        );
+                        setGuestCart(newCartData);
+                      }
                     }}
                   >
                     Confirm
                   </button>
                 </div>
+                {cartModal && (
+                  <CartInventoryModal
+                    setCartModal={setCartModal}
+                    title={cart.title}
+                    inventory={cart.inventory}
+                  />
+                )}
               </div>
             );
           })}

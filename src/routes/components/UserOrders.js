@@ -1,7 +1,10 @@
-const UserOrders = ({ myAccount, myOrders }) => {
+import "./UserWishlist.css";
+
+const UserOrders = ({ myAccount, myOrders, username }) => {
 
   return (
-    <>
+    <section id="wishlist-container">
+      <h3>{username}'s Order History</h3>
       {myOrders.length < 1 ? (
         <h6>Your order history will appear here</h6>
       ) : (
@@ -13,7 +16,7 @@ const UserOrders = ({ myAccount, myOrders }) => {
             .map((account) => {
               return (
                 <div key={account.orderId}>
-                  <h3>Items left in your cart:</h3>
+                  <h4>Items left in your cart:</h4>
                   {account.orderDetails.map((order) => {
                     return (
                       <div key={order.bookId}>
@@ -32,7 +35,7 @@ const UserOrders = ({ myAccount, myOrders }) => {
             })
             .map((account) => {
               return (
-                <div key={account.orderId}>
+                <div key={account.orderId} className="wishlist-book-container">
                   <h4>Order Number: {account.orderId}</h4>
                   {account.orderDetails.map((order) => {
                     return (
@@ -47,7 +50,7 @@ const UserOrders = ({ myAccount, myOrders }) => {
             })}
         </>
       )}
-    </>
+    </section>
   );
 };
 export default UserOrders;
