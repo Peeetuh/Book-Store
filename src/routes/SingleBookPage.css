@@ -1,0 +1,103 @@
+#single-book-container{
+    min-height: 80vh;
+    width:1400px;
+    margin:0 auto;
+  }
+
+.single-book-img{
+  margin: 0 auto;
+}  
+
+  #book-page-background{
+    background-color: #A8DADC;
+    box-shadow: 0px 0px 15px -5px;
+    border-radius: 8px;
+    padding: 2rem;
+    margin:3rem;
+  }
+
+  #book-page-background h2 {
+    font-size:2rem;
+  }
+
+  #book-page-background h3 {
+    font-size:1.4rem
+  }
+
+  .book-rating {
+    border:1px solid #333;
+    margin:1rem auto;
+    width:20%;
+    padding:.5rem 0;
+  }
+  
+  .single-book-img{
+    height:350px;
+    margin:2rem auto;
+  }
+
+  .product-details {
+    width:50%;
+    margin:1rem auto;
+    text-align: left;
+    border:1px solid #333;
+    background-color: #1A4965;
+    color:white;
+    padding:1rem;
+    border-radius: 8px;
+  }
+
+  .product-details p {
+    margin:.4rem 0;
+  }
+
+  .book-page-cart-form {
+    background-color: #A8DADC;
+    color:black;
+    text-align: center;
+    width:75%;
+    border-radius:8px;
+    margin:2rem auto 0;
+    padding: 1rem;
+  }
+
+  .book-page-cart-form h3 {
+    margin-bottom:.5rem;
+  }
+
+  .float-child1{
+    width: auto;
+    float: left;
+    padding: 20px;
+    margin-left: 120px;
+    margin-top: 30px;
+  }
+  
+  .float-child2{
+    width: 50%;
+    float: left;
+    padding: 20px;
+    height: 440px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+  }
+  
+  @media(max-width: 800px){
+    .float-child2{
+      display: none;
+    }
+  }
+
+  .single-book-descriptions{
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .single-page-text{
+    margin-top: 50px;
+  }
+
+  .author-name{
+    font-style: italic;
+    text-decoration: underline;
+  }

@@ -1,38 +1,237 @@
-.App {
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 9vh;
+  background: #1b4965;
+}
+
+.nav-bar-search {
+  /* background: #CAE9FF; */
+  align-items: center;
+  height: 6.5vh;
+}
+
+.title-home {
+  font-family: "Roboto", sans-serif;
+  margin: 0 auto;
+  width: 100%;
   text-align: center;
+  font-size: 40px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.links {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: space-around;
+  gap: 3rem;
+  text-decoration: none;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 0.5px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.links:after {
+  content: "";
+  position: absolute;
+  background-color: #a8dadc;
+  height: 3px;
+  width: 0;
+  left: 0;
+  bottom: -10px;
+  transition: 0.3s;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+a:hover:after {
+  width: 100%;
+}
+
+.logo {
+  max-width: 7%;
+  height: 100%;
+  background-color: #2a2a72;
+  /* margin-right: 900px; */
+}
+
+.input-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 8px;
+  margin: 10px;
+}
+
+.login {
+  margin: auto;
+  width: 300px;
+  height: 200px;
+  background: #a8dadc;
+  box-shadow: 0px 0px 15px -5px;
+}
+
+.body-page {
+  min-height: 80vh;
+}
+
+.register-page {
+  min-height: 80vh;
+}
+
+.displays-top-ten {
+  font-weight: bolder;
+  font-stretch: ultra-expanded;
+}
+
+.my-account-page {
+  min-height: 50vw;
+}
+
+.delete-from-cart {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0 auto;
+  margin-bottom: 5px;
+  background: rgb(169, 77, 77);
   color: white;
+  width: 80px;
+  padding: 3px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.App-link {
-  color: #61dafb;
+#input-quantity {
+  border: 1px solid black;
+  padding: 1px 1px;
+  margin-right: 8px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.user-cart-confirm {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  background: #1e90ff;
+  color: white;
+  margin: 0px 0px 5px 5px;
+  width: 100px;
+  padding: 4px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 650px) {
+  .links {
+    display: none;
   }
-  to {
-    transform: rotate(360deg);
-  }
+}
+
+#login-header {
+  font-family: "Roboto", sans-serif;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+}
+
+#register-header {
+  font-family: "Roboto", sans-serif;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+}
+
+#login-btn {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  background: #1e90ff;
+  color: white;
+  width: 100px;
+  padding: 8px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#register-btn {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  background: #1e90ff;
+  color: white;
+  width: 100px;
+  padding: 8px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.cartpage {
+  min-height: 80vh;
+}
+
+.author-link {
+  font-size:.8rem;
+  margin:.2rem;
+}
+
+.author-link:hover {
+  font-weight: 600;
+}
+
+#username {
+  padding-left: 5px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border: 0.5px solid black;
+}
+
+#password {
+  padding-left: 5px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border: 0.5px solid black;
+}
+
+.user-info-btn {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  background: #1e90ff;
+  color: white;
+  width: 100px;
+  padding: 8px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.disabled-cart-btn {
+  color: grey;
+  pointer-events: none;
+  margin:0 .6rem;
+  font-size:1.2rem;
+}
+
+.disabled-select-list {
+  color: grey;
+  pointer-events: none;
 }

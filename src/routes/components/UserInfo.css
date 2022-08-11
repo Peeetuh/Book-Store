@@ -1,0 +1,22 @@
+#account-info-container {
+  width:1400px;
+  margin:3rem auto;
+}
+
+#account-info-container h4 {
+  font-size:1.5rem;
+}
+
+.account-details-container {
+  border: 1px solid;
+  margin: 2rem auto;
+  padding:1rem;
+  background-color: #f9f9f9;
+  width:700px;
+  border-radius: 8px;
+  border:1px solid #ddd;
+}
+
+.account-details-container p {
+  margin-bottom:.5rem;
+}

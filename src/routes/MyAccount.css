@@ -1,0 +1,72 @@
+#my-account{
+    min-height: 80vh;
+}
+
+#my-account h2 {
+    font-size:2rem;
+}
+
+.my-account-header {
+    margin:1rem 0;
+}
+
+.my-account-nav {
+    border:1px solid #999;
+    border-radius: 8px;
+    margin:1rem auto;
+    background-color:#a8dadc;
+    width: 500px;
+}
+
+.my-account-nav button {
+    margin:1rem 2rem;
+}
+
+#cancel{
+   background: lightslategray;
+    border-radius: 3px;
+    border: 1px solid black;
+    padding: 2px 4px;
+}
+
+#submit{
+    background-color: rgb(166, 195, 122);
+    border-radius: 3px;
+    margin-right: 10px;
+    padding: 2px 4px;
+    border: 1px solid black;
+}
+
+.edit-profile{
+    background-color: rgb(166, 195, 122);
+    border-radius: 3px;
+    border: 1px solid black;
+    padding: 2px 4px;
+
+}
+
+.inputs-account{
+    padding-left: 2px;
+}
+
+.myaccount-btn{
+    border: 1px solid black;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.add-address{
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    background: #1E90FF;
+    color: white;
+    width: 140px;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}

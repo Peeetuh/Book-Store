@@ -1,0 +1,70 @@
+#author-container {
+  min-height: 80vh;
+  width: 1400px;
+  margin: 0 auto;
+}
+
+#author-page-background {
+  background-color: #a8dadc;
+  box-shadow: 0px 0px 15px -5px;
+  border-radius: 8px;
+  padding: 2rem;
+  margin:3rem;
+}
+
+#author-page-background h2 {
+    font-size: 2rem;
+}
+
+#author-bio {
+    margin:2rem 0;
+}
+
+#author-pic {
+  margin-right:2.5rem;
+  float: left;
+}
+
+#author-book-img {
+  margin: 0 auto;
+  margin-top: 10px;
+  padding: 0px 20px;
+}
+
+#author-name-header {
+  margin-left: 100px;
+  margin-right: 100px;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+#author-single-book {
+  display: flex;
+  flex-direction: column;
+  margin:.5rem;
+}
+
+.related-books-display {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#author-bio-paragraph {
+    text-align: justify;
+    padding:0 3rem;
+}
+
+#author-bio-paragraph p {
+    margin-bottom:.5rem;
+}
+
+.author-books-by {
+    padding: 0rem;
+    margin:2rem 0;
+}
+
+.author-books-by img {
+    height: 125px;
+}

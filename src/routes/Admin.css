@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+.admin-main {
+  font-family: "Roboto", sans-serif;
+  margin: 0 auto;
+  width:100%;
+  text-align: center;
+  min-height: 80vh;
+}
+
+.admin-main nav {
+  margin:1rem 0;
+}
+
+.admin-link {
+  padding: 0 2rem;
+  text-decoration: none;
+}
+
+.admin-link:hover {
+  font-weight: 600;
+}
+
+.admin-link:visited {
+  color: #333;
+}
+
+.admin-main header {
+  padding:1rem;
+}
+.admin-main header>button {
+  margin-left:1rem;
+}
+
+.admin-main header>form {
+  margin-left:1rem;
+}
+
+.admin-main select {
+  margin:0 .5rem;
+}
+
+.admin-main h2 {
+  font-size: 3rem;
+  font-weight: 300;
+}
+
+.inline {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Tables */
+
+table {
+  font-size: .8rem;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+td, th {
+  border:1px solid #999;
+  padding:0.5rem;
+}
+
+th {
+  background-color: #f9f9f9;
+}
+
+.wrap {
+  width:15rem;
+}
+
+/* Headers */
+.order-buttons {
+  margin-left:2rem;
+}
+.order-buttons button {
+  margin:0 .3rem;
+}
+
+/* Buttons */
+.admin-main button {
+  padding:0.2rem 0.5rem;
+}
+
+/* Modals */
+
+.add-new-book-modal {
+  top:15vh;
+}

@@ -1,0 +1,33 @@
+#wishlist-container {
+  width:1400px;
+  margin:3rem auto;
+}
+
+#wishlist-container h4 {
+  font-size:1.5rem;
+}
+
+.wishlist-book-container {
+  display: flex;
+  align-items: center;
+  border:1px solid #ddd;
+  border-radius: 8px;
+  width: 70%;
+  margin:1rem auto;
+  padding:1rem;
+  background-color: #f9f9f9;
+}
+
+.wishlist-book-container img {
+  height: 150px;
+  margin-right:2rem;
+}
+
+.wishlist-book-subdiv {
+  margin:0 auto;
+}
+
+.wishlist-book-info {
+  display: flex;
+  align-items: center;
+}
