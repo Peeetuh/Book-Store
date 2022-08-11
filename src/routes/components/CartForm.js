@@ -4,7 +4,6 @@ import Selector from "./Selector";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import WishlistButton from "./WishlistButton";
 
-
 const CartForm = ({
   token,
   userId,
@@ -17,58 +16,55 @@ const CartForm = ({
   setIsLoading,
   setGuestCart,
   setCartToast,
-  setCartItem
+  setCartItem,
+  inWishlist,
 }) => {
   const [bookQuantity, setBookQuantity] = useState(1);
 
   const addToCartSubmitHandler = async (event) => {
     event.preventDefault();
-    setIsLoading(true);
-    try {
-      if (userId) {
-        await addBookToCart(userId, price, id, bookQuantity);
+    // setIsLoading(true);
+    // try {
+    if (userId) {
+      await addBookToCart(userId, price, id, bookQuantity);
+      setCartToast(true);
+      setCartItem({ title, price, bookQuantity });
+    } else {
+      const existingEntries =
+        JSON.parse(localStorage.getItem("GuestCartData")) || [];
+      const newBook = {
+        id,
+        title,
+        author,
+        bookImage,
+        inventory,
+        price,
+        bookQuantity,
+      };
+      if (!existingEntries.length) {
+        existingEntries.push(newBook);
+        localStorage.setItem("GuestCartData", JSON.stringify(existingEntries));
+        setGuestCart(existingEntries);
         setCartToast(true);
-        setCartItem({title, price, bookQuantity})
-        console.log(userId, price, id, bookQuantity)
+        setCartItem({ title, price, bookQuantity });
       } else {
-        const existingEntries =
-          JSON.parse(localStorage.getItem("GuestCartData")) || [];
-        const newBook = {
-          id,
-          title,
-          author,
-          bookImage,
-          inventory,
-          price,
-          bookQuantity,
-        };
-        if (!existingEntries.length) {
-          existingEntries.push(newBook);
-          localStorage.setItem(
-            "GuestCartData",
-            JSON.stringify(existingEntries)
-          );
-          setGuestCart(existingEntries);
-          setCartToast(true);
-          setCartItem({title, price, bookQuantity})
-        } else {
-          const checkForBook = existingEntries.filter((book) => {
-            if (book.id === newBook.id) {
-              const newQuantity = newBook.bookQuantity + book.bookQuantity;
-              newBook.bookQuantity = newQuantity;
-            }
-            return book.id !== newBook.id;
-          });
-          checkForBook.push(newBook);
-          localStorage.setItem("GuestCartData", JSON.stringify(checkForBook));
-          setGuestCart(checkForBook);
-          setCartToast(true);
-          setCartItem({title, price, bookQuantity})
-        }
+        const checkForBook = existingEntries.filter((book) => {
+          if (book.id === newBook.id) {
+            const newQuantity = newBook.bookQuantity + book.bookQuantity;
+            newBook.bookQuantity = newQuantity;
+          }
+          return book.id !== newBook.id;
+        });
+        checkForBook.push(newBook);
+        localStorage.setItem("GuestCartData", JSON.stringify(checkForBook));
+        setGuestCart(checkForBook);
+        setCartToast(true);
+        setCartItem({ title, price, bookQuantity });
       }
-    } finally {
-      setIsLoading(false);
     }
+    // } finally {
+    //   setIsLoading(false);
+    // }
   };
 
   return (
@@ -85,11 +81,13 @@ const CartForm = ({
         <select name="selectList" disabled></select>
       )}
       {inventory ? (
-        <button onClick={addToCartSubmitHandler}><AiOutlineShoppingCart /></button>
+        <button onClick={addToCartSubmitHandler}>
+          <AiOutlineShoppingCart />
+        </button>
       ) : (
         <button disabled>Add to Cart</button>
       )}
-      {userId ? (
+      {userId && !inWishlist ? (
         <WishlistButton
           setIsLoading={setIsLoading}
           userId={userId}

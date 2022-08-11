@@ -54,49 +54,55 @@ const SingleBookPage = ({
   return (
     <main className="single-book-container">
       <div id="book-page-background">
-      {cartToast && (
-        <AddToCartToast setCartToast={setCartToast} cartItem={cartItem} />
-      )}
-      {bookInfo ? (
-        <>
+        {cartToast && (
+          <AddToCartToast setCartToast={setCartToast} cartItem={cartItem} />
+        )}
+        {bookInfo ? (
+          <>
+            <header>
+              <h2>{bookInfo.title}</h2>
+            </header>
+            <Link className="author" to={`/authors/${bookInfo.author}`}>
+              {bookInfo.author}
+            </Link>
+            <h4>Rated {bookInfo.rating}/5 stars</h4>
+            <img
+              className="single-book-img"
+              src={bookInfo.imageLinkL}
+              alt={bookInfo.title}
+            />
+            <h5>Genre: {bookInfo.genre}</h5>
+            <h4>{bookInfo.description}</h4>
+            <h5>
+              Price: ${bookInfo.price} | No. available:{" "}
+              {!bookInfo.inventory
+                ? "Currently out of stock!"
+                : bookInfo.inventory > 15
+                ? `${bookInfo.inventory} copies`
+                : bookInfo.inventory === 1
+                ? `Only 1 copy left!`
+                : `Only ${bookInfo.inventory} copies left!`}
+            </h5>
+            <h6>
+              Published By: {bookInfo.publisher} in {bookInfo.year}
+            </h6>
+            <CartForm
+              setIsLoading={setIsLoading}
+              userId={userId}
+              title={bookInfo.title}
+              price={bookInfo.price}
+              id={bookInfo.id}
+              inventory={bookInfo.inventory}
+              setGuestCart={setGuestCart}
+              setCartToast={setCartToast}
+              setCartItem={setCartItem}
+            />
+          </>
+        ) : (
           <header>
-            <h2>{bookInfo.title}</h2>
+            <p>No results.</p>
           </header>
-          <Link className="author" to={`/authors/${bookInfo.author}`}>{bookInfo.author}</Link>
-          <h4>Rated {bookInfo.rating}/5 stars</h4>
-          <img className="single-book-img" src={bookInfo.imageLinkL} alt={bookInfo.title} />
-          <h5>Genre: {bookInfo.genre}</h5>
-          <h4>{bookInfo.description}</h4>
-          <h5>
-            Price: ${bookInfo.price} | No. available:{" "}
-            {!bookInfo.inventory
-              ? "Currently out of stock!"
-              : bookInfo.inventory > 15
-              ? `${bookInfo.inventory} copies`
-              : bookInfo.inventory === 1
-              ? `Only 1 copy left!`
-              : `Only ${bookInfo.inventory} copies left!`}
-          </h5>
-          <h6>
-            Published By: {bookInfo.publisher} in {bookInfo.year}
-          </h6>
-          <CartForm
-            setIsLoading={setIsLoading}
-            userId={userId}
-            title={bookInfo.title}
-            price={bookInfo.price}
-            id={bookInfo.id}
-            inventory={bookInfo.inventory}
-            setGuestCart={setGuestCart}
-            setCartToast={setCartToast}
-            setCartItem={setCartItem}
-          />
-        </>
-      ) : (
-        <header>
-          <p>No results.</p>
-        </header>
-      )}
+        )}
       </div>
     </main>
   );

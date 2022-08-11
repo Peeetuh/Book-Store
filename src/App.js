@@ -42,6 +42,7 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(
     window.localStorage.getItem("isAdmin")
   );
+  const [userWishlist, setUserWishlist] = useState([]);
   const [searchQuery, setSearchQuery] = useState("no-search-parameters-given");
   const [guestCart, setGuestCart] = useState(
     JSON.parse(window.localStorage.getItem("GuestCartData")) || []
@@ -56,7 +57,7 @@ function App() {
     "Mystery",
     "Rom-Com",
     "Classic",
-    "Historical-Fiction"
+    "Historical-Fiction",
   ]);
   const [genreSelect, setGenreSelect] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -67,7 +68,7 @@ function App() {
     <div className="App">
       <nav className="nav-bar">
         <img src={img1} alt="logo" className="logo" />
-        <Burger token={token}/>
+        <Burger token={token} />
         <Link className="links" to="/">
           Home
         </Link>
@@ -150,6 +151,7 @@ function App() {
               setIsAdmin={setIsAdmin}
               guestCart={guestCart}
               setGuestCart={setGuestCart}
+              setUserWishlist={setUserWishlist}
             />
           }
         />
@@ -180,7 +182,9 @@ function App() {
               setUserId={setUserId}
               setIsLoading={setIsLoading}
               userId={userId}
-              setCartToast={setCartToast} 
+              cartToast={cartToast}
+              setCartToast={setCartToast}
+              cartItem={cartItem}
               setCartItem={setCartItem}
             />
           }
@@ -232,6 +236,7 @@ function App() {
               setCartToast={setCartToast}
               cartItem={cartItem}
               setCartItem={setCartItem}
+              userWishlist={userWishlist}
             />
           }
         />
@@ -247,6 +252,7 @@ function App() {
               cartItem={cartItem}
               setCartItem={setCartItem}
               token={token}
+              userWishlist={userWishlist}
             />
           }
         />

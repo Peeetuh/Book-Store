@@ -9,7 +9,7 @@ const WishlistButton = ({userId, bookId, token}) => {
 
   return (
     <>
-      <button onClick={addToWishlist}>+Wishlist</button>
+      <button onClick={addToWishlist}>Add to Wishlist</button>
     </>
   );
 };

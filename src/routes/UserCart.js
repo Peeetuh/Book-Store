@@ -16,6 +16,11 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
   const [stripeRes, setStripeRes] = useState(false);
   const [currOrderId, setCurrOrderId] = useState(null);
 
+  const changeHandler = (e) => {
+    setBookQuantity(Number(e.target.value));
+    console.log("changeHandler", e.target.value);
+  }
+
   const submitHandler = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -94,7 +99,6 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
       ) : (
         <>
           {userCart.orderDetails.map((cart) => {
-            console.log("cart", cart);
             return (
               <div id="user-cart-container" key={cart.bookId}>
                 <h3>{cart.title}</h3>
@@ -114,19 +118,11 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
                   <input
                     id="input-quantity"
                     type="number"
-                    min={1}
-                    max={cart.inventory}
+                    min="1"
+                    max="100"
                     placeholder={1}
-                    onChange={(e) => {
-                      setBookQuantity(Number(e.target.value));
-                    }}
+                    onChange={changeHandler}
                   />
-                  {/*                   <select
-                    name="selectList"
-                    onChange={(e) => setBookQuantity(e.target.value)}
-                  >
-                    <Selector inventory={inventory} />
-                  </select> */}
                   <button
                     className="user-cart-confirm"
                     type="confirm"
