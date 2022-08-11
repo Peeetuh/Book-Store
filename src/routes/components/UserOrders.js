@@ -1,50 +1,89 @@
-import "./UserWishlist.css";
+import "./UserOrders.css";
 
 const UserOrders = ({ myAccount, myOrders, username }) => {
-
   return (
-    <section id="wishlist-container">
-      <h3>{username}'s Order History</h3>
+    <section id="users-orders-container">
+      <h4>{username}'s Order History</h4>
       {myOrders.length < 1 ? (
-        <h6>Your order history will appear here</h6>
+        <p>Your order history will appear here</p>
       ) : (
         <>
+          {/* <h4>Current Cart:</h4>
           {myAccount.orders
             .filter((account) => {
               return account.isComplete === false;
             })
             .map((account) => {
               return (
-                <div key={account.orderId}>
-                  <h4>Items left in your cart:</h4>
-                  {account.orderDetails.map((order) => {
-                    return (
-                      <div key={order.bookId}>
-                        <h6>{order.title}</h6>
-                        <h6>Quantity: {order.quantity}</h6>
-                      </div>
-                    );
-                  })}
+                <div
+                  key={account.orderId}
+                  className="users-orders-books-container"
+                >
+                  <div className="users-orders-id">
+                    <p>
+                      Cart Total: <b>${account.orderPrice}</b>
+                    </p>
+                  </div>
+                  <div>
+                    {account.orderDetails.map((order) => {
+                      return (
+                        <div
+                          key={order.bookId}
+                          className="users-orders-single-book"
+                        >
+                          <img src={order.imageLinkM} alt={order.title} />
+                          <div className="single-book-details">
+                            <p>
+                              <i>{order.title}</i>
+                            </p>
+                            <p>
+                              Quantity: {order.quantity} | ${order.bookPrice}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               );
-            })}
-          <h3>Previously Purchased:</h3>
+            })} */}
           {myAccount.orders
             .filter((account) => {
               return account.isComplete;
             })
             .map((account) => {
               return (
-                <div key={account.orderId} className="wishlist-book-container">
-                  <h4>Order Number: {account.orderId}</h4>
-                  {account.orderDetails.map((order) => {
-                    return (
-                      <div key={order.bookId}>
-                        <h6>{order.title}</h6>
-                        <h6>Quantity: {order.quantity}</h6>
-                      </div>
-                    );
-                  })}
+                <div
+                  key={account.orderId}
+                  className="users-orders-books-container"
+                >
+                  <div className="users-orders-id">
+                    <p>
+                      Order Number: <b>{account.orderId}</b>
+                      <br />
+                      Grand Total: <b>${account.orderPrice}</b>
+                    </p>
+                  </div>
+                  <div>
+                    {account.orderDetails.map((order) => {
+                      return (
+                        <div
+                          key={order.bookId}
+                          className="users-orders-single-book"
+                        >
+                          <img src={order.imageLinkM} alt={order.title} />
+                          <div className="single-book-details">
+                            <p>
+                              <i>{order.title}</i>
+                            </p>
+                            <p>
+                              Quantity: {order.quantity} | ${order.bookPrice}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               );
             })}

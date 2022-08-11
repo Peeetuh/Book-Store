@@ -1,0 +1,41 @@
+#users-orders-container {
+  width:1400px;
+  margin:1rem auto;
+}
+
+#users-orders-container h4 {
+  font-size: 1.5rem;
+}
+
+.users-orders-books-container {
+  display: flex;
+  align-items: center;
+  border:1px solid #ddd;
+  border-radius: 8px;
+  width: 70%;
+  margin:1rem auto;
+  padding:.5rem 1rem;
+  text-align: left;
+  background-color: #f9f9f9;
+}
+
+.users-orders-id {
+  margin-right:1rem;
+}
+
+.users-orders-books-container img {
+  height:60px;
+  margin-right:1rem;
+  border:1px #ddd solid;
+}
+
+.users-orders-single-book {
+  display: flex;
+  align-items: center;
+  margin:.5rem 0;
+}
+
+.single-book-details {
+  display: flex;
+  flex-direction: column;
+}
