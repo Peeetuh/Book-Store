@@ -16,6 +16,11 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
   const [stripeRes, setStripeRes] = useState(false);
   const [currOrderId, setCurrOrderId] = useState(null);
 
+  const changeHandler = (e) => {
+    setBookQuantity(Number(e.target.value));
+    console.log("changeHandler", e.target.value);
+  }
+
   const submitHandler = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -58,8 +63,7 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
   useEffect(() => {
     if (stripeConfirm) {
       const closeOrder = async () => {
-        const result = await userCompleteOrderReq(token, currOrderId);
-        console.log("result", result);
+        await userCompleteOrderReq(token, currOrderId);
       };
       closeOrder();
       loadUserCart();
@@ -95,7 +99,6 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
       ) : (
         <>
           {userCart.orderDetails.map((cart) => {
-            console.log("cart", cart);
             return (
               <div id="user-cart-container" key={cart.bookId}>
                 <h3>{cart.title}</h3>
@@ -112,25 +115,14 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
                 />
                 <div>
                   <label>Change Order Quantity</label>
-                  <select name ="selectList"
-                  min={1}
-                  max={cart.inventory}
-                  placeholder={1}
-                  onChange={(e) => {
-                    setBookQuantity(Number(e.target.value));
-                  }}
-                  >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                  </select>
+                  <input
+                    id="input-quantity"
+                    type="number"
+                    min="1"
+                    max="100"
+                    placeholder={1}
+                    onChange={changeHandler}
+                  />
                   <button
                     className="user-cart-confirm"
                     type="confirm"

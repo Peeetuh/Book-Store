@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { CartForm } from "./";
 
 function DisplayHighestRanking({
+  token,
   topRated,
   userId,
   setIsLoading,
@@ -36,6 +37,7 @@ function DisplayHighestRanking({
                 setGuestCart={setGuestCart}
                 setCartToast={setCartToast}
                 setCartItem={setCartItem}
+                token={token}
               />
             </div>
           );

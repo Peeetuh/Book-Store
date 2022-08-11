@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { CartForm } from "./";
 
-function DisplayFeatured({ featured, userId, setIsLoading, setGuestCart, setCartToast, setCartItem }) {
+function DisplayFeatured({ token, featured, userId, setIsLoading, setGuestCart, setCartToast, setCartItem }) {
   return (
     <section>
       <header>
@@ -29,6 +29,7 @@ function DisplayFeatured({ featured, userId, setIsLoading, setGuestCart, setCart
                 setGuestCart={setGuestCart}
                 setCartToast={setCartToast}
                 setCartItem={setCartItem}
+                token={token}
               />
             </div>
           );

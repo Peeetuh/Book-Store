@@ -15,7 +15,6 @@ export const fetchRegister = async (userEmail, password, guestCart) => {
       }),
     });
     const data = await response.json();
-    // console.log("data", data);
     return data;
   } catch (error) {
     console.log(error);
@@ -77,6 +76,62 @@ export const editUsersAddress = async (
         city,
         street,
         zip,
+      }),
+    });
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error("An error occurred:", err);
+  }
+};
+
+export const getUserWishlist = async (token) => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/me/wishlist`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    console.log("wishlistData", data);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addBookToWishlist = async (token, userId, bookId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/me/wishlist`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        userId,
+        bookId,
+      }),
+    });
+    const data = await response.json();
+    console.log("wishlistData", data.result[0]);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteBookFromWishlist = async (token, wishlistId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/me/wishlist`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        wishlistId,
       }),
     });
     const data = await response.json();
@@ -172,11 +227,6 @@ export const deleteFromCart = async (
       }),
     });
     const data = await response.json();
-    // console.log("data", data);
-    // if (data) {
-    //   const newCart = userCart.filter((cart) => cart.id !== bookId);
-    //   setUserCart(newCart);
-    // }
     return data;
   } catch (error) {
     console.log(error);
@@ -215,14 +265,15 @@ export const searchRequestCount = async (searchString) => {
   try {
     const response = await fetch(`${BASE_URL}/search/${searchString}`, {
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-    })
+    });
     const data = await response.json();
     return data;
+  } catch (err) {
+    console.error("An error occurred:", err);
   }
-  catch(err){console.error('An error occurred:',(err))};
-}
+};
 
 export const searchRequest = async (searchString, currentPage) => {
   try {
@@ -248,7 +299,6 @@ export const requestTopRated = async () => {
     },
   });
   const dataTopRated = await response.json();
-  // console.log(dataTopRated);
   return dataTopRated;
 };
 
