@@ -7,11 +7,9 @@ import "./Card.css";
             <img src={img} alt="" />
           </div>
           <div className="card-title">
-            <h3>{Link}</h3>
+            <h3><i>{Link}</i></h3>
             </div> 
          </div>      
-         
-
     );
   }
 

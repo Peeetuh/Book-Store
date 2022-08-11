@@ -1,0 +1,19 @@
+#genre-index-container {
+  width:1500px;
+  margin:0 auto;
+}
+
+#genre-index-container header {
+  margin:1rem 0;
+}
+
+#genre-index-container h2 {
+  font-size:2rem;  
+}
+
+.genre-cards{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  margin:1rem 0 3rem;
+}

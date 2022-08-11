@@ -1,5 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import Card from "./Card";
+import "./Genres.css"
 import Comedy from "./components/Images/comedy.png"
 import Horror from "./components/Images/horror.png"
 import GeneralFiction from "./components/Images/generalfiction.png"

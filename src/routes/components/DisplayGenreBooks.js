@@ -46,21 +46,20 @@ const DisplayGenreBooks = ({ genreSelect, setIsLoading }) => {
     setBooksData(genre);
   };
   return (
-    <main id="display-paginated">
+    <main id="display-paginated-container">
       {booksData.length ? (
-        <>
-          <header id="genre-header">
+          <section id="display-paginated-items">
+          <header>
             <h2>{genreSelect}</h2>
           </header>
-          <section>
             {booksData.map((book) => {
               return (
                 <React.Fragment key={book.id}>
                   <Link to={`/books/${book.id}`}>
-                    <div className="display-paginated-container">
+                    <div className="display-paginated-search-results">
                       <img src={book.imageLinkM} alt={book.title} />
-                      <span id="book-title">{book.title}</span>
-                      <span id="book-author">{book.author}</span>
+                      <span className="book-title"><i>{book.title}</i></span>
+                      <span className="book-author">{book.author}</span>
                     </div>
                   </Link>
                 </React.Fragment>
@@ -83,7 +82,6 @@ const DisplayGenreBooks = ({ genreSelect, setIsLoading }) => {
               )}
             </div>
           </section>
-        </>
       ) : (
         <header>
           <p>Sorry, we don't have any results to show for that genre.</p>

@@ -68,8 +68,8 @@ const CartForm = ({
   };
 
   return (
-    <form>
-      <label>Quantity</label>
+    <form className="add-to-cart-form">
+      {/* <label>Quantity</label> */}
       {inventory ? (
         <select
           name="selectList"
@@ -79,14 +79,16 @@ const CartForm = ({
           <Selector inventory={inventory} />
         </select>
       ) : (
-        <select id="disabled-select-list" name="selectList" disabled></select>
+        <select className="disabled-select-list" name="selectList" disabled></select>
       )}
       {inventory ? (
-        <button onClick={addToCartSubmitHandler}>
+        <button className="add-to-cart-button" onClick={addToCartSubmitHandler}>
           <AiOutlineShoppingCart />
         </button>
       ) : (
-        <button id="disabled-cart-btn" disabled>Out of stock</button>
+        <button className="disabled-cart-btn" disabled>
+          <AiOutlineShoppingCart />
+        </button>
       )}
       {userId && !inWishlist ? (
         <WishlistButton

@@ -1,0 +1,13 @@
+#not-found-container {
+  min-height: 80vh;
+    width:1400px;
+    margin:0 auto;
+}
+
+#not-found-container h2 {
+  font-size:4rem;
+}
+
+#not-found-container img {
+  margin:0 auto;
+}
