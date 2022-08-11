@@ -26,6 +26,7 @@ function Author({
       setIsLoading(true);
       try {
         const authorData = await requestAuthor(authorName);
+        console.log(authorData);
         setAuthorBooks(authorData || []);
       } finally {
         setIsLoading(false);
@@ -81,29 +82,32 @@ function Author({
         <div>
           <h3 id="books-by">Books by {authorName}</h3>
           <div className="related-books-display">
-          
-          {authorBooks.map((book) => {
-            return (
-              <div key={book.id} id="author-row">
-                <Link to={`/books/${book.id}`}> 
-                  <img id="author-book-img" src={book.imageLinkM} alt={book.title} />
-                </Link>
-                <CartForm
-                  className="cart-form"
-                  setIsLoading={setIsLoading}
-                  userId={userId}
-                  price={book.price}
-                  id={book.id}
-                  title={book.title}
-                  inventory={book.inventory}
-                  setGuestCart={setGuestCart}
-                  setCartToast={setCartToast}
-                  setCartItem={setCartItem}
-                  token={token}
-                />
-              </div>
-            );
-          })}
+            {authorBooks.map((book) => {
+              return (
+                <div key={book.id} id="author-row">
+                  <Link to={`/books/${book.id}`}>
+                    <img
+                      id="author-book-img"
+                      src={book.imageLinkM}
+                      alt={book.title}
+                    />
+                  </Link>
+                  <CartForm
+                    className="cart-form"
+                    setIsLoading={setIsLoading}
+                    userId={userId}
+                    price={book.price}
+                    id={book.id}
+                    title={book.title}
+                    inventory={book.inventory}
+                    setGuestCart={setGuestCart}
+                    setCartToast={setCartToast}
+                    setCartItem={setCartItem}
+                    token={token}
+                  />
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

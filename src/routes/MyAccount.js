@@ -1,14 +1,19 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchUserAccount } from "../api";
-import {
-  UserInfo,
-  UserOrders,
-  UserWishlist,
-} from "./components";
+import { UserInfo, UserOrders, UserWishlist, AddToCartToast } from "./components";
 import "./MyAccount.css";
 
-const MyAccount = ({ token, username, userId, setIsLoading }) => {
+const MyAccount = ({
+  token,
+  username,
+  userId,
+  setIsLoading,
+  cartToast,
+  setCartToast,
+  cartItem,
+  setCartItem
+}) => {
   const [myAccount, setMyAccount] = useState({});
   const [myOrders, setMyOrders] = useState([]);
   const [userInfoPage, setUserInfoPage] = useState(false);
@@ -37,6 +42,9 @@ const MyAccount = ({ token, username, userId, setIsLoading }) => {
 
   return (
     <main id="my-account">
+      {cartToast && (
+        <AddToCartToast setCartToast={setCartToast} cartItem={cartItem} />
+      )}
       <header>
         <h2>Your Account</h2>
       </header>
@@ -81,7 +89,14 @@ const MyAccount = ({ token, username, userId, setIsLoading }) => {
         />
       ) : null}
       {userWishlist ? (
-        <UserWishlist token={token} />
+        <UserWishlist
+          token={token}
+          username={username}
+          userId={userId}
+          setCartToast={setCartToast}
+          setCartItem={setCartItem}
+          setIsLoading={setIsLoading}
+        />
       ) : null}
     </main>
   );
