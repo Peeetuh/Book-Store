@@ -3,7 +3,7 @@ import "./UserOrders.css";
 const UserOrders = ({ myAccount, myOrders, username }) => {
   return (
     <section id="users-orders-container">
-      <h4>{username}'s Order History</h4>
+      <h4>Order History</h4>
       {myOrders.length < 1 ? (
         <p>Your order history will appear here</p>
       ) : (

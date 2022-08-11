@@ -7,19 +7,18 @@ import Mystery from "./components/Images/mystery.png"
 import Thriller from "./components/Images/thriller.png"
 import Romance from "./components/Images/romance.png"
 import ScienceFiction from "./components/Images/sciencefiction.png"
-import RomCom from "./components/Images/rom-com.png"
-import Classic from "./components/Images/classic.png"
+import RomCom from "./components/Images/rom-com.jpg"
+import Classic from "./components/Images/classic.jpg"
 import HistoricalFiction from "./components/Images/historical-fiction.png"
 
 
 function Genres({ genres, setGenreSelect }) {
   return (
-    <main>
+    <main id="genre-index-container">
       <header>
-        <h2 id="genre-browse-title">Browse Books by Genre</h2>
+        <h2>Browse Books by Genre</h2>
       </header>
       <div>
-    
       </div>
       <section className="genre-cards">
         {genres.map((genre) => {

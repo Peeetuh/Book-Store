@@ -158,7 +158,6 @@ textarea {
   font-family: "Roboto", sans-serif;
   font-size: 14px;
   font-weight: bold;
-  background: #1E90FF;
   color: white;
   width: 80px;
   padding: 8px;
@@ -170,6 +169,14 @@ textarea {
   border-radius: 5px;
   cursor: pointer;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-cancel {
+  background: rgb(169, 77, 77);
+}
+
+.modal-confirm {
+  background:#1E90FF; ;
 }
 
 .toast, .toast-cart {

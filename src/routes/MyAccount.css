@@ -2,9 +2,25 @@
     min-height: 80vh;
 }
 
-/* .inputs-accounts{
-    color: white;
-} */
+#my-account h2 {
+    font-size:2rem;
+}
+
+.my-account-header {
+    margin:1rem 0;
+}
+
+.my-account-nav {
+    border:1px solid #999;
+    border-radius: 8px;
+    margin:1rem auto;
+    background-color:#a8dadc;
+    width: 500px;
+}
+
+.my-account-nav button {
+    margin:1rem 2rem;
+}
 
 #cancel{
    background: lightslategray;

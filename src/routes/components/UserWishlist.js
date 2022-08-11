@@ -27,7 +27,7 @@ const UserWishlist = ({
 
   return (
     <section id="wishlist-container">
-      <h3>{username}'s Wishlist</h3>
+      <h4>Wishlist</h4>
       <div>
         {wishlist.map((book) => {
           return (
