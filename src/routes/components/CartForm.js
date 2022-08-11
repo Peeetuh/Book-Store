@@ -79,14 +79,14 @@ const CartForm = ({
           <Selector inventory={inventory} />
         </select>
       ) : (
-        <select name="selectList" disabled></select>
+        <select id="disabled-select-list" name="selectList" disabled></select>
       )}
       {inventory ? (
         <button onClick={addToCartSubmitHandler}>
           <AiOutlineShoppingCart />
         </button>
       ) : (
-        <button disabled>Add to Cart</button>
+        <button id="disabled-cart-btn" disabled>Out of stock</button>
       )}
       {userId && !inWishlist ? (
         <WishlistButton

@@ -236,3 +236,13 @@ a:hover:after{
     cursor: pointer;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+#disabled-cart-btn{
+    color: grey;
+    pointer-events: none;
+}
+
+#disabled-select-list{
+    color: grey;
+    pointer-events: none;
+}
