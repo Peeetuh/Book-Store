@@ -49,6 +49,7 @@ function Author({
         ></img>
       </header>
       <section id="author-bio">
+        <div id="author-bio-paragraph">
         <p>
           <b>About {authorName}:</b> Lorem ipsum dolor sit amet, consectetur
           adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
@@ -77,6 +78,7 @@ function Author({
           purus sit amet. Ornare quam viverra orci sagittis eu volutpat odio
           facilisis mauris.
         </p>
+        </div>
         <div>
           <h3 id="books-by">Books by {authorName}</h3>
           <div className="related-books-display">

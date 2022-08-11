@@ -7,16 +7,25 @@
 
 #books-by{
     font-weight: bolder;
+    margin-top: 100px;
+}
+
+#related-author-books{
+    font-weight: bolder;
+    position: absolute;
+    margin-bottom: 200px;
 }
 
 #author-pic{
    margin: 0 auto;
    margin-bottom: 30px;
+   float: left;
 }
 
 #author-name{
     font-weight: bolder;
     font-size: 30px;
+    margin-bottom: 20px;
 }
 
 #author-book-img{
@@ -30,12 +39,6 @@
     margin-right: 100px;
     font-size: 20px;
     font-weight: bolder;
-}
-
-#related-author-books{
-    font-weight: bolder;
-    position: absolute;
-    margin-bottom: 200px;
 }
 
 #author-row{
@@ -52,4 +55,10 @@
     flex-wrap: wrap;
     margin: 5px;
     padding-bottom: 30px;
+}
+
+#author-bio-paragraph{
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 40px;
 }

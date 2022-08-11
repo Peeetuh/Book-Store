@@ -74,7 +74,7 @@ const Login = ({
         <label>Password</label>
         <input
           placeholder="password"
-          id="pasword"
+          id="password"
           type="password"
           minLength={5}
           onChange={passwordChangeHandler}

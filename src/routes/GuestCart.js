@@ -4,6 +4,7 @@ import {
   guestCancelOrder,
 } from "../api/checkout";
 import { GuestCheckoutModal, AuthResponseModal } from "./components";
+import "./GuestCart.css";
 
 const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
   const [updatedBookQuantity, setUpdatedBookQuantity] = useState(1);
@@ -116,7 +117,7 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
         <>
           {guestCart.map((cart) => {
             return (
-              <div key={cart.id}>
+              <div id="guest-cart-container" key={cart.id}>
                 <h3>{cart.title}</h3>
                 <h6>Price: {cart.price}</h6>
                 <h6>
@@ -124,6 +125,7 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
                   {cart.inventory}
                 </h6>
                 <button
+                className="delete-from-cart"
                   type="button"
                   onClick={() => {
                     const newCartData = guestCart.filter((book) => {
@@ -140,16 +142,27 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
                 </button>
                 <div>
                   <label>Change Order Quantity</label>
-                  <input
-                    type="number"
-                    min={1}
-                    max={cart.inventory}
-                    placeholder={1}
-                    onChange={(e) => {
-                      setUpdatedBookQuantity(Number(e.target.value));
-                    }}
-                  />
+                  <select name ="selectList"
+                  min={1}
+                  max={cart.inventory}
+                  placeholder={1}
+                  onChange={(e) => {
+                    setUpdatedBookQuantity(Number(e.target.value));
+                  }}
+                  >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
                   <button
+                  className="user-cart-confirm"
                     type="confirm"
                     onClick={(event) => {
                       event.preventDefault();
@@ -173,7 +186,7 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
             );
           })}
           <h4>Cart Total: ${calculateOrderPrice(guestCart)}</h4>
-          <button onClick={checkoutClickHandler}>Checkout as Guest</button>
+          <button className="user-cart-confirm" onClick={checkoutClickHandler}>Checkout as Guest</button>
         </>
       )}
     </main>

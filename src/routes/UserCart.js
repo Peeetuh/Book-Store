@@ -112,22 +112,25 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
                 />
                 <div>
                   <label>Change Order Quantity</label>
-                  <input
-                    id="input-quantity"
-                    type="number"
-                    min={1}
-                    max={cart.inventory}
-                    placeholder={1}
-                    onChange={(e) => {
-                      setBookQuantity(Number(e.target.value));
-                    }}
-                  />
-                  {/*                   <select
-                    name="selectList"
-                    onChange={(e) => setBookQuantity(e.target.value)}
+                  <select name ="selectList"
+                  min={1}
+                  max={cart.inventory}
+                  placeholder={1}
+                  onChange={(e) => {
+                    setBookQuantity(Number(e.target.value));
+                  }}
                   >
-                    <Selector inventory={inventory} />
-                  </select> */}
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
                   <button
                     className="user-cart-confirm"
                     type="confirm"

@@ -61,9 +61,9 @@ const MyAccount = ({ token, username, userId, setIsLoading }) => {
           myAccount.city ||
           myAccount.state ||
           myAccount.zip ? (
-            <button onClick={clickHandler}>Edit Address</button>
+            <button className="edit-address-btn" onClick={clickHandler}>Edit Address</button>
           ) : (
-            <button onClick={clickHandler}>Add Address</button>
+            <button className="add-address" onClick={clickHandler}>Add Address</button>
           )}
         </div>
       </section>

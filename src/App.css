@@ -111,19 +111,44 @@ a:hover:after{
 }
 
 .delete-from-cart{
-    border: 1px solid black;
-    padding: 2px 4px;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
     margin: 0 auto;
+    margin-bottom: 5px;
+    background: rgb(169, 77, 77);
+    color: white;
+    width: 80px;
+    padding: 3px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #input-quantity{
     border: 1px solid black;
     padding: 1px 1px;
+    margin-right: 8px;
 }
 
 .user-cart-confirm{
-    padding: 1px 4px;
-    border: 1px solid black;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    background: #1E90FF;
+    color: white;
+    margin:0px 0px 5px 5px;
+    width: 100px;
+    padding: 4px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 @media(max-width: 650px){
@@ -149,17 +174,35 @@ a:hover:after{
 }
 
 #login-btn{
-    border-radius: 3px;
-    border: 1px solid black;
-    padding: 2px 4px;
-    margin: 0 auto;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    background: #1E90FF;
+    color: white;
+    width: 100px;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #register-btn{
-    border-radius: 3px;
-    border: 1px solid black;
-    padding: 2px 4px;
-    margin: 0 auto;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    background: #1E90FF;
+    color: white;
+    width: 100px;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .cartpage{
@@ -169,4 +212,18 @@ a:hover:after{
 .author-link{
     font-weight: 500;
     text-decoration: underline;
+}
+
+#username{
+    padding-left: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border: .5px solid black;
+}
+
+#password{
+    padding-left: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border: .5px solid black;
 }

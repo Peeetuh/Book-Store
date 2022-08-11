@@ -38,3 +38,19 @@
     padding-left: 3px;
     padding-right: 3px;
 }
+
+.add-address{
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    background: #1E90FF;
+    color: white;
+    width: 140px;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
