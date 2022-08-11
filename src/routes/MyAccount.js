@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchUserAccount } from "../api";
-import { UserInfo, UserOrders, UserWishlist, AddToCartToast } from "./components";
+import {
+  UserInfo,
+  UserOrders,
+  UserWishlist,
+  AddToCartToast,
+} from "./components";
 import "./MyAccount.css";
 
 const MyAccount = ({
@@ -12,7 +17,7 @@ const MyAccount = ({
   cartToast,
   setCartToast,
   cartItem,
-  setCartItem
+  setCartItem,
 }) => {
   const [myAccount, setMyAccount] = useState({});
   const [myOrders, setMyOrders] = useState([]);
@@ -45,39 +50,44 @@ const MyAccount = ({
       {cartToast && (
         <AddToCartToast setCartToast={setCartToast} cartItem={cartItem} />
       )}
-      <header>
-        <h2>Your Account</h2>
+      <header className="my-account-header">
+        <h2>{username}'s Account</h2>
+        <div className="my-account-nav">
+          <button
+            onClick={() => {
+              setUserInfoPage(true);
+              setUserOrders(false);
+              setUserWishlist(false);
+            }}
+          >
+            Account Info
+          </button>
+          <button
+            onClick={() => {
+              setUserOrders(true);
+              setUserInfoPage(false);
+              setUserWishlist(false);
+            }}
+          >
+            Orders
+          </button>
+          <button
+            onClick={() => {
+              setUserWishlist(true);
+              setUserInfoPage(false);
+              setUserOrders(false);
+            }}
+          >
+            Wishlist
+          </button>
+        </div>
       </header>
-      <button
-        onClick={() => {
-          setUserInfoPage(true);
-          setUserOrders(false);
-          setUserWishlist(false);
-        }}
-      >
-        Account Info
-      </button>
-      <button
-        onClick={() => {
-          setUserOrders(true);
-          setUserInfoPage(false);
-          setUserWishlist(false);
-        }}
-      >
-        Orders
-      </button>
-      <button
-        onClick={() => {
-          setUserWishlist(true);
-          setUserInfoPage(false);
-          setUserOrders(false);
-        }}
-      >
-        Wishlist
-      </button>
-
       {userOrders ? (
-        <UserOrders myAccount={myAccount} myOrders={myOrders} />
+        <UserOrders
+          myAccount={myAccount}
+          myOrders={myOrders}
+          username={username}
+        />
       ) : null}
       {userInfoPage ? (
         <UserInfo

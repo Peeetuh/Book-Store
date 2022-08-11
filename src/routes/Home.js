@@ -11,6 +11,7 @@ import {
   requestTopRated,
   requestFeatured,
 } from "../api";
+import "./Home.css";
 
 function Home({
   token,
@@ -69,7 +70,7 @@ function Home({
   }, []);
 
   return (
-    <main>
+    <main id="home-container">
       {toast && <LogOutToast setToast={setToast} />}
       {cartToast && (
         <AddToCartToast setCartToast={setCartToast} cartItem={cartItem} />

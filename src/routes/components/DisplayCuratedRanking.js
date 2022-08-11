@@ -24,7 +24,7 @@ function DisplayCuratedRanking({
               </Link>
 
               <Link to={`/authors/${book.author}`}>
-                <p className="author-link"> By {book.author}</p>
+                <p className="author-link"> by {book.author}</p>
               </Link>
               <CartForm
                 setIsLoading={setIsLoading}

@@ -1,64 +1,70 @@
-#author-container{
-    min-height: 80vh;
-    margin-left: 30px;
-    margin-right: 30px;
-  }
-
-
-#books-by{
-    font-weight: bolder;
-    margin-top: 100px;
+#author-container {
+  min-height: 80vh;
+  width: 1400px;
+  margin: 0 auto;
 }
 
-#related-author-books{
-    font-weight: bolder;
-    position: absolute;
-    margin-bottom: 200px;
+#author-page-background {
+  background-color: #a8dadc;
+  box-shadow: 0px 0px 15px -5px;
+  border-radius: 8px;
+  padding: 2rem;
+  margin:3rem;
 }
 
-#author-pic{
-   margin: 0 auto;
-   margin-bottom: 30px;
-   float: left;
+#author-page-background h2 {
+    font-size: 2rem;
 }
 
-#author-name{
-    font-weight: bolder;
-    font-size: 30px;
-    margin-bottom: 20px;
+#author-bio {
+    margin:2rem 0;
 }
 
-#author-book-img{
-   margin: 0 auto;
-   margin-top: 10px;
-   padding: 0px 20px;
+#author-pic {
+  margin-right:2.5rem;
+  float: left;
 }
 
-#author-name-header{
-    margin-left: 100px;
-    margin-right: 100px;
-    font-size: 20px;
-    font-weight: bolder;
+#author-book-img {
+  margin: 0 auto;
+  margin-top: 10px;
+  padding: 0px 20px;
 }
 
-#author-row{
-    display: flex;
-    flex-direction: column;
+#author-name-header {
+  margin-left: 100px;
+  margin-right: 100px;
+  font-size: 20px;
+  font-weight: bolder;
 }
 
-
-
-.related-books-display{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 5px;
-    padding-bottom: 30px;
+#author-single-book {
+  display: flex;
+  flex-direction: column;
+  margin:.5rem;
 }
 
-#author-bio-paragraph{
-    margin-left: 30px;
-    margin-right: 30px;
-    margin-top: 40px;
+.related-books-display {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#author-bio-paragraph {
+    text-align: justify;
+    padding:0 3rem;
+}
+
+#author-bio-paragraph p {
+    margin-bottom:.5rem;
+}
+
+.author-books-by {
+    padding: 0rem;
+    margin:2rem 0;
+}
+
+.author-books-by img {
+    height: 125px;
 }

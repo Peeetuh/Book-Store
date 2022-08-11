@@ -52,7 +52,7 @@ const SingleBookPage = ({
   //   year,
   // } = bookInfo;
   return (
-    <main className="single-book-container">
+    <main id="single-book-container">
       <div id="book-page-background">
         {cartToast && (
           <AddToCartToast setCartToast={setCartToast} cartItem={cartItem} />
@@ -60,32 +60,41 @@ const SingleBookPage = ({
         {bookInfo ? (
           <>
             <header>
-              <h2>{bookInfo.title}</h2>
+              <h2>
+                <i>{bookInfo.title}</i>
+              </h2>
             </header>
             <Link className="author" to={`/authors/${bookInfo.author}`}>
-              {bookInfo.author}
+              by {bookInfo.author}
             </Link>
-            <h4>Rated {bookInfo.rating}/5 stars</h4>
+            <p className="book-rating">
+              Rating: <b>{bookInfo.rating}</b> / 5 ({bookInfo.globalRatings}{" "}
+              ratings)
+            </p>
             <img
               className="single-book-img"
               src={bookInfo.imageLinkL}
               alt={bookInfo.title}
             />
-            <h5>Genre: {bookInfo.genre}</h5>
-            <h4>{bookInfo.description}</h4>
-            <h5>
-              Price: ${bookInfo.price} | No. available:{" "}
-              {!bookInfo.inventory
-                ? "Currently out of stock!"
-                : bookInfo.inventory > 15
-                ? `${bookInfo.inventory} copies`
-                : bookInfo.inventory === 1
-                ? `Only 1 copy left!`
-                : `Only ${bookInfo.inventory} copies left!`}
-            </h5>
-            <h6>
-              Published By: {bookInfo.publisher} in {bookInfo.year}
-            </h6>
+            <div className="product-details">
+              <h3>Product Details</h3>
+              <p>Genre: {bookInfo.genre}</p>
+              <p>Description: {bookInfo.description}</p>
+              <p>
+                Price: ${bookInfo.price} | No. available:{" "}
+                {!bookInfo.inventory
+                  ? "Currently out of stock!"
+                  : bookInfo.inventory > 15
+                  ? `${bookInfo.inventory}`
+                  : bookInfo.inventory === 1
+                  ? `Only 1 left!`
+                  : `Only ${bookInfo.inventory} left!`}
+              </p>
+              <p>
+                Publisher: {bookInfo.publisher} ({bookInfo.year})
+              </p>
+              <div className="book-page-cart-form">
+                <h3>Interested In This Book?</h3>
             <CartForm
               setIsLoading={setIsLoading}
               userId={userId}
@@ -97,6 +106,9 @@ const SingleBookPage = ({
               setCartToast={setCartToast}
               setCartItem={setCartItem}
             />
+            </div>
+            </div>
+
           </>
         ) : (
           <header>

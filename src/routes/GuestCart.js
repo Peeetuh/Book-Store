@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { guestCompleteOrderReq, guestCancelOrder } from "../api/checkout";
 import {
-  guestCompleteOrderReq,
-  guestCancelOrder,
-} from "../api/checkout";
-import { GuestCheckoutModal, AuthResponseModal } from "./components";
+  GuestCheckoutModal,
+  AuthResponseModal,
+  CartInventoryModal,
+} from "./components";
+
 import "./GuestCart.css";
 
 const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
@@ -17,6 +19,7 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
   const [currOrderId, setCurrOrderId] = useState(null);
   const [resModal, setResModal] = useState(false);
   const [resData, setResData] = useState({});
+  const [cartModal, setCartModal] = useState(false);
 
   const calculateOrderPrice = (guestCart) => {
     const totalPrice = guestCart.reduce((total, cart) => {
@@ -125,7 +128,7 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
                   {cart.inventory}
                 </h6>
                 <button
-                className="delete-from-cart"
+                  className="delete-from-cart"
                   type="button"
                   onClick={() => {
                     const newCartData = guestCart.filter((book) => {
@@ -148,34 +151,49 @@ const GuestCart = ({ guestCart, setGuestCart, setIsLoading }) => {
                     min="1"
                     max="100"
                     placeholder={1}
-                    onChange={(e) => setUpdatedBookQuantity(Number(e.target.value))}
-                    />
+                    onChange={(e) =>
+                      setUpdatedBookQuantity(Number(e.target.value))
+                    }
+                  />
                   <button
-                  className="user-cart-confirm"
+                    className="user-cart-confirm"
                     type="confirm"
                     onClick={(event) => {
                       event.preventDefault();
-                      const newCartData = guestCart.filter((book) => {
-                        if (book.id === cart.id) {
-                          cart.bookQuantity = updatedBookQuantity;
-                        }
-                        return book;
-                      });
-                      localStorage.setItem(
-                        "GuestCartData",
-                        JSON.stringify(newCartData)
-                      );
-                      setGuestCart(newCartData);
+                      if (updatedBookQuantity > cart.inventory) {
+                        setCartModal(true);
+                      } else {
+                        const newCartData = guestCart.filter((book) => {
+                          if (book.id === cart.id) {
+                            cart.bookQuantity = updatedBookQuantity;
+                          }
+                          return book;
+                        });
+                        localStorage.setItem(
+                          "GuestCartData",
+                          JSON.stringify(newCartData)
+                        );
+                        setGuestCart(newCartData);
+                      }
                     }}
                   >
                     Confirm
                   </button>
                 </div>
+                {cartModal && (
+                  <CartInventoryModal
+                    setCartModal={setCartModal}
+                    title={cart.title}
+                    inventory={cart.inventory}
+                  />
+                )}
               </div>
             );
           })}
           <h4>Cart Total: ${calculateOrderPrice(guestCart)}</h4>
-          <button className="user-cart-confirm" onClick={checkoutClickHandler}>Checkout as Guest</button>
+          <button className="user-cart-confirm" onClick={checkoutClickHandler}>
+            Checkout as Guest
+          </button>
         </>
       )}
     </main>

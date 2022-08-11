@@ -4,8 +4,11 @@ import {
   /* deleteFromCart, */ updateCartQuantity,
 } from "../api";
 import { stripeCheckoutRequest, userCompleteOrderReq } from "../api/checkout";
-import { /* Selector, */ DeleteFromCartButton } from "./components/";
-import "./UserCart.css"
+import {
+  /* Selector, */ DeleteFromCartButton,
+  CartInventoryModal,
+} from "./components/";
+import "./UserCart.css";
 
 const UserCart = ({ userId, username, token, setIsLoading }) => {
   const [userCart, setUserCart] = useState([]);
@@ -15,11 +18,7 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
   const [stripeMsg, setStripeMsg] = useState(false);
   const [stripeRes, setStripeRes] = useState(false);
   const [currOrderId, setCurrOrderId] = useState(null);
-
-  const changeHandler = (e) => {
-    setBookQuantity(Number(e.target.value));
-    console.log("changeHandler", e.target.value);
-  }
+  const [cartModal, setCartModal] = useState(false);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -118,36 +117,50 @@ const UserCart = ({ userId, username, token, setIsLoading }) => {
                   <input
                     id="input-quantity"
                     type="number"
-                    min="1"
-                    max="100"
+                    min={1}
+                    max={cart.inventory}
                     placeholder={1}
-                    onChange={changeHandler}
+                    onChange={(e) => {
+                      setBookQuantity(Number(e.target.value));
+                    }}
                   />
                   <button
                     className="user-cart-confirm"
-                    type="confirm"
                     onClick={async (event) => {
                       event.preventDefault();
-                      updateCartQuantity(
-                        userCart.orderId,
-                        cart.bookId,
-                        cart.bookPrice,
-                        cart.quantity,
-                        bookQuantity
-                      );
-                      const fetchedCart = await fetchUsersCart(token);
-                      setUserCart(fetchedCart);
+                      if (bookQuantity > cart.inventory) {
+                        setCartModal(true);
+                      } else {
+                        updateCartQuantity(
+                          userCart.orderId,
+                          cart.bookId,
+                          cart.bookPrice,
+                          cart.quantity,
+                          bookQuantity
+                        );
+                        const fetchedCart = await fetchUsersCart(token);
+                        setUserCart(fetchedCart);
+                      }
                     }}
                   >
                     Confirm
                   </button>
                 </div>
+                {cartModal && (
+                  <CartInventoryModal
+                    setCartModal={setCartModal}
+                    title={cart.title}
+                    inventory={cart.inventory}
+                  />
+                )}
               </div>
             );
           })}
           <h4>Cart Total: {userCart.orderPrice}</h4>
           <form onSubmit={submitHandler}>
-            <button className="user-cart-confirm" type="submit">Proceed to Checkout</button>
+            <button className="user-cart-confirm" type="submit">
+              Proceed to Checkout
+            </button>
           </form>
         </>
       )}

@@ -1,0 +1,10 @@
+#home-container {
+  min-height: 80vh;
+  width: 1800px;
+  margin: 0 auto;
+}
+
+.home-child-elements {
+  width: 20%;
+  margin: 1rem 0;
+}

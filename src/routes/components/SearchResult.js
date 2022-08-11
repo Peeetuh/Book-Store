@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { searchRequest, searchRequestCount } from "../../api";
+import "./DisplayGenreBooks.css";
 
 function SearchResult({ searchQuery }) {
   const [searchResult, setSearchResult] = useState([]);
@@ -37,27 +38,31 @@ function SearchResult({ searchQuery }) {
   }, [searchQuery]);
 
   return (
-    <main id="display-paginated">
-      <header>
-        <h2 id="search-result-h2">
-          {resCount} results found for "{searchQuery}"
-        </h2>
-      </header>
-{searchResult.length ?
-      <section>
+    <main id="display-paginated-container">
+      {searchResult.length ? (
+        <section id="display-paginated-items">
+          <header>
+            <p className="search-result">
+              <b>
+                {resCount} results found for "{searchQuery}"
+              </b>
+            </p>
+          </header>
           {searchResult.map((book) => {
             return (
               <React.Fragment key={book.id}>
                 <Link to={`/books/${book.id}`}>
-                  <div className="display-paginated-container">
+                  <div className="display-paginated-search-results">
                     <img src={book.imageLinkM} alt={book.title} />
-                    <span>{book.title}</span>
-                    <span>{book.author}</span>
+                    <p className="book-title">
+                      <i>{book.title}</i>
+                    </p>
+                    <p className="book-author">{book.author}</p>
                   </div>
                 </Link>
               </React.Fragment>
             );
-          })} 
+          })}
           <div>
             {currentPage !== 1 ? (
               <button onClick={prevClickHandler}>Prev</button>
@@ -73,8 +78,20 @@ function SearchResult({ searchQuery }) {
             ) : (
               <button disabled>Next</button>
             )}
-          </div>  
-      </section> : <section><p>Search again?</p></section>}
+          </div>
+        </section>
+      ) : (
+        <section className="no-search-results">
+          <header>
+            <p>
+              <b>
+                {resCount} results found for "{searchQuery}"
+              </b>
+            </p>
+          </header>
+          <p className="search-again">Search again?</p>
+        </section>
+      )}
     </main>
   );
 }

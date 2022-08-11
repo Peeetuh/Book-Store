@@ -1,29 +1,63 @@
-* {
-  padding:0;
-  margin:0;
-  box-sizing: border-box;
-}
-#display-paginated {
-  width:1200px;
+#display-paginated-container {
+  width:1400px;
   margin: 0 auto;
   display: flex;
   flex-flow:row wrap;
   justify-content: space-between;
+  min-height: 70vh;
+}
+
+#display-paginated-items {
+  margin:3rem;
+  padding:2rem;
   background-color: #A8DADC;
   box-shadow: 0px 0px 15px -5px;
+  border-radius: 8px;
 }
 
-#genre-header{
-  margin: 0 auto;
-  font-weight: bolder;
-  font-size: 30px;
+#display-paginated-items h2 {
+  font-size:2rem;
 }
 
-#book-title{
-  font-weight: bold;
-  text-decoration: underline;
+.book-title{
+  font-size:.9rem;
+  margin-top:.5rem;
 }
 
-#book-author{
-  font-style: italic;
+.book-author{
+  font-size:.8rem;
+}
+
+p.search-result {
+  text-align: left;
+}
+
+.display-paginated-search-results {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  width: 20%;
+  margin: 2rem 0;
+  height: 250px;
+  padding: 0.5rem;
+}
+
+.display-paginated-search-results img {
+  height: 150px;
+  width: 120px;
+}
+
+.no-search-results {
+  margin:0 auto;
+  width: 1400px;
+  text-align: left;
+  margin:3rem;
+  padding:2rem;
+  background-color: #A8DADC;
+  box-shadow: 0px 0px 15px -5px;
+  border-radius: 8px;
+}
+
+p.search-again {
+  margin-top:2rem;
 }

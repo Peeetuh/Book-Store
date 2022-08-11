@@ -21,3 +21,4 @@ export { default as UserInfo } from "./UserInfo";
 export { default as WishlistButton } from "./WishlistButton";
 export { default as SingleAuthor } from "./SingleAuthor";
 export { default as DeleteFromWishlistButton } from "./DeleteFromWishlistButton";
+export { default as CartInventoryModal } from "./modals/CartInventoryModal";
