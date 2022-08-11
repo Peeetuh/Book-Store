@@ -155,10 +155,21 @@ textarea {
 }
 
 .modal button {
-  margin: 0 1rem;
-  border: 1px solid black;
-  padding-left: 3px;
-  padding-right: 3px;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  background: #1E90FF;
+  color: white;
+  width: 80px;
+  padding: 8px;
+  margin-right: 8px;
+  margin-left: 8px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .toast, .toast-cart {
@@ -237,4 +248,38 @@ select{
 
 #search-result-h2{
   margin: 0 auto;  
+}
+
+.edit-address-btn{
+  font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    background: #1E90FF;
+    color: white;
+    width: 140px;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#proceed-checkout-btn{
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  background: #1E90FF;
+  color: white;
+  width: 100px;
+  padding: 8px;
+  margin-right: 8px;
+  margin-left: 8px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
