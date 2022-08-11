@@ -34,9 +34,9 @@ const UserInfo = ({ token, userId, myAccount, username, setMyAccount }) => {
           myAccount.city ||
           myAccount.state ||
           myAccount.zip ? (
-            <button onClick={clickHandler}>Edit Address</button>
+            <button className="user-info-btn" onClick={clickHandler}>Edit Address</button>
           ) : (
-            <button onClick={clickHandler}>Add Address</button>
+            <button className="user-info-btn" onClick={clickHandler}>Add Address</button>
           )}
         </div>
       </section>

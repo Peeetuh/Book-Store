@@ -46,8 +46,8 @@ const GuestCheckoutModal = ({
             onChange={(e) => setGuestEmail(e.target.value)}
           />
           <div className="modal-form-buttons">
-          <button onClick={cancelClickHandler}>Cancel</button>
-          <button type="submit">Proceed to Checkout</button>
+          <button className="cancel-btn-guest" onClick={cancelClickHandler}>Cancel</button>
+          <button id="proceed-checkout-btn" type="submit">Proceed to Checkout</button>
           </div>
         </form>
       </div>

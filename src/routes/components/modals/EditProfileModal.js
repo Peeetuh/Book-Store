@@ -69,7 +69,7 @@ const EditProfileModal = ({ token, userId, setEditMode, setMyAccount }) => {
             onChange={(e) => setZip(e.target.value)}
           />
           <div className="modal-form-buttons">
-            <button onClick={cancelHandler}>Cancel</button>
+            <button className="modal-buttons" onClick={cancelHandler}>Cancel</button>
             <button type="submit">Submit</button>
           </div>
         </form>

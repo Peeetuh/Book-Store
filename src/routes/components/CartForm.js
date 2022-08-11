@@ -73,6 +73,7 @@ const CartForm = ({
       {inventory ? (
         <select
           name="selectList"
+          id="select-dropdown"
           onChange={(e) => setBookQuantity(Number(e.target.value))}
         >
           <Selector inventory={inventory} />

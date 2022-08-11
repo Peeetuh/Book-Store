@@ -73,7 +73,7 @@ const Register = ({
         <label>Password</label>
         <input
           placeholder="minimum of 8 characters"
-          id="pasword"
+          id="password"
           type="password"
           value={password}
           onChange={passwordChangeHandler}
